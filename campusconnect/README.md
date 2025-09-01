@@ -1,7 +1,7 @@
 TEAM 1
-Smarth Phutela 
-Harshitha K
-Satwik dixit
-Chitra Hegde
-Sumedha Hiremath
-Madan A
+1 Smarth Phutela 
+2 Harshitha K
+3 Satwik dixit
+4 Chitra Hegde
+5 Sumedha Hiremath
+6 Madan A
