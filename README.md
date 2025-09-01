@@ -231,3 +231,5 @@ npm run dev
 ```
 
 You should be able to access the frontend by opening your browser and pointing to: http://localhost:5173
+
+
