@@ -1,2 +1,6 @@
-Smarth Phutela TEAM 1
-abc
+TEAM 1
+Smarth Phutela 
+Harshitha K
+Satwik dixit
+Chitra Hegde
+Sumedha Hiremath
