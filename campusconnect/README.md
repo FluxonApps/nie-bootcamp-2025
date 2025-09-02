@@ -3,6 +3,6 @@ TEAM 1 (Innovex)
 2) Harshitha K
 3) Satwik dixit
 4) Chitra Hegde
-5) Sumedha Hiremath
-5) Madan A
+5) Shreesha G Shetty
+6) Madan A
 
