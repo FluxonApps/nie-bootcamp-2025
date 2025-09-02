@@ -1,8 +1,8 @@
 # Fintrack Team
 
 ## Team Members
-- Shubhangi
 - Rahul Reddy
+- Shubhangi
 - Spandana
 - Ananya Ramesh
 - Ganesha M
