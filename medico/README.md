@@ -124,3 +124,11 @@ o	Limited dataset for adulteration detection (may affect accuracy).
 o	Rule-based AI may give oversimplified predictions.
 o	Deployment delays if API integration fails.
 
+
+Team Members:
+1. Chandu S
+2. Parushuram
+3. Sharath
+4. Shreya Ojha
+5. Sumedha Hiremath
+
