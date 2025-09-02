@@ -9,6 +9,10 @@ var app = express();
 app.use(cors());
 app.use(express.json());
 
+
+const onboardingRoutes=require("./routes/onboardingRoutes")
+app.use("/api/onboarding",onboardingRoutes);
+
 app.get("/", function (req, res, next) {
   res.json({ status: "ok", server: "fintrack server" });
 });
