@@ -9,6 +9,8 @@ var app = express();
 app.use(cors());
 app.use(express.json());
 
+
+
 app.get("/", function (req, res, next) {
   res.json({ status: "ok", server: "fintrack server" });
 });

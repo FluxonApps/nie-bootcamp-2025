@@ -1,5 +1,6 @@
 const userRoutes = require("./userRoute");
+const onboardingRoutes= require("./onboardingRoute");
 
-const allRoutes = [...userRoutes];
+const allRoutes = [...userRoutes,...onboardingRoutes];
 
 module.exports = allRoutes;
