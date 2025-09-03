@@ -29,8 +29,37 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
 * {
   box-sizing: border-box;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+a:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
 }
 
 
@@ -61,21 +90,78 @@ h2 {
   padding-bottom: 0.75rem;
 }
 
-p {
-  margin: 0 0 1rem 0; /* Only add margin to the bottom */
-  color: var(--secondary-text);
-  max-width: 75ch; /* Limit line width for better readability */
+
+/* Flip card container */
+.flip-card {
+  background-color: transparent;
+  width: 100%;
+  height: 300px;
+  perspective: 1000px; /* for 3D effect */
 }
 
-a {
-  text-decoration: none;
-  color: var(--accent-primary);
-  font-weight: 500;
-  transition: all 0.2s ease-in-out;
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  cursor: pointer;
 }
 
-a:hover {
-  color: var(--accent-hover);
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Front and back sides */
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 1rem;
+}
+
+/* Back side */
+.flip-card-back {
+  transform: rotateY(180deg);
+}
+
+
+/* Flip card container */
+.flip-card {
+  background-color: transparent;
+  width: 100%;
+  height: 300px;
+  perspective: 1000px; /* for 3D effect */
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Front and back sides */
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 1rem;
+}
+
+/* Back side */
+.flip-card-back {
+  transform: rotateY(180deg);
 }

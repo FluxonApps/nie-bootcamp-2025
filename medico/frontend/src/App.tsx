@@ -1,4 +1,3 @@
-import React from "react";
 import "./App.css";
 
 // 👈 1. Import routing components and your pages
