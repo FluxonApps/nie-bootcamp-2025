@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Icon from '../AppIcon';
 import Button from './Button';
@@ -56,10 +56,10 @@ const NavigationHeader = () => {
               </div>
               <div className="hidden sm:block">
                 <h1 className="text-xl font-heading font-bold text-primary">
-                  PlateFullPromise
+                  FeedTheNeed
                 </h1>
                 <p className="text-xs font-caption text-text-secondary -mt-1">
-                  Nourishing Communities
+                  Serving Hope, One Plate at a Time
                 </p>
               </div>
             </Link>
