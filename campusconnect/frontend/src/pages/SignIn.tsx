@@ -15,7 +15,7 @@ const SignIn: React.FC = () => {
     e.preventDefault();
     setError("");
     try {
-      const response = await api.post("/auth/signin", { email, password });
+      const response = await api.post("/signin", { email, password });
       localStorage.setItem("token", response.data.token);
       navigate("/dashboard");
     } catch (err: any) {

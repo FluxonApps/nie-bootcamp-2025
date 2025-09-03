@@ -16,7 +16,7 @@ const SignUp: React.FC = () => {
     e.preventDefault();
     setError("");
     try {
-      const response = await api.post("/auth/signup", { name, email, password });
+      const response = await api.post("/signup", { name, email, password });
       console.log(response.data);
       navigate("/");
     } catch (err: any) {
