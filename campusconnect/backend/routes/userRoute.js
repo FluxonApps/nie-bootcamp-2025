@@ -1,6 +1,6 @@
 const userController = require("../controllers/userController.js");
 
-const base = "/api/users";
+const base = "/api/user";
 
 const userRoutes = [
   {
