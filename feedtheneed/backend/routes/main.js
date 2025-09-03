@@ -1,5 +1,7 @@
 const userRoutes = require("./userRoute");
 const requestRoutes = require("./requestRoute");
-const allRoutes = [...userRoutes, ...requestRoutes];
+const donationRoutes = require("./donationRoute");
+
+const allRoutes = [...userRoutes,...donationRoutes, ...requestRoutes];
 
 module.exports = allRoutes;
