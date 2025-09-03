@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import api from "../api/axios";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "./Auth.css";
 
 const SignIn: React.FC = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -15,11 +15,12 @@ const SignIn: React.FC = () => {
     e.preventDefault();
     setError("");
     try {
-      const response = await api.post("/signin", { email, password });
-      localStorage.setItem("token", response.data.token);
-      navigate("/dashboard");
+      const response = await api.post("/login", { username, password });
+      console.log("Sign In Response:", response.data);
+      alert("Sign in successful!");
+      navigate("/home"); // Redirect to Home page after signin
     } catch (err: any) {
-      setError(err.response?.data?.message || "Something went wrong");
+      setError(err.response?.data?.message || "Invalid username or password");
     }
   };
 
@@ -32,8 +33,8 @@ const SignIn: React.FC = () => {
           {error && <p className="error">{error}</p>}
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label>Email</label>
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+              <label>Username</label>
+              <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required />
             </div>
             <div className="form-group">
               <label>Password</label>

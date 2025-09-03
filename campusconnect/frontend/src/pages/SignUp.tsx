@@ -7,6 +7,7 @@ import "./Auth.css";
 
 const SignUp: React.FC = () => {
   const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -16,9 +17,10 @@ const SignUp: React.FC = () => {
     e.preventDefault();
     setError("");
     try {
-      const response = await api.post("/signup", { name, email, password });
-      console.log(response.data);
-      navigate("/");
+      const response = await api.post("/signup", { name, username, email, password });
+      console.log("Sign Up Response:", response.data);
+      alert("Registration successful! You can now sign in.");
+      navigate("/"); // Redirect to Sign In page after signup
     } catch (err: any) {
       setError(err.response?.data?.message || "Something went wrong");
     }
@@ -35,6 +37,10 @@ const SignUp: React.FC = () => {
             <div className="form-group">
               <label>Name</label>
               <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+            </div>
+            <div className="form-group">
+              <label>Username</label>
+              <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required />
             </div>
             <div className="form-group">
               <label>Email</label>
