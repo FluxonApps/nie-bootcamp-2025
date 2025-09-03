@@ -1,40 +1,27 @@
-var express = require("express");
-const mongoose = require("mongoose");
+const express = require('express');
+const cors = require('cors');
+const connectDB = require('./config/db');
+const { PORT } = require('./config/vars');
+const counterRoutes = require('./routes/counterRoutes');
 
-const { APP_PORT, DB_URL } = require("./config/vars");
-const routes = require("./routes/main");
 
-var cors = require("cors");
-var app = express();
+const app = express();
+
+connectDB();
+
 app.use(cors());
 app.use(express.json());
 
-app.get("/", function (req, res, next) {
-  res.json({ status: "ok", server: "fintrack server" });
+app.get('/', (req, res) => {
+  res.send('FinTrack Backend is running...');
 });
 
-routes.forEach((route) => {
-  routes.forEach((route) => {
-    try {
-      app[route.method.toLowerCase()](route.url, route.handler);
-    } catch {
-      console.warn(`Error creating route ${route}}`);
-    }
-  });
+
+app.use('/api/counter', counterRoutes);
+app.use('/api/transactions', require('./routes/transactions'));
+app.use('/api/dashboard', require('./routes/dashboard'));
+
+
+app.listen(PORT, () => {
+  console.log(`Backend running at http://localhost:${PORT}`);
 });
-
-const start = async () => {
-  var server;
-  try {
-    server = app.listen(APP_PORT, async function () {
-      console.log(`Server started at port ${APP_PORT}`);
-      await mongoose.connect(DB_URL);
-      console.log("Database successfully connected");
-    });
-  } catch {
-    console.log("Error in starting server");
-    server.close();
-  }
-};
-
-start();

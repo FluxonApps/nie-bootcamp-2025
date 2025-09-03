@@ -1,4 +1,6 @@
+require('dotenv').config();
+
 module.exports = {
-  APP_PORT: process.env.PORT ? process.env.PORT : "8003",
-  DB_URL: process.env.DB_URL ? process.env.DB_URL : "",
+  MONGO_URI: process.env.MONGO_URI,
+  PORT: process.env.PORT || 5000,
 };
