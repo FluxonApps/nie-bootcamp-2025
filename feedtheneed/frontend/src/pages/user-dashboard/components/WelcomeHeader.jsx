@@ -1,7 +1,17 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Icon from '../../../components/AppIcon';
 
 const WelcomeHeader = ({ user, userStats }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("username");
+    localStorage.removeItem("userRole");
+    navigate("/login", { replace: true });
+  };
+
   const getGreeting = () => {
     const hour = new Date()?.getHours();
     if (hour < 12) return 'Good morning';
@@ -22,7 +32,8 @@ const WelcomeHeader = ({ user, userStats }) => {
           </h1>
           <p className="text-white/90 text-base lg:text-lg mb-4">
             {user?.role === 'donor' 
-              ? 'Thank you for making a difference in your community' :'Find fresh food donations near you'}
+              ? 'Thank you for making a difference in your community' 
+              : 'Find fresh food donations near you'}
           </p>
           
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -47,8 +58,17 @@ const WelcomeHeader = ({ user, userStats }) => {
           </div>
         </div>
         
-        <div className="hidden lg:flex items-center justify-center w-32 h-32 bg-white/10 rounded-full">
-          <Icon name="Heart" size={48} color="white" />
+        <div className="flex flex-col items-center space-y-4">
+          <div className="hidden lg:flex items-center justify-center w-32 h-32 bg-white/10 rounded-full">
+            <Icon name="Heart" size={48} color="white" />
+          </div>
+          {/* 🚀 Logout Button */}
+          <button 
+            onClick={handleLogout}
+            className="mt-4 bg-white text-primary px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition"
+          >
+            Logout
+          </button>
         </div>
       </div>
     </div>
