@@ -6,4 +6,5 @@ const groupRoutes = require("./groupRoute");
 
 const allRoutes = [...userRoutes,...groupRoutes,...signUpRoutes,...loginRoutes,...postRoutes];
 
+
 module.exports = allRoutes;
