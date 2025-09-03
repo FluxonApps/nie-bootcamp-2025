@@ -1,6 +1,11 @@
 import React from "react";
 import "./App.css";
-import HomePage from "../pages/homePage"; // import your HomePage component
+
+// 👈 1. Import routing components and your pages
+import { Routes, Route } from "react-router-dom";
+import HomePage from "../pages/HomePage"; 
+import SearchPage from "../pages/SearchPage"; 
+import Navbar from "../components/Navbar";     
 
 // 👈 Import routing components and your pages
 import { Routes, Route } from "react-router-dom";
