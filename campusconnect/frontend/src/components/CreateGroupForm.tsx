@@ -1,49 +1,51 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import api from "../api/axios";
 
-export default function CreateGroupForm() {
+interface Props {
+  onGroupCreated: () => void;
+}
+
+const CreateGroupForm: React.FC<Props> = ({ onGroupCreated }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [domain, setDomain] = useState("");
-  const [type, setType] = useState<"public" | "private">("public");
+
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:8001/api/groups", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          description,
-          domain,
-          type,
-          members: [], // start empty
-        }),
+        console.log("Submitting group:", {
+  name,
+  description,
+  domain,
+  userId: user._id || user.userId,
+});
+
+      await api.post("/groups", {
+        name,
+        description,
+        domain,
+        userId: user._id, // pass creator id
       });
-      const data = await res.json();
-      console.log("Group created:", data);
-      alert("Group created successfully!");
-    } catch (err) {
-      console.error(err);
-      alert("Failed to create group");
+      setName("");
+      setDescription("");
+      setDomain("");
+      onGroupCreated(); // refresh list
+    } catch (err: any) {
+      alert(err.response?.data?.message || "Error creating group");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Create Group</h2>
+    <form onSubmit={handleSubmit} style={{ marginBottom: "20px" }}>
+      <h3>Create Group</h3>
       <input
         type="text"
-        placeholder="Group Name"
+        placeholder="Group name"
         value={name}
         onChange={(e) => setName(e.target.value)}
         required
-      />
-      <input
-        type="text"
-        placeholder="Description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
       />
       <input
         type="text"
@@ -52,11 +54,14 @@ export default function CreateGroupForm() {
         onChange={(e) => setDomain(e.target.value)}
         required
       />
-      <select value={type} onChange={(e) => setType(e.target.value as "public" | "private")}>
-        <option value="public">Public</option>
-        <option value="private">Private</option>
-      </select>
+      <textarea
+        placeholder="Description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      />
       <button type="submit">Create</button>
     </form>
   );
-}
+};
+
+export default CreateGroupForm;

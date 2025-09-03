@@ -17,6 +17,7 @@ const SignIn: React.FC = () => {
     try {
       const response = await api.post("/login", { username, password });
       console.log("Sign In Response:", response.data);
+      localStorage.setItem("user", JSON.stringify(response.data)); // ✅ store whole response
       alert("Sign in successful!");
       navigate("/home"); // redirect to Home page
     } catch (err: any) {
