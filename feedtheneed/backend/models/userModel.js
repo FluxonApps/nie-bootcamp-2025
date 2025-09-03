@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["donor", "recipient"], // only donor or recipient
+      enum: ["donor", "recipient", "admin"], // added admin role
       required: true,
     },
     address: {
