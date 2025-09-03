@@ -1,7 +1,13 @@
-const express=require("express")
-const router=express.Router();
-const {saveDetails}=require("../controllers/onboardingController");
+const onboardingController = require("../controllers/onboardingController.js");
 
-router.post("/",saveDetails);
+const base = "/api/onboarding";
 
-module.exports=router;
+const onboardingRoutes = [
+  {
+    method: "POST",
+    url: base,
+    handler: onboardingController.saveDetails,
+  },
+];
+
+module.exports = onboardingRoutes;
