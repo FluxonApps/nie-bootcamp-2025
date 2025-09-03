@@ -9,18 +9,14 @@ var app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/", function (req, res, next) {
-  res.json({ status: "ok", server: "medico server" });
-});
 
 routes.forEach((route) => {
-  routes.forEach((route) => {
-    try {
-      app[route.method.toLowerCase()](route.url, route.handler);
-    } catch {
-      console.warn(`Error creating route ${route}}`);
-    }
-  });
+  try {
+    console.log(`Creating route ${route.path}`);
+    app[route.method.toLowerCase()](route.path, route.handler);
+  } catch {
+    console.warn(`Error creating route ${route}}`);
+  }
 });
 
 const start = async () => {

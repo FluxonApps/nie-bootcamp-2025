@@ -5,9 +5,9 @@ This document is designed as a template for PMs to use when writing product requ
 			
 	Status	In Progress
 
-	Last Updated	Sept 1, 2025	
+	Last Updated	Sept 2, 2025	
 	Author(s)	Chandu S	
-	Collaborator(s)	Person Person Person	
+	Collaborator(s)	Parushram, Shreya, Sumedha,	
 			
 
 Executive Summary
