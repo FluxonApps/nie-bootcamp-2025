@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const groupModel = new mongoose.Schema({
+const groupSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -28,15 +28,10 @@ const groupModel = new mongoose.Schema({
       },
     },
   ],
-  type: {
-    type: String,
-    enum: ["public", "private"],
-    default: "public",
-  },
   createdAt: {
     type: Date,
     default: Date.now,
   },
 });
 
-module.exports = mongoose.model("group", groupModel);
+module.exports = mongoose.model("group", groupSchema);

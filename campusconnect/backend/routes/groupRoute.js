@@ -1,4 +1,3 @@
-// routes/groupRoutes.js
 const groupController = require("../controllers/groupController");
 
 const base = "/api/groups";
@@ -8,6 +7,11 @@ const groupRoute = [
     method: "GET",
     url: base,
     handler: groupController.getAllGroups,
+  },
+  {
+    method: "GET",
+    url: `${base}/user/:userId`,
+    handler: groupController.getUserGroups,
   },
   {
     method: "POST",

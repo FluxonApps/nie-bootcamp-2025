@@ -1,4 +1,3 @@
-// controllers/groupController.js
 const groupService = require("../services/groupService");
 
 const getAllGroups = async (req, res) => {
@@ -6,9 +5,22 @@ const getAllGroups = async (req, res) => {
   return res.json(groups || []);
 };
 
+const getUserGroups = async (req, res) => {
+  const { userId } = req.params;
+  if (!userId) return res.status(400).json({ message: "userId required" });
+
+  const groups = await groupService.getUserGroups(userId);
+  return res.json(groups || []);
+};
+
 const createGroup = async (req, res) => {
-  const savedGroup = await groupService.createGroup(req.body);
-  return res.status(201).json(savedGroup || {});
+  try {
+    const creatorId = req.body.userId; // frontend must send userId
+    const savedGroup = await groupService.createGroup(req.body, creatorId);
+    return res.status(201).json(savedGroup);
+  } catch (err) {
+    return res.status(400).json({ message: err.message });
+  }
 };
 
 const addMember = async (req, res) => {
@@ -17,9 +29,11 @@ const addMember = async (req, res) => {
 
   const updatedGroup = await groupService.addMember(groupId, userId, role);
   if (!updatedGroup) {
-    return res.status(404).json({ message: "Group not found or failed to update" });
+    return res
+      .status(404)
+      .json({ message: "Group not found or failed to update" });
   }
   return res.json(updatedGroup);
 };
 
-module.exports = { getAllGroups, createGroup, addMember };
+module.exports = { getAllGroups, getUserGroups, createGroup, addMember };
