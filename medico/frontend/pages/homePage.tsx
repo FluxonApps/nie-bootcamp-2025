@@ -1,6 +1,9 @@
+// HomePage.tsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import ProductCard from "../components/productCard"; 
+import ProductCard from "../components/ProductCard";
+import "./homePage.css";
+
 type Ingredient = {
   name: string;
   description?: string;
@@ -42,8 +45,9 @@ const HomePage: React.FC = () => {
     const fetchApprovedProducts = async () => {
       try {
         const response = await axios.get("http://localhost:8004/api/products");
-        console.log(response.data);
-        const data = Array.isArray(response.data.data) ? response.data.data : [];
+        const data = Array.isArray(response.data.data)
+          ? response.data.data
+          : [];
         setProducts(data);
       } catch (err) {
         console.error(err);
@@ -56,19 +60,21 @@ const HomePage: React.FC = () => {
     fetchApprovedProducts();
   }, []);
 
-  if (loading) return <p>Loading approved products...</p>;
-  if (error) return <p>{error}</p>;
-  if (products.length === 0) return <p>No approved products available.</p>;
-  console.log(products);
+  if (loading) return <p className="status-text">Loading approved products...</p>;
+  if (error) return <p className="status-text error">{error}</p>;
+  if (products.length === 0)
+    return <p className="status-text">No approved products available.</p>;
+
   return (
     <div className="home-page px-6 py-4">
-      <h1 className="text-2xl font-bold mb-6">Approved Products</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <h2 className="text-2xl font-bold mb-6">Approved Products</h2>
+      <div className="product-list">
         {products.map((product) => (
           <ProductCard key={product._id} product={product} />
         ))}
       </div>
     </div>
+
   );
 };
 
