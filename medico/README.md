@@ -63,7 +63,7 @@ Admin	Monitor ingredient database health (status, reports).
 	
 Requirements
 Functional requirements
-PoS 1 – Ingredient Database + User SideIngredient Database
+PoS 1 – Ingredient Database + User SideIngredient Database (P0)
 o	Store ingredient details (name, description, possible adulterants, simple detection methods).
 •	User Interface
 o	Ingredient search (by name / category).
@@ -75,7 +75,7 @@ o	GET /ingredients/:id (details)
 o	POST /check (submit authenticity check request)
  Person A can take this (frontend + backend for user-facing parts).
 ________________________________________
-PoS 2 – Admin Panel
+PoS 2 – Admin Panel(P1)
 (Skip login for now, keep it simple)
 •	Admin Panel
 o	Review authenticity submissions (approve/reject).
@@ -91,7 +91,7 @@ o	PUT /ingredients/:id
 o	DELETE /ingredients/:id
 
 ________________________________________
-PoS 3 – Rule-based AI Logic
+PoS 3 – Rule-based AI Logic(P1)
 •	Basic Detection Rules Engine
 o	Simple rules like:
 	“If ingredient = milk and test=water mix → adulteration likely”
@@ -123,4 +123,12 @@ o	Vercel/Netlify for frontend hosting.
 o	Limited dataset for adulteration detection (may affect accuracy).
 o	Rule-based AI may give oversimplified predictions.
 o	Deployment delays if API integration fails.
+
+
+Team Members:
+1. Chandu S
+2. Parushuram
+3. Sharath
+4. Shreya Ojha
+5. Sumedha Hiremath
 
