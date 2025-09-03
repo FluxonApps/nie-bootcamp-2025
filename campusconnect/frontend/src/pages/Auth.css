@@ -2,24 +2,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 120px); /* header + footer */
-  background-color: #f3f3f3;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  min-height: 70vh;
 }
 
 .auth-box {
-  background: #fff;
   padding: 2rem;
+  border: 1px solid #ddd;
   border-radius: 8px;
-  width: 100%;
-  max-width: 400px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.auth-box h2 {
-  text-align: center;
-  margin-bottom: 1rem;
+  width: 350px;
+  background-color: #fafafa;
 }
 
 .form-group {
@@ -40,26 +31,19 @@
 
 button {
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.5rem;
   border: none;
-  border-radius: 4px;
-  background-color: #0077ff;
+  background-color: #007bff;
   color: white;
-  font-weight: bold;
+  border-radius: 4px;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #005fcc;
+  background-color: #0056b3;
 }
 
 .error {
   color: red;
   margin-bottom: 1rem;
-  text-align: center;
-}
-
-.auth-box p {
-  text-align: center;
-  margin-top: 1rem;
 }

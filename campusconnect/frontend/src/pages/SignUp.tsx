@@ -20,7 +20,7 @@ const SignUp: React.FC = () => {
       const response = await api.post("/signup", { name, username, email, password });
       console.log("Sign Up Response:", response.data);
       alert("Registration successful! You can now sign in.");
-      navigate("/"); // Redirect to Sign In page after signup
+      navigate("/"); // redirect to sign in
     } catch (err: any) {
       setError(err.response?.data?.message || "Something went wrong");
     }

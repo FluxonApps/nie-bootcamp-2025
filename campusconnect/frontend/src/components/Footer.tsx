@@ -1,20 +1,9 @@
 import React from "react";
 
-const Footer: React.FC = () => {
-  return (
-    <footer style={footerStyle}>
-      &copy; {new Date().getFullYear()} Campus Connect. All rights reserved.
-    </footer>
-  );
-};
-
-const footerStyle: React.CSSProperties = {
-  backgroundColor: "#f3f3f3",
-  textAlign: "center",
-  padding: "1rem",
-  marginTop: "2rem",
-  fontSize: "0.9rem",
-  color: "#333",
-};
+const Footer: React.FC = () => (
+  <footer style={{ padding: "1rem", backgroundColor: "#f0f0f0", textAlign: "center" }}>
+    &copy; 2025 Campus Connect
+  </footer>
+);
 
 export default Footer;
