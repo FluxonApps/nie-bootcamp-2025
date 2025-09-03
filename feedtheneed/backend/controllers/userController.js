@@ -1,6 +1,7 @@
 const userService = require("../services/userService");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { ROLES } = require("../constants/constant");
 
 // Secret key for JWT (move to .env in production)
 const JWT_SECRET = process.env.JWT_SECRET || "supersecretkey";
@@ -9,7 +10,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "supersecretkey";
 const getAllUsers = async (req, res) => {
   try {
     const users = await userService.getAllUsers();
-    const safeUsers = users.map((user) => {
+    const safeUsers = users.map(user => {
       const { password, ...rest } = user.toObject();
       return rest;
     });
@@ -25,14 +26,11 @@ const addUser = async (req, res) => {
     const { name, username, password, role, address, phone } = req.body;
 
     if (!username || !password || !role) {
-      return res
-        .status(400)
-        .json({ error: "username, password, and role are required" });
+      return res.status(400).json({ error: "username, password, and role are required" });
     }
 
-    // validate role
-    if (!["donor", "recipient", "admin"].includes(role)) {
-      return res.status(400).json({ error: "Invalid role provided" });
+    if (!ROLES.includes(role)) {
+      return res.status(400).json({ error: `Invalid role. Allowed roles: ${ROLES.join(", ")}` });
     }
 
     const existingUser = await userService.findByUsername(username);
@@ -65,9 +63,7 @@ const loginUser = async (req, res) => {
     const { username, password } = req.body;
 
     if (!username || !password) {
-      return res
-        .status(400)
-        .json({ error: "username and password are required" });
+      return res.status(400).json({ error: "username and password are required" });
     }
 
     const user = await userService.findByUsername(username);
@@ -81,18 +77,14 @@ const loginUser = async (req, res) => {
       return res.status(401).json({ error: "Invalid username or password" });
     }
 
-    // generate JWT (with role = donor, recipient, or admin)
+    // generate JWT
     const token = jwt.sign(
       { id: user._id, username: user.username, role: user.role },
       JWT_SECRET,
       { expiresIn: "1h" }
     );
 
-    return res.json({
-      token,
-      role: user.role,
-      username: user.username,
-    });
+    return res.json({ token, role: user.role, username: user.username });
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
