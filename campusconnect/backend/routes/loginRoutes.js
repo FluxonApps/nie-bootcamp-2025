@@ -1,4 +1,4 @@
-const loginController = require("../controllers/loginController.js");
+const loginController = require("../controllers/loginControllers");
 
 
 
@@ -6,7 +6,7 @@ const loginController = require("../controllers/loginController.js");
 const base="/api/login"
 const loginRoutes=[
     {
-    method: "GET",
+    method: "POST",
     url:base,
     handler: loginController.login,
   }
