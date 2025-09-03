@@ -1,0 +1,9 @@
+const groupModel = require("mongoose");
+
+const groupModel = new mongoose.Schema({
+  name: String,
+  username: { type: String, unique: true, required: true },
+  address: String,
+});
+
+module.exports = mongoose.model("user", groupModel);
