@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Core Colors */
+    --color-background: #FEFEFE; /* near-white */
+    --color-foreground: #1A1A1A; /* near-black */
+    --color-border: #E5E7EB; /* light-gray */
+    --color-input: #FFFFFF; /* white */
+    --color-ring: #2D5A3D; /* deep-forest-green */
+    
+    /* Card Colors */
+    --color-card: #FFFFFF; /* white */
+    --color-card-foreground: #1A1A1A; /* near-black */
+    --color-popover: #FFFFFF; /* white */
+    --color-popover-foreground: #1A1A1A; /* near-black */
+    
+    /* Muted Colors */
+    --color-muted: #F8F9FA; /* subtle-gray */
+    --color-muted-foreground: #6B7280; /* medium-gray */
+    
+    /* Primary Colors */
+    --color-primary: #2D5A3D; /* deep-forest-green */
+    --color-primary-foreground: #FFFFFF; /* white */
+    
+    /* Secondary Colors */
+    --color-secondary: #4A90A4; /* calming-blue-gray */
+    --color-secondary-foreground: #FFFFFF; /* white */
+    
+    /* Accent Colors */
+    --color-accent: #F4A261; /* warm-amber */
+    --color-accent-foreground: #1A1A1A; /* near-black */
+    
+    /* State Colors */
+    --color-destructive: #EF4444; /* clear-red */
+    --color-destructive-foreground: #FFFFFF; /* white */
+    --color-success: #10B981; /* fresh-green */
+    --color-success-foreground: #FFFFFF; /* white */
+    --color-warning: #F59E0B; /* gentle-amber */
+    --color-warning-foreground: #1A1A1A; /* near-black */
+    --color-error: #EF4444; /* clear-red */
+    --color-error-foreground: #FFFFFF; /* white */
+    
+    /* Text Colors */
+    --color-text-primary: #1A1A1A; /* near-black */
+    --color-text-secondary: #6B7280; /* medium-gray */
+    
+    /* Surface Colors */
+    --color-surface: #F8F9FA; /* subtle-gray */
+    --color-surface-foreground: #1A1A1A; /* near-black */
+  }
+  
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .shadow-soft {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .shadow-elevated {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .transition-smooth {
+    transition: all 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  .transition-gentle {
+    transition: all 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+}
