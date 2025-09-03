@@ -7,7 +7,7 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await api.get("/dashboard"); // Example protected route
+        const res = await api.get("/dashboard"); 
         setMessage(res.data.message);
       } catch (err: any) {
         setMessage(err.response?.data?.message || "Failed to fetch data");
