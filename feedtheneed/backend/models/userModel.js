@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { ROLES } = require("../constants/constant");
 
 const userSchema = new mongoose.Schema(
   {
@@ -19,7 +20,7 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["donor", "recipient"], // only donor or recipient
+      enum: ROLES, // use constant here
       required: true,
     },
     address: {
