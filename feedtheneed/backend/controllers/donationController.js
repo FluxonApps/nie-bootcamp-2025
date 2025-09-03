@@ -1,55 +1,53 @@
 const donationService = require("../services/donationService");
 
-// GET all donations
 const getAllDonations = async (req, res) => {
   try {
     const donations = await donationService.getAllDonations();
-    return res.json(donations || []);
+    res.json(donations || []);
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 };
 
-// ADD donation
 const addDonation = async (req, res) => {
   try {
-    const { donor, category, description, status } = req.body;
+    const { donor, category, description, quantity } = req.body;
 
-    if (!donor || !category) {
-      return res.status(400).json({ error: "donor and category are required" });
+    if (!donor || !category || !quantity) {
+      return res
+        .status(400)
+        .json({ error: "donor, category, and quantity are required" });
     }
 
-    const savedDonation = await donationService.addDonation({
+    const newDonation = await donationService.addDonation({
       donor,
       category,
       description,
-      status,
+      quantity,
     });
 
-    return res.status(201).json(savedDonation);
+    res.status(201).json(newDonation);
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 };
 
-// DELETE donation
-const deleteDonation = async (req, res) => {
+const updateDonationStatus = async (req, res) => {
   try {
-    const donationId = req.params.id;
-    const deleted = await donationService.deleteDonation(donationId);
+    const { id } = req.params;
+    const { status } = req.body;
 
-    if (!deleted) {
+    const updated = await donationService.updateDonationStatus(id, status);
+
+    if (!updated) {
       return res.status(404).json({ error: "Donation not found" });
     }
 
-    return res.json({ message: "Donation deleted successfully" });
+    res.json(updated);
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 };
 
-module.exports = {
-  getAllDonations,
-  addDonation,
-  deleteDonation,
-};
+module.exports = { getAllDonations, addDonation, updateDonationStatus };
+

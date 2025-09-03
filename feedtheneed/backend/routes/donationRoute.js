@@ -1,22 +1,25 @@
 const donationController = require("../controllers/donationController.js");
+const { DONATION_STATUS } = require("../constants/constant");
 
 const base = "/api/donations";
 
 const donationRoutes = [
   {
     method: "GET",
-    url: base, // get all donations
+    url: base,
     handler: donationController.getAllDonations,
   },
   {
     method: "POST",
-    url: base, // add donation
+    url: base,
     handler: donationController.addDonation,
   },
   {
-    method: "DELETE",
-    url: `${base}/:id`, // delete donation by id
-    handler: donationController.deleteDonation,
+    method: "PATCH",
+    url: `${base}/:id/status`,
+    handler: donationController.updateDonationStatus,
+    
+    allowedStatus: Object.values(DONATION_STATUS),
   },
 ];
 

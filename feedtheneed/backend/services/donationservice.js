@@ -1,19 +1,40 @@
 const Donation = require("../models/donationModel");
+const { DONATION_STATUS } = require("../constants/constant");
 
 // Get all donations
 const getAllDonations = async () => {
-  return await Donation.find().populate("donor", "name username role");
+  return await Donation.find().populate("donor", "name username");
 };
 
-// Add a new donation
+// Add donation
 const addDonation = async (donationData) => {
-  const donation = new Donation(donationData);
+  const donation = new Donation({
+    ...donationData,
+    status: DONATION_STATUS.ACTIVE, 
+  });
   return await donation.save();
 };
 
-// Delete a donation by ID
-const deleteDonation = async (id) => {
-  return await Donation.findByIdAndDelete(id);
+// Update donation status
+const updateDonationStatus = async (donationId, status) => {
+  return await Donation.findByIdAndUpdate(
+    donationId,
+    { status },
+    { new: true }
+  );
 };
 
-module.exports = { getAllDonations, addDonation, deleteDonation };
+const markAsFulfilled = async (donationId) => {
+  return await Donation.findByIdAndUpdate(
+    donationId,
+    { status: DONATION_STATUS.FULFILLED },
+    { new: true }
+  );
+};
+
+module.exports = {
+  getAllDonations,
+  addDonation,
+  updateDonationStatus,
+  markAsFulfilled,
+};
