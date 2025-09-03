@@ -13,10 +13,11 @@ const HeroSection = () => {
           {/* Content */}
           <div className="text-center lg:text-left">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-text-primary mb-6 leading-tight">
-              Serving Hope, <span className="text-primary">One Plate</span> at a Time
+              Welcome to <span className="text-primary">FeedTheNeed</span>
+              <br /> Serving Hope, One Plate at a Time
             </h1>
             <p className="text-lg sm:text-xl text-text-secondary mb-8 max-w-xl mx-auto lg:mx-0">
-              Connect surplus food with those who need it most.
+              Connecting surplus food with those who need it most.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Button
