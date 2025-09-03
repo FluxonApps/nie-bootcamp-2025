@@ -14,13 +14,11 @@ app.get("/", function (req, res, next) {
 });
 
 routes.forEach((route) => {
-  routes.forEach((route) => {
-    try {
-      app[route.method.toLowerCase()](route.url, route.handler);
-    } catch {
-      console.warn(`Error creating route ${route}}`);
-    }
-  });
+  try {
+    app[route.method.toLowerCase()](route.url, route.handler);
+  } catch (error) {
+    console.warn(`Error creating route ${route.url}:`, error);
+  }
 });
 
 const start = async () => {

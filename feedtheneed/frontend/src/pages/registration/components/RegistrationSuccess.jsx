@@ -1,9 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Icon from '../../../components/AppIcon';
 import Button from '../../../components/ui/Button';
 
-const RegistrationSuccess = ({ email, role, onResendVerification }) => {
+const RegistrationSuccess = () => {
+  const location = useLocation();
+  const { email, role } = location.state || {};
   return (
     <div className="max-w-md mx-auto text-center">
       <div className="w-20 h-20 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -11,7 +13,7 @@ const RegistrationSuccess = ({ email, role, onResendVerification }) => {
       </div>
       
       <h2 className="text-2xl font-bold text-text-primary mb-4">
-        Welcome to PlateFullPromise!
+        Welcome to FeedTheNeed!
       </h2>
       
       <p className="text-text-secondary mb-6">
@@ -35,16 +37,6 @@ const RegistrationSuccess = ({ email, role, onResendVerification }) => {
       </div>
       
       <div className="space-y-4">
-        <Button
-          variant="default"
-          fullWidth
-          onClick={onResendVerification}
-          iconName="RefreshCw"
-          iconPosition="left"
-        >
-          Resend Verification Email
-        </Button>
-        
         <div className="flex items-center space-x-4">
           <Button
             variant="outline"
