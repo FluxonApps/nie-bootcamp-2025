@@ -5,12 +5,12 @@ const allRoutes = [
     {
       method: "GET",
       path: `${base}/products/search`,
-      handler: [productController.searchProducts],
+      handler: [productController.searchAprovedProducts],
     },
     {
       method: "GET",
-      path: `${base}products/`,
-      handler: productController.getProducts,
+      path: `${base}/products/`,
+      handler: productController.getApprovedProducts,
       },
     {
       method: "GET",
