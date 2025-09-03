@@ -24,7 +24,7 @@ function Onboarding(): JSX.Element {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:4000/api/onboarding", form);
+      const res = await axios.post("http://localhost:8003/api/onboarding", form);
       if (res.status === 201) {
         navigate("/dashboard");
       }
