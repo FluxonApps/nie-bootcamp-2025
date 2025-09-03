@@ -5,4 +5,10 @@ module.exports = {
     FULFILLED: "fulfilled",
     CANCELLED: "cancelled",
   },
+   REQUEST_STATUS: {
+    PENDING: "pending",
+    APPROVED: "approved",
+    REJECTED: "rejected",
+    COMPLETED: "completed",
+  },
 };
