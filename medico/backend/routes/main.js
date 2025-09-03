@@ -5,17 +5,12 @@ const allRoutes = [
     {
       method: "GET",
       path: `${base}/products/search`,
-      handler: [productController.searchAprovedProducts],
+      handler: [productController.searchApprovedProducts],
     },
     {
       method: "GET",
       path: `${base}/products/`,
       handler: productController.getApprovedProducts,
-      },
-    {
-      method: "GET",
-      path: `${base}/products:id`,
-      handler: [productController.getProductById],
       },
       {
         method: "POST",
@@ -23,15 +18,20 @@ const allRoutes = [
         handler: [productController.createProduct],
       },
       {
-        method: "PUT",
-        path: `${base}/products/:id`,
-        handler: [productController.updateProduct],
-      },
-      {
         method: "DELETE",
         path: `${base}/products/:id`,
         handler: [productController.deleteProduct],
       },
+      {
+        method: "GET",
+        path: `${base}/products/unapproved`,
+        handler: [productController.getUnApprovedProducts],
+      },
+      {
+        method: "PUT",
+        path: `${base}/products/approve/:id`,
+        handler: [productController.approveProduct],
+      }
 ];
 
 module.exports = allRoutes;
