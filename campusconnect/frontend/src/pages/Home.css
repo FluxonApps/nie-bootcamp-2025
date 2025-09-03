@@ -1,0 +1,131 @@
+.home-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 5%;
+  min-height: 75vh;
+  background-color: #f9f9f9;
+}
+
+/* Welcome Section */
+.welcome-section {
+  flex: 1;
+  max-width: 55%;
+  text-align: left;
+}
+
+.welcome-image {
+  width: 750px;   /* ⬅️ Increased image size (double) */
+  height: auto;
+  margin-bottom: 1.5rem;
+  border-radius: 18px;
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.25);
+  display: block;
+}
+
+/* Headings */
+.welcome-section h1 {
+  font-size: 2.6rem;
+  margin-bottom: 0.5rem;
+  color: #222;
+}
+
+.welcome-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #444;
+}
+
+.welcome-section p {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+/* Buttons Section */
+.buttons-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  align-items: flex-end;
+}
+
+/* Buttons */
+.btn {
+  padding: 1rem 1.8rem;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  width: 260px;
+  text-align: left;
+}
+
+.connect-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.connect-btn:hover {
+  background-color: #0056b3;
+}
+
+.group-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.group-btn:hover {
+  background-color: #1e7e34;
+}
+
+.logout-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.logout-btn:hover {
+  background-color: #a71d2a;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .welcome-image {
+    width: 600px; /* Reduce slightly for smaller laptops */
+  }
+}
+
+@media (max-width: 900px) {
+  .home-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+  }
+
+  .welcome-section {
+    max-width: 100%;
+  }
+
+  .welcome-image {
+    width: 450px; /* Adjust for tablets */
+  }
+
+  .buttons-section {
+    align-items: center;
+  }
+  .profile-btn {
+  background-color: #a0650eef;
+  color: white;
+}
+
+.profile-btn:hover {
+  background-color: #e68900;
+}
+}
+
+@media (max-width: 600px) {
+  .welcome-image {
+    width: 320px; /* Mobile-friendly */
+  }
+}
