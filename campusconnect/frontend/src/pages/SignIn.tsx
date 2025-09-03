@@ -18,7 +18,7 @@ const SignIn: React.FC = () => {
       const response = await api.post("/login", { username, password });
       console.log("Sign In Response:", response.data);
       alert("Sign in successful!");
-      navigate("/home"); // Redirect to Home page after signin
+      navigate("/home"); // redirect to Home page
     } catch (err: any) {
       setError(err.response?.data?.message || "Invalid username or password");
     }

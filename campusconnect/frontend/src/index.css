@@ -1,3 +1,39 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Light theme */
+.light {
+  --bg-color: #fafafa;
+  --text-color: #000;
+  --box-bg: #fff;
+  --border-color: #ccc;
+  --button-bg: #007bff;
+  --button-hover: #0056b3;
+}
+
+/* Dark theme */
+.dark {
+  --bg-color: #121212;
+  --text-color: #f0f0f0;
+  --box-bg: #1e1e1e;
+  --border-color: #444;
+  --button-bg: #1a73e8;
+  --button-hover: #135ab6;
+}
+
+/* Apply variables */
+body, .light, .dark {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.auth-box {
+  background-color: var(--box-bg);
+  border: 1px solid var(--border-color);
+}
+
+button {
+  background-color: var(--button-bg);
+  color: white;
+}
+
+button:hover {
+  background-color: var(--button-hover);
+}
