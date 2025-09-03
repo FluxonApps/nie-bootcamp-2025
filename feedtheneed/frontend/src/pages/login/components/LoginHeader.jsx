@@ -15,10 +15,10 @@ const LoginHeader = () => {
         </div>
         <div>
           <h1 className="text-2xl font-bold text-primary">
-            PlateFullPromise
+            FeedTheNeed
           </h1>
           <p className="text-sm text-text-secondary -mt-1">
-            Nourishing Communities
+            Serving Hope, One Plate at a Time
           </p>
         </div>
       </Link>
