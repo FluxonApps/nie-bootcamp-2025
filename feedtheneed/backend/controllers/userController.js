@@ -1,6 +1,7 @@
 const userService = require("../services/userService");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { ROLES } = require("../constants/constant");
 
 // Secret key for JWT (move to .env in production)
 const JWT_SECRET = process.env.JWT_SECRET || "supersecretkey";
@@ -26,6 +27,10 @@ const addUser = async (req, res) => {
 
     if (!username || !password || !role) {
       return res.status(400).json({ error: "username, password, and role are required" });
+    }
+
+    if (!ROLES.includes(role)) {
+      return res.status(400).json({ error: `Invalid role. Allowed roles: ${ROLES.join(", ")}` });
     }
 
     const existingUser = await userService.findByUsername(username);
