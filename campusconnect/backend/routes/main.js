@@ -5,7 +5,7 @@ const postRoutes = require("./postRoute");
 const groupRoutes = require("./groupRoute");
 const connectionRoutes = require("./connectionRoutes");
 
-const allRoutes = [...userRoutes,...groupRoutes,...signUpRoutes,...loginRoutes,...postRoutes];
+const allRoutes = [...userRoutes,...groupRoutes,...signUpRoutes,...loginRoutes,...postRoutes, ...connectionRoutes];
 
 
 module.exports = allRoutes;
