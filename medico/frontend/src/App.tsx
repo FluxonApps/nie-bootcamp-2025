@@ -1,9 +1,9 @@
 import React from "react";
 import "./App.css";
+import HomePage from "../pages/homePage"; // import your HomePage component
 
 // 👈 Import routing components and your pages
 import { Routes, Route } from "react-router-dom";
-import HomePage from "../pages/HomePage";
 import SearchPage from "../pages/SearchPage";
 import ReviewPage from "../pages/ReviewPage";
 import Signuppage from "../pages/SignupPage";
@@ -13,6 +13,7 @@ import Navbar from "../components/Navbar";
 
 // 👈 Import your ProductList component
 import ProductList from "../Pages/ProductList";
+
 
 function App() {
   return (
