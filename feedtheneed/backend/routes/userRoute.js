@@ -10,8 +10,13 @@ const userRoutes = [
   },
   {
     method: "POST",
-    url: base,
+    url: `${base}/signup`, // signup route
     handler: userController.addUser,
+  },
+  {
+    method: "POST",
+    url: `${base}/login`, // login route
+    handler: userController.loginUser,
   },
 ];
 
