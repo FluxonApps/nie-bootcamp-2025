@@ -1,4 +1,4 @@
-const loginService = require("../services/loginService");
+const loginService = require("../services/login");
 
 exports.login = async (req, res) => {
   try {
