@@ -1,0 +1,118 @@
+/* Container */
+.flip-card {
+  background-color: transparent;
+  width: 100%;
+  height: 350px;
+  perspective: 1200px;
+  margin: 10px 0;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s cubic-bezier(.4,.2,.2,1);
+  transform-style: preserve-3d;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Front & Back */
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 1rem;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Front styling */
+.flip-card-front {
+  background: linear-gradient(145deg, #f0f4f8, #d9e2ec);
+  color: #111;
+  border: 1px solid #e2e8f0;
+  text-align: center;
+}
+
+.flip-card-front h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.brand {
+  font-size: 0.9rem;
+  color: #4a5568;
+}
+
+.category {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: #4299e1;
+  color: white;
+  border-radius: 9999px;
+}
+
+.approved {
+  margin-top: 10px;
+  font-weight: 600;
+  color: #38a169;
+}
+
+/* Back styling */
+.flip-card-back {
+  background: linear-gradient(145deg, #edf2f7, #e2e8f0);
+  color: #111;
+  transform: rotateY(180deg);
+  overflow-y: auto;
+}
+
+.back-content h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.back-content ul {
+  list-style: disc inside;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.ingredients .ingredient-name {
+  font-weight: 500;
+}
+
+.adulterants {
+  margin-left: 10px;
+  color: #e53e3e;
+  font-size: 0.8rem;
+}
+
+/* Scrollbar for back content */
+.flip-card-back::-webkit-scrollbar {
+  width: 6px;
+}
+
+.flip-card-back::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+
+/* Smooth hover effect */
+.flip-card-inner {
+  transition: transform 0.8s cubic-bezier(.4,.2,.2,1);
+}
