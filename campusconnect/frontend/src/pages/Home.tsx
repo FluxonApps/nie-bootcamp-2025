@@ -53,12 +53,13 @@ const Home: React.FC = () => {
           >
             🤝 Connect with People
           </button>
-          <button
+         <button
             className="btn group-btn"
-            onClick={() => navigate("/create-group")}
-          >
-            👥 Create a Group
-          </button>
+            onClick={() => navigate("/groups")}
+>
+            👥 Groups
+           </button>
+
           <button
             className="btn profile-btn"
             onClick={() => navigate("/profile")}
