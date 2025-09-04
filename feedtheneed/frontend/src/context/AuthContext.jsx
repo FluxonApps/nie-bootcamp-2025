@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (username, password) => {
         try {
+<<<<<<< HEAD
             // Frontend-only fixed admin credentials bypass
             // NOTE: This is purely for demo/dev convenience. Do not use in production.
             const fixedAdminUsername = 'admin@feedtheneed.com';
@@ -35,6 +36,8 @@ export const AuthProvider = ({ children }) => {
             }
 
             // Use fetch instead of axios
+=======
+>>>>>>> 977d585 (recipient integration)
             const response = await fetch(`${API_URL}/users/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -47,12 +50,32 @@ export const AuthProvider = ({ children }) => {
             }
 
             const data = await response.json();
+<<<<<<< HEAD
             const { token, role, username: serverUsername } = data;
 
             // Allow all roles; redirect will be handled by pages based on role
             localStorage.setItem('token', token);
             setToken(token);
             setUser({ token, role, username: serverUsername || username });
+=======
+            // Your backend's login response does not include the user ID.
+            // We need to decode it from the JWT.
+            // This is a simple (but insecure for frontend) way to do it.
+            // A better backend would return the user object on login.
+            const decodedToken = JSON.parse(atob(data.token.split('.')[1]));
+            
+            const { id, role } = decodedToken;
+
+            if (role !== 'recipient') {
+                throw new Error("Login failed: Not a recipient account.");
+            }
+
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('userRole', role);
+            localStorage.setItem('userId', id); // Save the user's ID
+
+            setUser({ token: data.token, role, userId: id });
+>>>>>>> 977d585 (recipient integration)
             return { success: true };
 
         } catch (error) {
