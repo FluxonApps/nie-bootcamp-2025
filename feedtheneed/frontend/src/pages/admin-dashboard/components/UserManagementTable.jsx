@@ -12,7 +12,7 @@ const UserManagementTable = ({ users = [], refreshUsers }) => {   // ⬅️ defa
   // Approve user
   const handleApprove = async (userId) => {
     try {
-      await fetch(`http://localhost:5000/api/users/${userId}/approve`, { method: "PATCH" });
+      await fetch(`http://localhost:8002/api/users/${userId}/approve`, { method: "PATCH" });
       refreshUsers();
     } catch (error) {
       console.error("Error approving user:", error);
@@ -22,7 +22,7 @@ const UserManagementTable = ({ users = [], refreshUsers }) => {   // ⬅️ defa
   // Reject user
   const handleReject = async (userId) => {
     try {
-      await fetch(`http://localhost:5000/api/users/${userId}/reject`, { method: "PATCH" });
+      await fetch(`http://localhost:8002/api/users/${userId}/reject`, { method: "PATCH" });
       refreshUsers();
     } catch (error) {
       console.error("Error rejecting user:", error);
