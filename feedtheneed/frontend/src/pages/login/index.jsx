@@ -4,6 +4,7 @@ import LoginBackground from "./components/LoginBackground";
 import LoginHeader from "./components/LoginHeader";
 import LoginForm from "./components/LoginForm";
 
+
 const Index = () => {
   const navigate = useNavigate();
 
@@ -12,9 +13,12 @@ const Index = () => {
     const userRole = localStorage.getItem("userRole");
 
     if (token && userRole) {
+
       if (userRole === "admin") {
         navigate("/admin-dashboard");
-      } else {
+      }
+      // Redirect to appropriate dashboard if already logged in
+      else {
         navigate("/user-dashboard");
       }
     }
