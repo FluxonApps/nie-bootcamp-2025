@@ -1,0 +1,61 @@
+body {
+  body {
+  background-color: black;
+  color: white;
+}
+
+  color: #222;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Headings */
+h1, h2, h3 {
+  color: #1e3a8a; /* Blue heading */
+}
+
+/* Inputs */
+input {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  margin-right: 0.5rem;
+  font-size: 14px;
+}
+
+/* Base button */
+button {
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  margin: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Blue button */
+.btn-blue {
+  background-color: #3b82f6; /* Blue */
+  color: white;
+}
+.btn-blue:hover {
+  background-color: #2563eb;
+}
+
+/* Green button */
+.btn-green {
+  background-color: #22c55e; /* Green */
+  color: white;
+}
+.btn-green:hover {
+  background-color: #16a34a;
+}
+
+/* Red button */
+.btn-red {
+  background-color: #ef4444; /* Red */
+  color: white;
+}
+.btn-red:hover {
+  background-color: #dc2626;
+}

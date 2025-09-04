@@ -14,6 +14,6 @@ function App() {
       <StackedBarChart />
     </div>
   );
-}
+};
 
 export default App;
