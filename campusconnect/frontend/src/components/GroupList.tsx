@@ -1,51 +1,67 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import api from "../api/axios";
 
-interface Group {
-  _id: string;
-  name: string;
-  description: string;
-  domain: string;
-  members: { user: { name: string; username: string }; role: string }[];
+interface Props {
+  onGroupCreated: () => void;
 }
 
-export default function GroupList() {
-  const [groups, setGroups] = useState<Group[]>([]);
+const CreateGroupForm: React.FC<Props> = ({ onGroupCreated }) => {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [domain, setDomain] = useState("");
 
-  const fetchGroups = async () => {
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     try {
-      const response = await api.get("/groups");
-      setGroups(response.data);
-    } catch (err) {
-      console.error("Error fetching groups:", err);
-    }
-  };
+        console.log("Submitting group:", {
+  name,
+  description,
+  domain,
+  userId: user._id || user.userId,
+});
 
-  useEffect(() => {
-    fetchGroups();
-  }, []);
-
-  const handleJoin = async (groupId: string) => {
-    try {
-      await api.post(`/groups/${groupId}/members`); // backend takes req.user
-      fetchGroups(); // refresh list
-    } catch (err) {
-      console.error("Error joining group:", err);
+      await api.post("/groups", {
+        name,
+        description,
+        domain,
+        userId: user._id, // pass creator id
+      });
+      setName("");
+      setDescription("");
+      setDomain("");
+      onGroupCreated(); // refresh list
+    } catch (err: any) {
+      alert(err.response?.data?.message || "Error creating group");
     }
   };
 
   return (
-    <div style={{ marginTop: "20px" }}>
-      <h2>Available Groups</h2>
-      {groups.map((group) => (
-        <div key={group._id} style={{ border: "1px solid #ccc", padding: "10px", marginBottom: "10px" }}>
-          <h3>{group.name}</h3>
-          <p>{group.description}</p>
-          <p>Domain: {group.domain}</p>
-          <p>Members: {group.members.length}</p>
-          <button onClick={() => handleJoin(group._id)}>Join Group</button>
-        </div>
-      ))}
-    </div>
+    <form onSubmit={handleSubmit} style={{ marginBottom: "20px" }}>
+      <h3>Create Group</h3>
+      <input
+        type="text"
+        placeholder="Group name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        required
+      />
+      <input
+        type="text"
+        placeholder="Domain"
+        value={domain}
+        onChange={(e) => setDomain(e.target.value)}
+        required
+      />
+      <textarea
+        placeholder="Description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      />
+      <button type="submit">Create</button>
+    </form>
   );
-}
+};
+
+export default CreateGroupForm;
