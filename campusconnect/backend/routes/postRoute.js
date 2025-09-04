@@ -1,28 +1,38 @@
-const postController = require("../controllers/postController.js");
+const upload = require("../middleware/upload");
+const postController = require("../controllers/postController");
 
-const base = "/api/posts";
-
+// Export routes as an array of route objects
 const postRoutes = [
   {
-    method: "GET",
-    url: base,
-    handler: postController.getAllPosts,
+    method: "post",
+    url: "/posts",
+    handler: upload.single("image") // middleware for image upload
   },
   {
-    method: "POST",
-    url: base,
-    handler: postController.addPost,
+    method: "post",
+    url: "/posts",
+    handler: postController.createPost // actual handler
   },
   {
-    method: "PUT",
-    url: `${base}/:postId/like`,
-    handler: postController.toggleLike,
+    method: "get",
+    url: "/posts",
+    handler: postController.getAllPosts
   },
   {
-    method: "POST",
-    url: `${base}/:postId/comment`,
-    handler: postController.addComment,
+    method: "post",
+    url: "/posts/:postId/like",
+    handler: postController.likePost
   },
+  {
+    method: "post",
+    url: "/posts/:postId/comment",
+    handler: postController.commentPost
+  },
+  {
+    method: "get",
+    url: "/posts/:postId/comments",
+    handler: postController.getComments // new route to fetch all comments
+  }
 ];
 
 module.exports = postRoutes;
