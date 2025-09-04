@@ -5,7 +5,7 @@ const login = async (req, res) => {
   const result = await authService.loginUser(email, password);
 
   if (!result.success && result.message === "User not found") {
-    // 🚨 No user → redirect to onboarding
+    
     return res.status(404).json({
       success: false,
       message: "User not found",

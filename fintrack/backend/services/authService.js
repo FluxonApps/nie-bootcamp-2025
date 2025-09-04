@@ -1,14 +1,12 @@
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
-
-const SECRET_KEY = "your_secret_key"; 
+const { SECRET_KEY } = require("../config/vars");
 
 exports.loginUser = async (email, password) => {
   try {
     const user = await User.findOne({ email });
 
     if (!user) {
-     
       return { success: false, message: "User not found" };
     }
 
@@ -16,11 +14,10 @@ exports.loginUser = async (email, password) => {
       return { success: false, message: "Invalid credentials" };
     }
 
-    
     const token = jwt.sign(
       { id: user._id, email: user.email },
       SECRET_KEY,
-      { expiresIn: "1h" }
+      { expiresIn: "5d" } // ✅ now 5 days
     );
 
     return {
