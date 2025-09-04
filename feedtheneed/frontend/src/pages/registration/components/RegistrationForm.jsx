@@ -22,8 +22,7 @@ const RegistrationForm = () => {
 
   const roleOptions = [
     { value: 'donor', label: 'Donor' },
-    { value: 'recipient', label: 'Recipient' },
-    { value: 'admin', label: 'Admin' }
+    { value: 'recipient', label: 'Recipient' }
   ];
 
   const handleInputChange = (e) => {
