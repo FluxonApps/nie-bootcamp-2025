@@ -1,239 +1,169 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import Button from '../../../components/ui/Button';
-import Input from '../../../components/ui/Input';
-import Icon from '../../../components/AppIcon';
+// import React, { useState } from "react";
+// import { useNavigate } from "react-router-dom";
 
-const LoginForm = () => {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
-  const [errors, setErrors] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+// const LoginForm = () => {
+//   const navigate = useNavigate();
+//   const [username, setUsername] = useState("");
+//   const [password, setPassword] = useState("");
+//   const [loading, setLoading] = useState(false);
+//   const [error, setError] = useState("");
 
-  // Mock credentials for different user types
-  const mockCredentials = {
-    admin: { email: 'admin@platefullpromise.com', password: 'admin123' },
-    donor: { email: 'donor@example.com', password: 'donor123' },
-    recipient: { email: 'recipient@example.com', password: 'recipient123' }
-  };
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     setError("");
+//     setLoading(true);
 
-  const validateForm = () => {
-    const newErrors = {};
+//     try {
+//       // 🚀 Trim to remove accidental spaces
+//       const payload = { username: username.trim(), password };
+//       console.log("🚀 Sending payload:", payload);
 
-    if (!formData?.email) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/?.test(formData?.email)) {
-      newErrors.email = 'Please enter a valid email address';
-    }
+//       const response = await fetch("http://localhost:8002/api/users/login", {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify(payload),
+//       });
 
-    if (!formData?.password) {
-      newErrors.password = 'Password is required';
-    } else if (formData?.password?.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
-    }
+//       const data = await response.json();
+//       console.log("📩 Response from server:", data);
 
-    setErrors(newErrors);
-    return Object.keys(newErrors)?.length === 0;
-  };
+//       if (!response.ok) {
+//         throw new Error(data.error || "Login failed");
+//       }
 
-  const handleInputChange = (e) => {
-    const { name, value } = e?.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+//       // ✅ Save token, role & username
+//       localStorage.setItem("authToken", data.token);
+//       localStorage.setItem("userRole", data.role);
+//       localStorage.setItem("username", data.username || username);
 
-    // Clear error when user starts typing
-    if (errors?.[name]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: ''
-      }));
-    }
-  };
+//       // ✅ Redirect based on role
+//       if (data.role === "admin") {
+//         navigate("/admin-dashboard", { replace: true });
+//       } else {
+//         navigate("/user-dashboard", { replace: true });
+//       }
+//     } catch (err) {
+//       setError(err.message);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   return (
+//     <form onSubmit={handleSubmit} className="space-y-6">
+//       {error && <div className="text-red-500 text-sm text-center">{error}</div>}
+
+//       <div>
+//         <label
+//           htmlFor="username"
+//           className="block text-sm font-medium text-gray-700"
+//         >
+//           Username
+//         </label>
+//         <input
+//           id="username"
+//           type="text"
+//           value={username}
+//           onChange={(e) => setUsername(e.target.value)}
+//           required
+//           className="mt-1 w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+//         />
+//       </div>
+
+//       <div>
+//         <label
+//           htmlFor="password"
+//           className="block text-sm font-medium text-gray-700"
+//         >
+//           Password
+//         </label>
+//         <input
+//           id="password"
+//           type="password"
+//           value={password}
+//           onChange={(e) => setPassword(e.target.value)}
+//           required
+//           className="mt-1 w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+//         />
+//       </div>
+
+//       <button
+//         type="submit"
+//         disabled={loading}
+//         className="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg shadow-md hover:bg-indigo-700 disabled:opacity-50 transition"
+//       >
+//         {loading ? "Signing in..." : "Sign In"}
+//       </button>
+//     </form>
+//   );
+// };
+
+// export default LoginForm;
+import React, { useState } from "react";
+
+// The component now receives props from its parent
+const LoginForm = ({ onLogin, loginError }) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
-    e?.preventDefault();
-    
-    if (!validateForm()) {
-      return;
-    }
+    e.preventDefault();
+    setLoading(true);
 
-    setIsLoading(true);
+    // Call the onLogin function that was passed down from the parent page
+    await onLogin(username.trim(), password);
 
-    try {
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
-
-      // Mock authentication logic
-      const { email, password } = formData;
-      let userRole = null;
-      let isValidCredentials = false;
-
-      // Check against mock credentials
-      Object.entries(mockCredentials)?.forEach(([role, credentials]) => {
-        if (email === credentials?.email && password === credentials?.password) {
-          userRole = role;
-          isValidCredentials = true;
-        }
-      });
-
-      if (!isValidCredentials) {
-        setErrors({
-          general: `Invalid credentials. Try: ${mockCredentials?.admin?.email} / ${mockCredentials?.admin?.password} (Admin) or ${mockCredentials?.donor?.email} / ${mockCredentials?.donor?.password} (Donor)`
-        });
-        return;
-      }
-
-      // Mock JWT token creation
-      const mockToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.${btoa(JSON.stringify({
-        email,
-        role: userRole,
-        exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24) // 24 hours
-      }))}.mock-signature`;
-
-      // Store token in localStorage
-      localStorage.setItem('authToken', mockToken);
-      localStorage.setItem('userRole', userRole);
-
-      // Role-based redirection
-      if (userRole === 'admin') {
-        navigate('/admin-dashboard');
-      } else {
-        navigate('/user-dashboard');
-      }
-
-    } catch (error) {
-      setErrors({
-        general: 'Login failed. Please check your connection and try again.'
-      });
-    } finally {
-      setIsLoading(false);
-    }
+    setLoading(false);
   };
 
   return (
-    <div className="w-full max-w-md mx-auto">
-      <div className="bg-card border border-border rounded-lg shadow-elevated p-8">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-            <Icon name="Heart" size={32} color="white" />
-          </div>
-          <h1 className="text-2xl font-bold text-text-primary mb-2">
-            Welcome Back
-          </h1>
-          <p className="text-text-secondary text-sm">
-            Sign in to your PlateFullPromise account
-          </p>
-        </div>
+    <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Display the error message that comes from the parent */}
+      {loginError && <div className="text-red-500 text-sm text-center">{loginError}</div>}
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* General Error */}
-          {errors?.general && (
-            <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
-              <div className="flex items-start space-x-3">
-                <Icon name="AlertCircle" size={20} className="text-destructive mt-0.5 flex-shrink-0" />
-                <p className="text-sm text-destructive leading-relaxed">
-                  {errors?.general}
-                </p>
-              </div>
-            </div>
-          )}
-
-          {/* Email Input */}
-          <Input
-            label="Email Address"
-            type="email"
-            name="email"
-            placeholder="Enter your email"
-            value={formData?.email}
-            onChange={handleInputChange}
-            error={errors?.email}
-            required
-            disabled={isLoading}
-          />
-
-          {/* Password Input */}
-          <Input
-            label="Password"
-            type="password"
-            name="password"
-            placeholder="Enter your password"
-            value={formData?.password}
-            onChange={handleInputChange}
-            error={errors?.password}
-            required
-            disabled={isLoading}
-          />
-
-          {/* Forgot Password Link */}
-          <div className="text-right">
-            <Link
-              to="/forgot-password"
-              className="text-sm text-primary hover:text-primary/80 transition-colors"
-            >
-              Forgot your password?
-            </Link>
-          </div>
-
-          {/* Submit Button */}
-          <Button
-            type="submit"
-            variant="default"
-            fullWidth
-            loading={isLoading}
-            disabled={isLoading}
-            iconName="LogIn"
-            iconPosition="left"
-          >
-            {isLoading ? 'Signing In...' : 'Sign In'}
-          </Button>
-        </form>
-
-        {/* Divider */}
-        <div className="relative my-8">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-border"></div>
-          </div>
-          <div className="relative flex justify-center text-sm">
-            <span className="px-4 bg-card text-text-secondary">
-              Don't have an account?
-            </span>
-          </div>
-        </div>
-
-        {/* Registration Link */}
-        <div className="text-center">
-          <Link to="/registration">
-            <Button
-              variant="outline"
-              fullWidth
-              iconName="UserPlus"
-              iconPosition="left"
-            >
-              Create Account
-            </Button>
-          </Link>
-        </div>
-
-        {/* Demo Credentials Info */}
-        <div className="mt-6 p-4 bg-muted rounded-lg">
-          <p className="text-xs text-text-secondary text-center mb-2">
-            Demo Credentials:
-          </p>
-          <div className="space-y-1 text-xs text-text-secondary">
-            <p><strong>Admin:</strong> {mockCredentials?.admin?.email} / {mockCredentials?.admin?.password}</p>
-            <p><strong>Donor:</strong> {mockCredentials?.donor?.email} / {mockCredentials?.donor?.password}</p>
-            <p><strong>Recipient:</strong> {mockCredentials?.recipient?.email} / {mockCredentials?.recipient?.password}</p>
-          </div>
-        </div>
+      <div>
+        <label
+          htmlFor="username"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Username
+        </label>
+        <input
+          id="username"
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+          className="mt-1 w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        />
       </div>
-    </div>
+
+      <div>
+        <label
+          htmlFor="password"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Password
+        </label>
+        <input
+          id="password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          className="mt-1 w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        />
+      </div>
+
+      <button
+        type="submit"
+        disabled={loading}
+        className="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg shadow-md hover:bg-indigo-700 disabled:opacity-50 transition"
+      >
+        {loading ? "Signing in..." : "Sign In"}
+      </button>
+    </form>
   );
 };
 
