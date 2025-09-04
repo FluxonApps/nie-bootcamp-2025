@@ -5,19 +5,18 @@ const DonorDashboard = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // 🔹 Replace this with actual logged-in donorId (from auth/localStorage)
+  // Hardcoded donorId for testing
   const donorId = "64f2cbd8d4f12345abcd6789";
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch user info
-        const userRes = await fetch(`http://localhost:5000/api/users/${donorId}`);
+        // ✅ update API calls to backend port 8002
+        const userRes = await fetch(`http://localhost:8002/api/users/${donorId}`);
         const userData = await userRes.json();
         setUser(userData);
 
-        // Fetch all donations then filter by donor
-        const donationRes = await fetch("http://localhost:5000/api/donations");
+        const donationRes = await fetch("http://localhost:8002/api/donations");
         const allDonations = await donationRes.json();
 
         const donorDonations = allDonations.filter(
@@ -46,7 +45,31 @@ const DonorDashboard = () => {
         <h1 className="text-2xl font-bold text-gray-800">
           Welcome, {user?.name || "Donor"}
         </h1>
-        <button className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700">
+        <button
+          onClick={async () => {
+            // ✅ Test donation POST
+            const newDonation = {
+              donor: donorId,
+              category: "Food",
+              description: "Test Donation",
+              quantity: 1,
+              status: "ACTIVE",
+            };
+
+            const res = await fetch("http://localhost:8002/api/donations", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(newDonation),
+            });
+
+            if (res.ok) {
+              alert("Donation submitted!");
+            } else {
+              alert("Error submitting donation");
+            }
+          }}
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700"
+        >
           Make a Donation
         </button>
       </div>
