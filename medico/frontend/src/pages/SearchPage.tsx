@@ -2,9 +2,13 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom"; // 👈 Import to read URL query
 import axios from "axios";
+
+
+
 // 👈 Corrected import pat h
 import "./SearchPage.css"; // 👈 New CSS file for the search page
 import ProductCard from "../components/productCard"
+
 // --- Type definitions (copied from HomePage) ---
 type Ingredient = {
   name: string;

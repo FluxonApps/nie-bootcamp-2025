@@ -18,7 +18,11 @@
   align-items: center;
   padding: 0 2rem;
   box-shadow: 0 4px 12px var(--shadow-color);
+
+  position: fixed;
+
   position: sticky;
+
   top: 0;
   z-index: 1000;
   width: 100%;
