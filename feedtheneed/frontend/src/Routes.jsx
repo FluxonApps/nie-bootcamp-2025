@@ -8,6 +8,7 @@ import AdminDashboard from "./pages/admin-dashboard";
 import Registration from "./pages/registration";
 import LoginPage from "./pages/login";
 import UserDashboard from "./pages/user-dashboard";
+import DonorDashboard from "./pages/user-dashboard/DonorDashboard";  // 👈 Added import
 
 const Routes = () => {
   return (
@@ -32,6 +33,9 @@ const Routes = () => {
           {/* User */}
           <Route path="/user" element={<UserDashboard />} />
           <Route path="/user-dashboard" element={<UserDashboard />} />
+
+          {/* 👇 New route to test DonorDashboard directly */}
+          <Route path="/donor-dashboard" element={<DonorDashboard />} />
 
           {/* Catch-all */}
           <Route path="*" element={<NotFound />} />
