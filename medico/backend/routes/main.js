@@ -31,7 +31,12 @@ const allRoutes = [
         method: "PUT",
         path: `${base}/products/approve/:id`,
         handler: [productController.approveProduct],
-      }
+      },
+      {
+        method: "PATCH",
+        path: `${base}/products/:id/approve`,
+        handler: [productController.updateProductReview],
+  }
 ];
 
 module.exports = allRoutes;
