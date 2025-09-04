@@ -6,7 +6,6 @@ import Input from "../../../components/ui/Input";
 const UserManagementTable = ({ users = [], refreshUsers }) => {   // ⬅️ default safe
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [filterRole, setFilterRole] = useState("all");
-  const [filterStatus, setFilterStatus] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
 
   // Approve user
@@ -33,25 +32,13 @@ const UserManagementTable = ({ users = [], refreshUsers }) => {   // ⬅️ defa
     { value: "all", label: "All Roles" },
     { value: "donor", label: "Donors" },
     { value: "recipient", label: "Recipients" },
-    { value: "admin", label: "Administrators" },
-  ];
-
-  const statusOptions = [
-    { value: "all", label: "All Status" },
-    { value: "active", label: "Active" },
-    { value: "inactive", label: "Inactive" },
-    { value: "pending", label: "Pending" },
   ];
 
   // Filtering
   const filteredUsers = users.filter((user) => {
     const matchesRole = filterRole === "all" || user.role === filterRole;
-    const matchesStatus = filterStatus === "all" || user.status === filterStatus;
-    const matchesSearch =
-      user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.email?.toLowerCase().includes(searchTerm.toLowerCase());
-
-    return matchesRole && matchesStatus && matchesSearch;
+    const matchesSearch = user.name?.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesRole && matchesSearch;
   });
 
   const handleSelectUser = (userId) => {
@@ -105,8 +92,7 @@ const UserManagementTable = ({ users = [], refreshUsers }) => {   // ⬅️ defa
               className="w-full sm:w-64"
             />
             <div className="flex gap-2">
-              <Select options={roleOptions} value={filterRole} onChange={setFilterRole} className="w-32" />
-              <Select options={statusOptions} value={filterStatus} onChange={setFilterStatus} className="w-32" />
+              <Select options={roleOptions} value={filterRole} onChange={setFilterRole} className="w-40" />
             </div>
           </div>
         </div>
@@ -125,16 +111,13 @@ const UserManagementTable = ({ users = [], refreshUsers }) => {   // ⬅️ defa
                 />
               </th>
               <th className="p-4 text-left">Name</th>
-              <th className="p-4 text-left">Email</th>
-              <th className="p-4 text-left">Role</th>
-              <th className="p-4 text-left">Status</th>
               <th className="p-4 text-left">Actions</th>
             </tr>
           </thead>
           <tbody>
             {filteredUsers.length === 0 ? (
               <tr>
-                <td colSpan="6" className="p-6 text-center text-gray-500">
+                <td colSpan="3" className="p-6 text-center text-gray-500">
                   No users found
                 </td>
               </tr>
@@ -149,16 +132,9 @@ const UserManagementTable = ({ users = [], refreshUsers }) => {   // ⬅️ defa
                     />
                   </td>
                   <td className="p-4">{user.name}</td>
-                  <td className="p-4">{user.email}</td>
-                  <td className="p-4">{getRoleBadge(user.role)}</td>
-                  <td className="p-4">{getStatusBadge(user.status)}</td>
                   <td className="p-4 space-x-2">
-                    {user.status === "pending" && (
-                      <>
-                        <Button variant="success" size="sm" onClick={() => handleApprove(user._id)}>Approve</Button>
-                        <Button variant="destructive" size="sm" onClick={() => handleReject(user._id)}>Reject</Button>
-                      </>
-                    )}
+                    <Button variant="success" size="sm" onClick={() => handleApprove(user._id)}>Accept</Button>
+                    <Button variant="destructive" size="sm" onClick={() => handleReject(user._id)}>Reject</Button>
                   </td>
                 </tr>
               ))
