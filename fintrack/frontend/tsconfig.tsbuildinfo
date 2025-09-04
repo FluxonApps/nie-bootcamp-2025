@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/types.ts","./src/vite-env.d.ts","./src/components/progressbar.tsx","./src/components/transactionform.tsx","./src/components/transactionlist.tsx","./src/pages/dashboard.tsx","./src/pages/formpage.tsx"],"version":"5.8.3"}
