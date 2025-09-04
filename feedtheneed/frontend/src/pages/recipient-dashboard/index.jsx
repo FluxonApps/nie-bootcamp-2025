@@ -7,14 +7,22 @@ import DonationList from './components/DonationList.jsx';
 import MyRequests from './components/MyRequests.jsx';
 
 const RecipientDashboardPage = () => {
-    const [view, setView] = useState('donations');
-    const [availableDonations, setAvailableDonations] = useState([]);
-    const [userRequests, setUserRequests] = useState([]);
+      const [view, setView] = useState('donations');
+      const [availableDonations, setAvailableDonations] = useState([]);
+      const [userRequests, setUserRequests] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isUserDataoaded, setIsUserDataLoaded] = useState(false);
     const [error, setError] = useState(null);
     const { user } = useAuth(); // The user object now contains { token, role, userId }
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+  const { user } = useAuth();
+=======
+    
+>>>>>>> ab3f71a (changes updated)
+>>>>>>> b1723a5 (changes updated)
 
     useEffect(() => {
         // Run this effect once when the component mounts
