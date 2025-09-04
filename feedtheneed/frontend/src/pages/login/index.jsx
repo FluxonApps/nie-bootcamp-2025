@@ -1,23 +1,21 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import LoginBackground from './components/LoginBackground';
-import LoginHeader from './components/LoginHeader';
-import LoginForm from './components/LoginForm';
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import LoginBackground from "./components/LoginBackground";
+import LoginHeader from "./components/LoginHeader";
+import LoginForm from "./components/LoginForm";
 
-const LoginPage = () => {
+const Index = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if user is already authenticated
-    const token = localStorage.getItem('authToken');
-    const userRole = localStorage.getItem('userRole');
+    const token = localStorage.getItem("authToken");
+    const userRole = localStorage.getItem("userRole");
 
     if (token && userRole) {
-      // Redirect to appropriate dashboard if already logged in
-      if (userRole === 'admin') {
-        navigate('/admin-dashboard');
+      if (userRole === "admin") {
+        navigate("/admin-dashboard");
       } else {
-        navigate('/user-dashboard');
+        navigate("/user-dashboard");
       }
     }
   }, [navigate]);
@@ -32,4 +30,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default Index;
