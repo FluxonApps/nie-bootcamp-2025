@@ -3,7 +3,7 @@ const { ROLES, JWT_SECRET } = require("../constants/constant");
 
 // Middleware to check authentication
 const authMiddleware = (req, res, next) => {
-  const token = req.header("Authorization")?.replace("Bearer ", "") || req.header("authorization")?.replace("Bearer ", "");
+  const token = req.header("Authorization")?.replace("Bearer ", "");
 
   if (!token) {
     return res.status(401).json({ message: "No token, authorization denied" });
@@ -14,8 +14,7 @@ const authMiddleware = (req, res, next) => {
     const decoded = jwt.verify(token, JWT_SECRET);
 
     // Attach user info to request
-    req.user = decoded || {};
-    console.log(req.user);
+    req.user = decoded;
     next();
   } catch (err) {
     res.status(401).json({ message: "Token is not valid" });

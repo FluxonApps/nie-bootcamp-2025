@@ -13,17 +13,16 @@ const LoginPage = () => {
   // This useEffect handles redirecting a user who is ALREADY logged in.
   useEffect(() => {
     if (user && user.role) {
-      // This logic now correctly handles all roles
       if (user.role === 'admin') {
         navigate('/admin-dashboard');
       } else if (user.role === 'recipient') {
         navigate('/recipient-dashboard');
       } else {
-        // Fallback for other roles like 'donor'
-        navigate('/user-dashboard');
+        // For roles not implemented yet (e.g., donor), send to home for now
+        navigate('/');
       }
     }
-  }, [user, navigate]); // This runs when the 'user' from the context changes
+  }, [user, navigate]);
 
   // This function will be passed to LoginForm to handle the form submission.
   const handleLogin = async (username, password) => {

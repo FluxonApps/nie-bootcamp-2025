@@ -19,6 +19,18 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (username, password) => {
         try {
+            // Frontend-only fixed admin credentials bypass
+            // NOTE: This is purely for demo/dev convenience. Do not use in production.
+            const fixedAdminUsername = 'admin@feedtheneed.com';
+            const fixedAdminPassword = 'Admin@123';
+            if (username === fixedAdminUsername && password === fixedAdminPassword) {
+                const fakeToken = 'fixed-admin-token';
+                localStorage.setItem('token', fakeToken);
+                setToken(fakeToken);
+                setUser({ token: fakeToken, role: 'admin', username });
+                return { success: true };
+            }
+
             // Use fetch instead of axios
             const response = await fetch(`${API_URL}/users/login`, {
                 method: 'POST',
@@ -37,15 +49,12 @@ export const AuthProvider = ({ children }) => {
 
             // Manually parse the JSON response
             const data = await response.json();
-            const { token, role } = data;
+            const { token, role, username: serverUsername } = data;
 
-            if (role !== 'recipient') {
-                throw new Error("Login failed: Not a recipient account.");
-            }
-
+            // Allow all roles; redirect will be handled by pages based on role
             localStorage.setItem('token', token);
             setToken(token);
-            setUser({ token, role });
+            setUser({ token, role, username: serverUsername || username });
             return { success: true };
 
         } catch (error) {
