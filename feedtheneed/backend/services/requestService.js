@@ -1,44 +1,75 @@
-// services/requestService.js
 const Request = require("../models/requestModel");
+const Donation = require("../models/donationModel"); // import donation model
 const { REQUEST_STATUS } = require("../constants/constant");
 
-// Get all requests
-const getAllRequests = async () => {
-  return await Request.find()
-    .populate("recipient")
-    .populate("donation");
+const getAllRequests = async (user) => {
+  if (user.role === "recipient") {
+    // return only their own requests
+    return await Request.find({ requestedId: user.id }).sort({ CreatedAt: -1 });
+  } else if (user.role === "admin") {
+    // return all requests
+    return await Request.find().sort({ CreatedAt: -1 });
+  }
+  return [];
 };
 
-// Add a new request
+
 const addRequest = async (requestData) => {
+  // Prevent multiple requests on the same donation
+  if (requestData.donationId) {
+    const existingRequest = await Request.findOne({
+      donationId: requestData.donationId,
+      status: { $in: ["pending", "approved"] },
+    });
+
+    if (existingRequest) {
+      throw new Error("This donation is already requested or approved.");
+    }
+  }
+
+  const now = new Date();
+  requestData.CreatedAt = now;
+  requestData.UpdatedAt = now;
+
   const request = new Request(requestData);
   return await request.save();
 };
 
-// Find request by ID
-const findById = async (id) => {
-  return await Request.findById(id)
-    .populate("recipient")
-    .populate("donation");
+
+
+const getRequestById = async (id) => {
+  return await Request.findById(id);
 };
 
-// Update request status
-const updateRequestStatus = async (id, status) => {
-  if (!Object.values(REQUEST_STATUS).includes(status)) {
-    throw new Error(`Invalid status. Allowed: ${Object.values(REQUEST_STATUS).join(", ")}`);
+
+const updateRequest = async (id, updateData) => {
+  if (updateData.status === "approved") {
+    updateData.UpdatedAt = new Date();
+
+    // Mark donation as unavailable
+    const request = await Request.findById(id);
+    if (request && request.donationId) {
+      await Donation.findByIdAndUpdate(request.donationId, { isAvailable: false });
+    }
   }
-  return await Request.findByIdAndUpdate(id, { status }, { new: true });
+
+  return await Request.findByIdAndUpdate(id, updateData, { new: true });
 };
 
-// Delete request
+
 const deleteRequest = async (id) => {
   return await Request.findByIdAndDelete(id);
+};
+
+const getRequestsByUser = async (userId) => {
+  return await Request.find({ requestedId: userId }).sort({ CreatedAt: -1 });
 };
 
 module.exports = {
   getAllRequests,
   addRequest,
-  findById,
-  updateRequestStatus,
+  getRequestById,
+  updateRequest,
   deleteRequest,
+  getRequestsByUser,
 };

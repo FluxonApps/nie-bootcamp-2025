@@ -3,27 +3,35 @@ const { REQUEST_STATUS } = require("../constants/constant");
 
 const requestSchema = new mongoose.Schema(
   {
-    recipient: {
+    requestedId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User", // A request is made by a recipient (User)
-      required: true,
-    },
-    donation: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Donation", // Link to the donation being requested
+      ref: "User",
       required: true,
     },
     status: {
       type: String,
-      enum: Object.values(REQUEST_STATUS), 
-      default: REQUEST_STATUS.PENDING,
+      enum: REQUEST_STATUS, // ✅ use constant
+      default: REQUEST_STATUS[0], // "pending"
     },
-    createdAt: {
+    donationId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Donation",
+      default: null,
+    },
+    CreatedAt: {
       type: Date,
       default: Date.now,
+    },
+    UpdatedAt: {
+      type: Date,
+      default: Date.now,
+    },
+    UpdatedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
     },
   },
   { versionKey: false }
 );
-
 module.exports = mongoose.model("Request", requestSchema);

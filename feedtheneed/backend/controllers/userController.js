@@ -1,10 +1,7 @@
 const userService = require("../services/userService");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { ROLES } = require("../constants/constant");
-
-// Secret key for JWT (move to .env in production)
-const JWT_SECRET = process.env.JWT_SECRET || "supersecretkey";
+const { ROLES, JWT_SECRET } = require("../constants/constant");
 
 // GET all users (hide password field)
 const getAllUsers = async (req, res) => {
