@@ -33,7 +33,7 @@ const MyRequests = ({ requests = [] }) => {
             // This ensures that if a request object is missing its 'donationId'
             // for any reason, the component will not crash when trying to access
             // properties like donation.category or donation.description.
-            const donation = request.donationId || {};
+            const donation = request.donation || {};
             
             // Your requestModel.js uses 'CreatedAt' (capital C, A), so we'll use that.
             const requestDate = request.CreatedAt ? new Date(request.CreatedAt).toLocaleDateString() : 'N/A';

@@ -37,7 +37,7 @@ const RecipientDashboardPage = () => {
                 // 1. Fetch ALL donations (as per your donationRoute.js)
                 api.get('/donations'),
                 // 2. Fetch requests for the specific logged-in user
-                api.get(`/requests/user/${user.userId}`)
+                api.get(`/requests`)
             ]);
 
             const allDonationsFromApi = allDonationsResponse;
@@ -48,7 +48,7 @@ const RecipientDashboardPage = () => {
             );
 
             setAvailableDonations(filteredDonations);
-            setUserRequests(requestsResponse.data);
+            setUserRequests(requestsResponse);
 
         } catch (err) {
             setError(err.message || 'Failed to fetch data.');
