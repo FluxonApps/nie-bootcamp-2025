@@ -1,7 +1,8 @@
 import  { type JSX } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Onboarding from "./pages/Onboarding";
-import Dashboard from "./pages/Dashboard";
+import Onboarding from "./pages/onboarding";
+import { Login } from "./pages/login";
+import Dashboard from "./pages/dashboard";  // <-- use their Dashboard
 import FormPage from "./pages/FormPage";
 
 function App(): JSX.Element {
@@ -9,8 +10,9 @@ function App(): JSX.Element {
     <div className="min-h-screen bg-gray-900 text-white">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Onboarding />} />
+          <Route path="/" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/form" element={<FormPage />} />
         </Routes>
       </BrowserRouter>
