@@ -37,7 +37,6 @@ const Home: React.FC = () => {
           </div>
         </div>
 
-
         <div className="button-container">
           <div className="card" onClick={() => navigate("/connect")}>
             <h2>🤝 Connect with People</h2>
@@ -45,7 +44,7 @@ const Home: React.FC = () => {
             <button>Explore</button>
           </div>
 
-          <div className="card" onClick={() => navigate("/create-group")}>
+          <div className="card" onClick={() => navigate("/groups")}>
             <h2>👥 Create a Group</h2>
             <p>Collaborate and share ideas in groups.</p>
             <button>Create</button>
@@ -56,7 +55,6 @@ const Home: React.FC = () => {
             <p>Personalize your experience and update details.</p>
             <button>Update</button>
           </div>
-
         </div>
       </div>
       <Footer />
