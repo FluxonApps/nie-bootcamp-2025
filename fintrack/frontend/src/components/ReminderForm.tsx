@@ -1,13 +1,10 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { COLORS } from "../theme/colors";
+import { createBillReminder } from "../services/billReminderService";
 
 interface ReminderFormProps {
   onClose: () => void;
-  onSave: (reminder: {
-    billName: string;
-    amount: number;
-    date: string;
-  }) => void;
+  onSave: () => void;
   onShowReminders: () => void;
 }
 
@@ -30,10 +27,16 @@ const ReminderForm: React.FC<ReminderFormProps> = ({
     }));
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    onSave(formData);
-    onClose();
+    try {
+      await createBillReminder(formData);
+      onSave();
+      onClose();
+    } catch (error) {
+      console.error("Failed to save reminder:", error);
+      // Optionally, display an error message to the user
+    }
   };
 
   return (

@@ -242,9 +242,9 @@ const Dashboard = () => {
       {showReminderForm && (
         <ReminderForm
           onClose={() => setShowReminderForm(false)}
-          onSave={(reminder) => {
-            console.log("Saving reminder:", reminder);
-            // TODO: Implement save reminder logic
+          onSave={() => {
+            console.log('Reminder saved!');
+            // Optionally, refresh data or show a success message
           }}
           onShowReminders={() => {
             console.log("Show reminders clicked");
