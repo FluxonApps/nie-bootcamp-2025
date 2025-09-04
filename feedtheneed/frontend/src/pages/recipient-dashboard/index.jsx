@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../api/api';
 import { useAuth } from '../../context/AuthContext';
-import { useAuth } from '../../context/AuthContext';
-
 import DashboardHeader from './components/DashboardHeader.jsx';
 import DashboardNav from './components/DashboardNav.jsx';
 import DonationList from './components/DonationList.jsx';
@@ -16,11 +14,7 @@ const RecipientDashboardPage = () => {
     const [isUserDataoaded, setIsUserDataLoaded] = useState(false);
     const [error, setError] = useState(null);
     const { user } = useAuth(); // The user object now contains { token, role, userId }
-<<<<<<< HEAD
-  const { user } = useAuth();
-=======
-    
->>>>>>> ab3f71a (changes updated)
+
 
     useEffect(() => {
         // Run this effect once when the component mounts
