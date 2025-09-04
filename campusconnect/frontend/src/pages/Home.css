@@ -1,109 +1,165 @@
+/* Home Container */
 .home-container {
-  min-height: 80vh;
-  background-color: #f8f9fa;
-  padding-bottom: 2rem;
+  padding: 20px;
+  background-color: #fdfdfd;
+  min-height: 75vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Banner Section */
-.banner {
+/* Welcome Section */
+.welcome-section {
+  margin-bottom: 40px;
+  padding: 20px 40px;
+  background: linear-gradient(135deg, #e0f7fa, #ffffff);
+  border-radius: 14px;
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.08);
+  width: fit-content;
+  text-align: center;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+.welcome-section h1 {
+  font-size: 2.4rem;
+  color: #2c3e50;
+  margin-bottom: 8px;
+}
+
+.welcome-section p {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+/* Features Container */
+.features-container {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 40px; /* ✅ Better spacing */
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+/* Flip Card Wrapper */
+.flip-card {
+  background-color: transparent;
+  width: 250px; /* ✅ Slightly smaller cards */
+  height: 320px;
+  perspective: 1200px;
+  cursor: pointer;
+}
+
+/* Inner Flip Mechanism */
+.flip-card-inner {
   position: relative;
   width: 100%;
-  height: 350px;
-  overflow: hidden;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.7s ease;
+  transform-style: preserve-3d;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 14px;
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Front & Back Faces */
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 14px;
+  padding: 18px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.banner-image {
-  width: 100%;
-  height: 350px;
-  object-fit: cover;
-  filter: brightness(70%);
+/* Front Face */
+.flip-card-front {
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(200, 200, 200, 0.2);
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease-in-out;
 }
 
-.banner-text {
-  position: absolute;
-  text-align: center;
-  color: white;
+.flip-card-front img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 14px;
+  transition: transform 0.3s ease;
 }
 
-.banner-text h1 {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
+.flip-card:hover .flip-card-front img {
+  transform: scale(1.1);
 }
 
-.banner-text p {
+.flip-card-front h3 {
   font-size: 1.2rem;
+  color: #1f2937;
 }
 
-/* Buttons Section */
-.button-container {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  padding: 2rem;
-  flex-wrap: wrap;
-}
-
-/* Cards */
-.card {
-  background-color: white;
-  width: 280px;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
-}
-
-.card h2 {
-  margin-bottom: 0.5rem;
-  color: #333;
-}
-
-.card p {
-  margin-bottom: 1rem;
-  color: #666;
-}
-
-/* Buttons inside cards */
-.card button {
-  background-color: #007bff;
+/* Back Face */
+.flip-card-back {
+  background: linear-gradient(135deg, #4a90e2, #357ab7);
   color: white;
-  padding: 0.6rem 1.2rem;
+  transform: rotateY(180deg);
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.flip-card-back h4 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.flip-card-back ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 14px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.flip-card-back li {
+  margin-bottom: 6px;
+}
+
+/* Back Button */
+.flip-card-back button {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #4a90e2;
+  background-color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
 
-.card button:hover {
-  background-color: #0056b3;
+.flip-card-back button:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.05);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .banner {
-    height: 250px;
+/* Smooth Fade-in Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
   }
-
-  .banner-image {
-    height: 250px;
-  }
-
-  .banner-text h1 {
-    font-size: 2rem;
-  }
-
-  .button-container {
-    flex-direction: column;
-    align-items: center;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
