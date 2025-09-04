@@ -3,6 +3,7 @@ import { useState, type ChangeEvent, type FormEvent, type JSX } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { COLORS } from "../theme/colors";
+import Logo from "../assets/logo.png"; 
 
 interface FormState {
   name: string;
@@ -16,7 +17,6 @@ function Onboarding(): JSX.Element {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Get email/password from login
   const { email: emailFromLogin = "", password: passwordFromLogin = "" } =
     location.state || {};
 
@@ -28,6 +28,8 @@ function Onboarding(): JSX.Element {
     password: passwordFromLogin,
   });
 
+  const [message, setMessage] = useState("");
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -37,105 +39,116 @@ function Onboarding(): JSX.Element {
 
     try {
       const res = await axios.post(`http://localhost:8003/api/onboarding`, form);
-      alert(res.data.message);
+      setMessage(res.data.message);
 
-      // Redirect to dashboard after onboarding
       navigate("/dashboard");
     } catch (err: any) {
-      alert(err.response?.data?.message || "Unexpected error occurred");
+      setMessage(err.response?.data?.message || "⚠️ Unexpected error occurred");
     }
   };
 
   const inputStyle = {
-    backgroundColor: COLORS.card,
+    backgroundColor: COLORS.background,
     color: COLORS.primaryText,
     border: `1px solid ${COLORS.border}`,
   };
 
   return (
     <div
-      className="flex h-screen items-center justify-center"
+      className="min-h-screen flex items-center justify-center"
       style={{ backgroundColor: COLORS.background }}
     >
-      <form
-        onSubmit={handleSubmit}
-        className="shadow-lg rounded-xl p-6 w-96"
-        style={{
-          backgroundColor: COLORS.card,
-          border: `1px solid ${COLORS.border}`,
-        }}
+      <div
+        className="w-full max-w-md p-8 rounded-2xl shadow-2xl text-center"
+        style={{ backgroundColor: COLORS.card, border: `1px solid ${COLORS.border}` }}
       >
-        <h2
-          className="text-2xl font-bold mb-4 text-center"
-          style={{ color: COLORS.primaryText }}
-        >
-          Onboarding
-        </h2>
 
-        <input
-          type="text"
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          placeholder="Name"
-          style={inputStyle}
-          className="w-full mb-3 p-2 rounded"
-          required
-        />
+        <div className="flex flex-col items-center gap-2 mb-6">
+          <img src={Logo} alt="FinTrack Logo" className="w-40 h-40 object-contain" />
+          <h2 className="text-3xl font-bold" style={{ color: COLORS.primaryAccent }}>
+            Onboarding
+          </h2>
+        </div>
 
-        <input
-          type="email"
-          name="email"
-          value={form.email}
-          style={inputStyle}
-          className="w-full mb-3 p-2 rounded"
-          required
-          readOnly
-        />
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <input
+            type="text"
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            placeholder="Name"
+            style={inputStyle}
+            className="w-full p-3 rounded-lg outline-none"
+            required
+          />
 
-        <input
-          type="password"
-          name="password"
-          value={form.password}
-          style={inputStyle}
-          className="w-full mb-3 p-2 rounded"
-          required
-          readOnly
-        />
+          <input
+            type="email"
+            name="email"
+            value={form.email}
+            style={inputStyle}
+            className="w-full p-3 rounded-lg outline-none"
+            required
+            readOnly
+          />
 
-        <input
-          type="text"
-          name="college"
-          value={form.college}
-          onChange={handleChange}
-          placeholder="College"
-          style={inputStyle}
-          className="w-full mb-3 p-2 rounded"
-          required
-        />
+          <input
+            type="password"
+            name="password"
+            value={form.password}
+            style={inputStyle}
+            className="w-full p-3 rounded-lg outline-none"
+            required
+            readOnly
+          />
 
-        <input
-          type="number"
-          name="budget"
-          value={form.budget}
-          onChange={handleChange}
-          placeholder="Budget"
-          style={inputStyle}
-          className="w-full mb-3 p-2 rounded"
-          required
-        />
+          <input
+            type="text"
+            name="college"
+            value={form.college}
+            onChange={handleChange}
+            placeholder="College"
+            style={inputStyle}
+            className="w-full p-3 rounded-lg outline-none"
+            required
+          />
 
-        <button
-          type="submit"
-          className="w-full py-2 rounded mt-2"
-          style={{
-            backgroundColor: COLORS.primaryAccent,
-            color: COLORS.primaryText,
-          }}
-        >
-          Continue
-        </button>
-      </form>
+          <input
+            type="number"
+            name="budget"
+            value={form.budget}
+            onChange={handleChange}
+            placeholder="Budget"
+            style={inputStyle}
+            className="w-full p-3 rounded-lg outline-none"
+            required
+          />
+
+          <button
+            type="submit"
+            className="w-full py-3 rounded-lg font-semibold transition duration-300 shadow-lg"
+            style={{
+              background: `linear-gradient(90deg, ${COLORS.primaryAccent}, ${COLORS.secondaryAccent})`,
+              color: COLORS.primaryText,
+            }}
+          >
+            Continue
+          </button>
+        </form>
+
+        {message && (
+          <p
+            className="mt-4 text-sm"
+            style={{
+              color: message.toLowerCase().includes("success")
+                ? COLORS.secondaryAccent
+                : COLORS.danger,
+            }}
+          >
+            {message}
+          </p>
+        )}
+      </div>
     </div>
   );
 }
