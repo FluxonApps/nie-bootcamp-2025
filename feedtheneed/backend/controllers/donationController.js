@@ -1,20 +1,36 @@
-const donationService = require("../services/donationservice");
+const donationService = require("../services/donationService");
+const { ROLES } = require("../constants/constant");
+const Donation = require("../models/donationModel"); // to use populate in getDonationById
 
-// Get only logged-in donor's donations
-const getMyDonations = async (req, res) => {
+// Get all donations
+const getAllDonations = async (req, res) => {
   try {
-    const donorId = req.user.id; // from JWT auth middleware
-    const donations = await donationService.getDonationsByDonor(donorId);
-    res.json(donations || []);
+    let donations;
+
+    if (req.user.role === ROLES[2]) {
+      // Admin can see all donations
+      donations = await donationService.getAllDonations();
+    } else if (req.user.role === ROLES[0]) {
+      // Donor can see only their own donations
+      donations = await donationService.getDonationsByDonor(req.user.id);
+    } else {
+      // Recipients can see all available donations
+      donations = await donationService.getAvailableDonations();
+    }
+
+    return res.json(donations || []);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message });
   }
 };
 
-// Add new donation (donor auto-assigned from token)
+// Add new donation (only donor)
 const addDonation = async (req, res) => {
   try {
-    const donorId = req.user.id; // take from token
+    if (req.user.role !== ROLES[0]) {
+      return res.status(403).json({ error: "Only donors can add donations" });
+    }
+
     const { category, description, quantity } = req.body;
 
     if (!category || !quantity) {
@@ -23,33 +39,84 @@ const addDonation = async (req, res) => {
         .json({ error: "category and quantity are required" });
     }
 
-    const newDonation = await donationService.addDonation(
+    const savedDonation = await donationService.addDonation(
       { category, description, quantity },
-      donorId
+      req.user.id // donorId from JWT
     );
 
-    res.status(201).json(newDonation);
+    return res.status(201).json(savedDonation);
   } catch (err) {
-    res.status(500).json({ error: "Failed to add donation" });
+    return res.status(500).json({ error: err.message });
   }
 };
 
-// Update donation status (admin or donor can update their own donation)
+// Get donation by ID (with donor details)
+const getDonationById = async (req, res) => {
+  try {
+    const donation = await Donation.findById(req.params.id).populate({
+      path: "donor",
+      select: "name username role",
+    });
+
+    if (!donation) {
+      return res.status(404).json({ error: "Donation not found" });
+    }
+
+    return res.json(donation);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+};
+
+// Update donation status (donor or admin)
 const updateDonationStatus = async (req, res) => {
   try {
+    const { status } = req.body;
     const donationId = req.params.id;
-    const updatedDonation = await donationService.markAsFulfilled(donationId);
-    res.json(updatedDonation);
+
+    // Only donors can update their own donation OR admins can update any
+    if (req.user.role !== ROLES[0] && req.user.role !== ROLES[2]) {
+      return res.status(403).json({ error: "Access denied" });
+    }
+
+    const updated = await donationService.updateDonationStatus(
+      donationId,
+      status,
+      req.user.id // UpdatedBy
+    );
+
+    if (!updated) {
+      return res.status(404).json({ error: "Donation not found" });
+    }
+
+    return res.json(updated);
   } catch (err) {
-    res.status(500).json({ error: "Failed to update donation status" });
+    return res.status(500).json({ error: err.message });
   }
 };
 
-module.exports = { 
-  getAllDonations, 
-  getMyDonations, 
-  addDonation, 
-  updateDonationStatus 
+// Delete donation (only admin)
+const deleteDonation = async (req, res) => {
+  try {
+    if (req.user.role !== ROLES[2]) {
+      return res.status(403).json({ error: "Only admins can delete donations" });
+    }
+
+    const deleted = await donationService.deleteDonation(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ error: "Donation not found" });
+    }
+
+    return res.json({ message: "Donation deleted successfully" });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
 };
 
-
+module.exports = {
+  getAllDonations,
+  addDonation,
+  getDonationById,
+  updateDonationStatus,
+  deleteDonation,
+};

@@ -1,23 +1,59 @@
 const Donation = require("../models/donationModel");
 
-// Get all donations of a donor
-const getDonationsByDonor = async (donorId) => {
-  return await Donation.find({ donor: donorId }).sort({ createdAt: -1 });
+// Get all donations (admin sees all, donor sees only theirs)
+const getAllDonations = async (user) => {
+  if (user.role === "donor") {
+    // donor → only their own donations
+    return await Donation.find({ donor: user.id }).sort({ CreatedAt: -1 });
+  } else if (user.role === "admin") {
+    // admin → all donations
+    return await Donation.find().sort({ CreatedAt: -1 });
+  }
+  return [];
 };
 
-// Add donation (auto-assign donorId)
+// Add donation (donorId comes from auth)
 const addDonation = async (donationData, donorId) => {
-  const donation = new Donation({ ...donationData, donor: donorId });
+  const now = new Date();
+
+  const donation = new Donation({
+    ...donationData,
+    donor: donorId,
+    CreatedAt: now,
+    UpdatedAt: now,
+  });
+
   return await donation.save();
 };
 
-// Mark donation as fulfilled
-const markAsFulfilled = async (donationId) => {
-  return await Donation.findByIdAndUpdate(
-    donationId,
-    { status: "fulfilled" },
-    { new: true }
-  );
+// Get donation by ID
+const getDonationById = async (id) => {
+  return await Donation.findById(id).populate("donor", "name username email");
 };
 
-module.exports = { getDonationsByDonor, addDonation, markAsFulfilled };
+// Update donation (status or details)
+const updateDonation = async (id, updateData, user) => {
+  updateData.UpdatedAt = new Date();
+  updateData.UpdatedBy = user.id;
+
+  return await Donation.findByIdAndUpdate(id, updateData, { new: true });
+};
+
+// Delete donation (only admin should be allowed at controller level)
+const deleteDonation = async (id) => {
+  return await Donation.findByIdAndDelete(id);
+};
+
+// Get donations by donor (sorted latest first)
+const getDonationsByDonor = async (donorId) => {
+  return await Donation.find({ donor: donorId }).sort({ CreatedAt: -1 });
+};
+
+module.exports = {
+  getAllDonations,
+  addDonation,
+  getDonationById,
+  updateDonation,
+  deleteDonation,
+  getDonationsByDonor,
+};
