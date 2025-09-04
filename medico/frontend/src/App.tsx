@@ -1,12 +1,6 @@
 import React from "react";
 import "./App.css";
 
-// 👈 1. Import routing components and your pages
-import { Routes, Route } from "react-router-dom";
-import HomePage from "../pages/HomePage"; 
-import SearchPage from "../pages/SearchPage"; 
-import Navbar from "../components/Navbar";     
-
 // 👈 Import routing components and your pages
 import { Routes, Route } from "react-router-dom";
 import SearchPage from "../pages/SearchPage";
@@ -15,6 +9,8 @@ import Signuppage from "../pages/SignupPage";
 import LoginPage from "../pages/LoginPage";
 import FavoritesPage from "../pages/FavoritesPage";
 import Navbar from "../components/Navbar";
+import HomePage from "../pages/HomePage";
+
 
 // 👈 Import your ProductList component
 import ProductList from "../Pages/ProductList";
@@ -48,4 +44,3 @@ function App() {
 }
 
 export default App;
-
