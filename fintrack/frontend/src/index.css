@@ -1,3 +1,11 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
+@import "tailwindcss";
+
+
+/* Custom styles */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #4ade80 #1f1f1f;
+}
