@@ -14,15 +14,7 @@ const RecipientDashboardPage = () => {
     const [isUserDataoaded, setIsUserDataLoaded] = useState(false);
     const [error, setError] = useState(null);
     const { user } = useAuth(); // The user object now contains { token, role, userId }
-<<<<<<< HEAD
 
-=======
-<<<<<<< HEAD
-  const { user } = useAuth();
-=======
-    
->>>>>>> ab3f71a (changes updated)
->>>>>>> b1723a5 (changes updated)
 
     useEffect(() => {
         // Run this effect once when the component mounts
