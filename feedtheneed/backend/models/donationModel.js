@@ -16,18 +16,34 @@ const donationSchema = new mongoose.Schema(
     description: {
       type: String,
       trim: true,
+      default: "",
     },
     quantity: {
       type: Number,
       required: true,
+      min: 1,
     },
     status: {
       type: String,
-      enum: Object.values(DONATION_STATUS), 
-      default: DONATION_STATUS.ACTIVE,      
+      enum: DONATION_STATUS, // ✅ use constants for status
+      default: DONATION_STATUS[0], // e.g. "available"
+    },
+    CreatedAt: {
+      type: Date,
+      default: Date.now,
+    },
+    UpdatedAt: {
+      type: Date,
+      default: Date.now,
+    },
+    UpdatedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
     },
   },
-  { timestamps: true }
+  { versionKey: false }
 );
 
 module.exports = mongoose.model("Donation", donationSchema);
+

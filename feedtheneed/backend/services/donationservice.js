@@ -1,40 +1,59 @@
 const Donation = require("../models/donationModel");
-const { DONATION_STATUS } = require("../constants/constant");
 
-// Get all donations
-const getAllDonations = async () => {
-  return await Donation.find().populate("donor", "name username");
+// Get all donations (admin sees all, donor sees only theirs)
+const getAllDonations = async (user) => {
+  if (user.role === "donor") {
+    // donor → only their own donations
+    return await Donation.find({ donor: user.id }).sort({ CreatedAt: -1 });
+  } else if (user.role === "admin") {
+    // admin → all donations
+    return await Donation.find().sort({ CreatedAt: -1 });
+  }
+  return [];
 };
 
-// Add donation
-const addDonation = async (donationData) => {
+// Add donation (donorId comes from auth)
+const addDonation = async (donationData, donorId) => {
+  const now = new Date();
+
   const donation = new Donation({
     ...donationData,
-    status: DONATION_STATUS.ACTIVE, 
+    donor: donorId,
+    CreatedAt: now,
+    UpdatedAt: now,
   });
+
   return await donation.save();
 };
 
-// Update donation status
-const updateDonationStatus = async (donationId, status) => {
-  return await Donation.findByIdAndUpdate(
-    donationId,
-    { status },
-    { new: true }
-  );
+// Get donation by ID
+const getDonationById = async (id) => {
+  return await Donation.findById(id).populate("donor", "name username email");
 };
 
-const markAsFulfilled = async (donationId) => {
-  return await Donation.findByIdAndUpdate(
-    donationId,
-    { status: DONATION_STATUS.FULFILLED },
-    { new: true }
-  );
+// Update donation (status or details)
+const updateDonation = async (id, updateData, user) => {
+  updateData.UpdatedAt = new Date();
+  updateData.UpdatedBy = user.id;
+
+  return await Donation.findByIdAndUpdate(id, updateData, { new: true });
+};
+
+// Delete donation (only admin should be allowed at controller level)
+const deleteDonation = async (id) => {
+  return await Donation.findByIdAndDelete(id);
+};
+
+// Get donations by donor (sorted latest first)
+const getDonationsByDonor = async (donorId) => {
+  return await Donation.find({ donor: donorId }).sort({ CreatedAt: -1 });
 };
 
 module.exports = {
   getAllDonations,
   addDonation,
-  updateDonationStatus,
-  markAsFulfilled,
+  getDonationById,
+  updateDonation,
+  deleteDonation,
+  getDonationsByDonor,
 };
