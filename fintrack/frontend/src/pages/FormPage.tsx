@@ -2,6 +2,7 @@ import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import TransactionForm from "../components/TransactionForm";
 import { Transaction } from "../types";
+import { COLORS } from "../theme/colors";
 
 const FormPage: React.FC = () => {
   const location = useLocation();
@@ -49,12 +50,24 @@ const FormPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white flex items-center justify-center p-6">
-      <TransactionForm
-        formData={formData}
-        handleInputChange={handleInputChange}
-        handleSubmit={handleSubmit}
-      />
+    <div
+      className="min-h-screen flex items-center justify-center p-6"
+      style={{ backgroundColor: COLORS.background, color: COLORS.primaryText }}
+    >
+      <div
+        className="w-full max-w-lg p-8 rounded-2xl shadow-lg"
+        style={{ backgroundColor: COLORS.card, border: `1px solid ${COLORS.border}` }}
+      >
+        <h1 className="text-2xl font-bold text-center mb-6">
+          {state?.transaction ? "Edit Transaction" : "Add Transaction"}
+        </h1>
+
+        <TransactionForm
+          formData={formData}
+          handleInputChange={handleInputChange}
+          handleSubmit={handleSubmit}
+        />
+      </div>
     </div>
   );
 };
