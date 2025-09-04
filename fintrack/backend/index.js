@@ -1,13 +1,19 @@
+require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') });
 var express = require("express");
 const mongoose = require("mongoose");
 
 const { APP_PORT, DB_URL } = require("./config/vars");
 const routes = require("./routes/main");
+const tempAuthMiddleware = require('./middleware/authMiddleware');
 
 var cors = require("cors");
 var app = express();
 app.use(cors());
 app.use(express.json());
+
+
+app.use(tempAuthMiddleware);
+
 
 
 
