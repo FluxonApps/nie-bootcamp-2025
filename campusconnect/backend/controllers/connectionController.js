@@ -53,3 +53,8 @@ exports.getRequests = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+const User = require("../models/userModel"); // make sure this path is correct
+
+
+

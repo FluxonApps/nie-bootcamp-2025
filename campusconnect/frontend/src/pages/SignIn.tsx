@@ -17,6 +17,10 @@ const SignIn: React.FC = () => {
     try {
       const response = await api.post("/login", { username, password });
       console.log("Sign In Response:", response.data);
+
+      localStorage.setItem("userId", response.data.userId);
+      localStorage.setItem("username", response.data.username);
+
       alert("Sign in successful!");
       navigate("/home"); // redirect to Home page
     } catch (err: any) {

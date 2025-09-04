@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", function (req, res, next) {
-  res.json({ status: "ok", server: "campusconnect server" });
+  res.json({ status: "ok", server: "campusconnect server updated" });
 });
 
 routes.forEach((route) => {

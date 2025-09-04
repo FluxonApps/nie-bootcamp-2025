@@ -28,6 +28,7 @@ const connectionRoutes = [
     url: `${base}/:userId/requests`,
     handler: connectionController.getRequests,
   },
+  
 ];
 
 module.exports = connectionRoutes;
