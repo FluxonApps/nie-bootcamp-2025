@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 
 const AddProductPage = () => {
@@ -94,7 +95,7 @@ const AddProductPage = () => {
         setFormData({ ...formData, ingredients: updatedIngredients });
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         const payload = {
@@ -114,6 +115,14 @@ const AddProductPage = () => {
                     .map((o) => o.trim()),
             },
         };
+        try {
+            const res = await axios.post("http://localhost:8004/api/products", payload)
+            alert("✅ Product saved successfully!")
+            console.log("Saved product:", res.data)
+        } catch (err: any) {
+            console.error("Error saving product:", err)
+            alert("❌ Failed to save product")
+        }
 
         console.log("Final Payload:", payload);
     };
