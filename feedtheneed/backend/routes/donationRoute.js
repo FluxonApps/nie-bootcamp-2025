@@ -1,25 +1,23 @@
-const donationController = require("../controllers/donationController.js");
-const { DONATION_STATUS } = require("../constants/constant");
+const donationController = require("../controllers/donationController");
+const { authMiddleware } = require("../middleware/authMiddleware");
 
 const base = "/api/donations";
 
 const donationRoutes = [
   {
     method: "GET",
-    url: base,
-    handler: donationController.getAllDonations,
+    url: `${base}/my-donations`,
+    handler: [authMiddleware, donationController.getMyDonations],
   },
   {
     method: "POST",
     url: base,
-    handler: donationController.addDonation,
+    handler: [authMiddleware, donationController.addDonation],
   },
   {
-    method: "PATCH",
-    url: `${base}/:id/status`,
-    handler: donationController.updateDonationStatus,
-    
-    allowedStatus: Object.values(DONATION_STATUS),
+    method: "PUT",
+    url: `${base}/:id/fulfilled`,
+    handler: [authMiddleware, donationController.markDonationAsFulfilled],
   },
 ];
 

@@ -1,14 +1,4 @@
-const donationService = require("../service/donationService");
-
-// Get all donations (latest first)
-const getAllDonations = async (req, res) => {
-  try {
-    const donations = await donationService.getAllDonations();
-    res.json(donations || []);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
+const donationService = require("../services/donationservice");
 
 // Get only logged-in donor's donations
 const getMyDonations = async (req, res) => {
@@ -40,25 +30,18 @@ const addDonation = async (req, res) => {
 
     res.status(201).json(newDonation);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: "Failed to add donation" });
   }
 };
 
 // Update donation status (admin or donor can update their own donation)
 const updateDonationStatus = async (req, res) => {
   try {
-    const { id } = req.params;
-    const { status } = req.body;
-
-    const updated = await donationService.updateDonationStatus(id, status);
-
-    if (!updated) {
-      return res.status(404).json({ error: "Donation not found" });
-    }
-
-    res.json(updated);
+    const donationId = req.params.id;
+    const updatedDonation = await donationService.markAsFulfilled(donationId);
+    res.json(updatedDonation);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: "Failed to update donation status" });
   }
 };
 

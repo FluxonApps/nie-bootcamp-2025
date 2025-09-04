@@ -3,12 +3,7 @@ const { DONATION_STATUS } = require("../constants/constant");
 
 const donationSchema = new mongoose.Schema(
   {
-    donor: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-    category: {
+    title: {
       type: String,
       required: true,
       trim: true,
@@ -17,17 +12,22 @@ const donationSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
-    quantity: {
-      type: Number,
+    donor: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
     status: {
       type: String,
-      enum: Object.values(DONATION_STATUS), 
-      default: DONATION_STATUS.ACTIVE,      
+      enum: Object.values(DONATION_STATUS),
+      default: DONATION_STATUS.ACTIVE,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
     },
   },
-  { timestamps: true }
+  { versionKey: false }
 );
 
 module.exports = mongoose.model("Donation", donationSchema);

@@ -1,40 +1,23 @@
 const Donation = require("../models/donationModel");
-const { DONATION_STATUS } = require("../constants/constant");
 
-// Get all donations
-const getAllDonations = async () => {
-  return await Donation.find().populate("donor", "name username");
+// Get all donations of a donor
+const getDonationsByDonor = async (donorId) => {
+  return await Donation.find({ donor: donorId }).sort({ createdAt: -1 });
 };
 
-// Add donation
-const addDonation = async (donationData) => {
-  const donation = new Donation({
-    ...donationData,
-    status: DONATION_STATUS.ACTIVE, 
-  });
+// Add donation (auto-assign donorId)
+const addDonation = async (donationData, donorId) => {
+  const donation = new Donation({ ...donationData, donor: donorId });
   return await donation.save();
 };
 
-// Update donation status
-const updateDonationStatus = async (donationId, status) => {
-  return await Donation.findByIdAndUpdate(
-    donationId,
-    { status },
-    { new: true }
-  );
-};
-
+// Mark donation as fulfilled
 const markAsFulfilled = async (donationId) => {
   return await Donation.findByIdAndUpdate(
     donationId,
-    { status: DONATION_STATUS.FULFILLED },
+    { status: "fulfilled" },
     { new: true }
   );
 };
 
-module.exports = {
-  getAllDonations,
-  addDonation,
-  updateDonationStatus,
-  markAsFulfilled,
-};
+module.exports = { getDonationsByDonor, addDonation, markAsFulfilled };

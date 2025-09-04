@@ -12,8 +12,7 @@ const getAllRequests = async (user) => {
   }
   return [];
 };
-
-
+const JWT_SECRET = process.env.JWT_SECRET || "supersecretkey";
 const addRequest = async (requestData) => {
   // Prevent multiple requests on the same donation
   if (requestData.donationId) {
