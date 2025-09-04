@@ -1,7 +1,7 @@
 /* Home Container */
 .home-container {
   padding: 20px;
-  background-color: #fdfdfd;
+  background-color: #fff;
   min-height: 75vh;
   text-align: center;
   display: flex;
@@ -9,27 +9,50 @@
   align-items: center;
 }
 
-/* Welcome Section */
-.welcome-section {
-  margin-bottom: 40px;
-  padding: 20px 40px;
-  background: linear-gradient(135deg, #e0f7fa, #ffffff);
+/* Welcome Banner */
+.welcome-banner {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  height: 300px;
   border-radius: 14px;
-  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.08);
-  width: fit-content;
-  text-align: center;
+  overflow: hidden;
+  margin-bottom: 40px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
   animation: fadeIn 0.8s ease-in-out;
 }
 
-.welcome-section h1 {
-  font-size: 2.4rem;
-  color: #2c3e50;
-  margin-bottom: 8px;
+.welcome-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(80%);
 }
 
-.welcome-section p {
-  font-size: 1.1rem;
-  color: #555;
+.welcome-banner .overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.25));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.welcome-banner h1 {
+  font-size: 2.6rem;
+  margin: 0;
+  font-weight: bold;
+  animation: slideIn 0.8s ease-in-out forwards;
+}
+
+.welcome-banner p {
+  font-size: 1.2rem;
+  margin-top: 10px;
+  opacity: 0;
+  animation: fadeInText 1.2s ease-in-out forwards;
+  animation-delay: 0.5s;
 }
 
 /* Features Container */
@@ -37,7 +60,7 @@
   display: flex;
   justify-content: center;
   align-items: stretch;
-  gap: 40px; /* ✅ Better spacing */
+  gap: 35px;
   flex-wrap: wrap;
   margin-top: 20px;
 }
@@ -45,10 +68,15 @@
 /* Flip Card Wrapper */
 .flip-card {
   background-color: transparent;
-  width: 250px; /* ✅ Slightly smaller cards */
-  height: 320px;
+  width: 230px;
+  height: 300px;
   perspective: 1200px;
   cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.flip-card:hover {
+  transform: scale(1.05) rotateZ(1deg);
 }
 
 /* Inner Flip Mechanism */
@@ -92,10 +120,11 @@
 }
 
 .flip-card-front img {
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
   margin-bottom: 14px;
   transition: transform 0.3s ease;
+  animation: float 3s ease-in-out infinite;
 }
 
 .flip-card:hover .flip-card-front img {
@@ -152,14 +181,30 @@
   transform: scale(1.05);
 }
 
-/* Smooth Fade-in Animation */
-@keyframes fadeIn {
+/* Animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes slideIn {
   from {
+    transform: translateX(-50px);
     opacity: 0;
-    transform: translateY(-20px);
   }
   to {
+    transform: translateX(0);
     opacity: 1;
-    transform: translateY(0);
   }
+}
+
+@keyframes fadeInText {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
