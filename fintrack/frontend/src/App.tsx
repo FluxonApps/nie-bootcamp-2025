@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
-import FormPage from "./pages/FormPage";
+import AddTransactionView from "./pages/AddTransactionView"; // ✅ renamed import
 
 const App: React.FC = () => {
   return (
@@ -9,7 +9,7 @@ const App: React.FC = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/form" element={<FormPage />} />
+          <Route path="/add-transaction" element={<AddTransactionView />} /> {/* ✅ better route */}
         </Routes>
       </BrowserRouter>
     </div>

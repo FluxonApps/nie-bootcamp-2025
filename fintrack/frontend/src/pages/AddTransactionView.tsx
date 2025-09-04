@@ -4,7 +4,7 @@ import TransactionForm from "../components/TransactionForm";
 import { Transaction } from "../types";
 import { COLORS } from "../theme/colors";
 
-const FormPage: React.FC = () => {
+const AddTransactionView: React.FC = () => {
   const location = useLocation();
   const state = location.state as { transaction?: Transaction };
 
@@ -72,4 +72,4 @@ const FormPage: React.FC = () => {
   );
 };
 
-export default FormPage;
+export default AddTransactionView;

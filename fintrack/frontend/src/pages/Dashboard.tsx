@@ -118,7 +118,7 @@ const Dashboard: React.FC = () => {
           className="h-24 flex items-center justify-center rounded-xl shadow w-1/2 text-lg font-semibold transition"
           style={{ backgroundColor: COLORS.secondaryAccent }}
           onClick={() =>
-            navigate("/form", {
+            navigate("/add-transaction", {
               state: {
                 transaction: {
                   userId: "",
@@ -146,4 +146,4 @@ const Dashboard: React.FC = () => {
   );
 };
 
-export default Dashboard;
+export default Dashboard;      
