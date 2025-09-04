@@ -4,7 +4,7 @@ import BillReminderList from './components/BillReminderList';
 import type { Bill } from './types';
 import './App.css';
 
-const API_URL = import.meta.env.API_URL; 
+const API_URL = 'http://localhost:8003/api'; 
 
 function App() {
   const [bills, setBills] = useState<Bill[]>([]);
