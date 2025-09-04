@@ -362,7 +362,8 @@ const Profile: React.FC = () => {
   if (error) return <div className="profile-status error">{error}</div>;
 
   return (
-    
+  <div>
+    <Header />
     <form className="profile-form" onSubmit={handleSubmit}>
       <h2>Update Profile</h2>
       {success && <div className="profile-status success">Profile updated successfully!</div>}
@@ -459,6 +460,8 @@ const Profile: React.FC = () => {
         {saving ? "Saving..." : "Save Changes"}
       </button>
     </form>
+    <Footer />
+  </div>
   );
 };
 
