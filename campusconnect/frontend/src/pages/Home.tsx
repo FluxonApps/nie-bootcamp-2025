@@ -44,7 +44,7 @@ const Home: React.FC = () => {
             <button>Explore</button>
           </div>
 
-          <div className="card" onClick={() => navigate("/create-group")}>
+          <div className="card" onClick={() => navigate("/groups")}>
             <h2>👥 Create a Group</h2>
             <p>Collaborate and share ideas in groups.</p>
             <button>Create</button>
