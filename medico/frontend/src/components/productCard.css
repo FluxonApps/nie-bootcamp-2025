@@ -4,7 +4,7 @@
   
   /* Backgrounds */
   --card-bg: linear-gradient(135deg, #ffffff 0%, #f0f8ff 100%); /* Softer blue-white gradient */
-  --light-bg: #f7f9fc; /* Very light gray-blue for sections */
+  --light-bg: #000000; /* Very light gray-blue for sections */
   
   /* Text Colors */
   --primary-text: #1a2c5a; /* Darker blue for headings */
@@ -214,7 +214,7 @@
   margin-top: 1.5rem;
   padding: 1rem;
   border-radius: 12px;
-  background-color: #ffffff;
+  background-color: #1a1313;
   border: 1px solid var(--border-color);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
@@ -248,7 +248,7 @@
   font-size: 0.8rem;
   font-weight: 500;
 }
-.badge { background: #ffeeb3; color: #cc8400; }
+.badge { background: #555248; color: #cc8400; }
 .tag { background: var(--accent-light-bg); color: var(--accent-color); }
 
 .adulterants {

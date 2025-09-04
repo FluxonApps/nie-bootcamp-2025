@@ -49,7 +49,7 @@ const Navbar: React.FC = () => {
             <HiPlusCircle />
             <span>Add Product</span>
           </a>
-          <a href="/approve-products" className="nav-link">
+          <a href="/unapproved-products" className="nav-link">
             <HiCheckCircle />
             <span>Approve</span>
           </a>
@@ -65,7 +65,7 @@ const Navbar: React.FC = () => {
       <div className={isMobileMenuOpen ? "mobile-menu active" : "mobile-menu"}>
         <a href="/" className="mobile-link">Home</a>
         <a href="/add-product" className="mobile-link">Add Product</a>
-        <a href="/approve-products" className="mobile-link">Approve Products</a>
+        <a href="/unapproved-products" className="mobile-link">Approve Products</a>
       </div>
     </nav>
   );

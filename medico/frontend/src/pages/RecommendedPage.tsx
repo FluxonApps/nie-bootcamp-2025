@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import ProductCard from "../components/productCard";
 import "./homePage.css";
@@ -49,7 +50,8 @@ type Product = {
   verdict?: string;
 };
 
-const HomePage: React.FC = () => {
+const RecommendPage: React.FC = () => {
+  const [searchParams] = useSearchParams();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -57,7 +59,7 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     const fetchApprovedProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:8004/api/products");
+        const response = await axios.get(`http://localhost:8004/api/products/search?query=${searchParams}`);
         const data = Array.isArray(response.data.data)
           ? response.data.data
           : [];
@@ -81,7 +83,7 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="home-page px-6 py-4">
-      <h2 className="text-2xl font-bold mb-6">Approved Products</h2>
+      <h2 className="text-2xl font-bold mb-6">Recommended Products</h2>
       <div className="product-list">
         {products.map((product) => (
           <ProductCard key={product._id} product={product} />
@@ -91,4 +93,4 @@ const HomePage: React.FC = () => {
   );
 };
 
-export default HomePage;
+export default RecommendPage;

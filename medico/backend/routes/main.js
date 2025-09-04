@@ -31,7 +31,17 @@ const allRoutes = [
         method: "PUT",
         path: `${base}/products/approve/:id`,
         handler: [productController.approveProduct],
-      }
+      },
+      {
+        method: "GET",
+        path: `${base}/products/get/:id`,
+        handler: [productController.getProductById],
+      },
+      {
+        method: "GET",
+        path: `${base}/products/similar/:id`,
+        handler: [productController.getSimilarProducts],
+      },
 ];
 
 module.exports = allRoutes;
