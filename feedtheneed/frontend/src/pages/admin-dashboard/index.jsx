@@ -15,7 +15,7 @@ const AdminDashboard = () => {
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:5000/api/users");
+      const res = await fetch("http://localhost:8002/api/users");
       const data = await res.json();
       setUsers(data || []);
     } catch (error) {
