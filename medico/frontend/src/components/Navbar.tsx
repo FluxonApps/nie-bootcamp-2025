@@ -1,6 +1,10 @@
 // src/components/Navbar.tsx
 import React, { useState } from 'react';
+
 import { useNavigate } from 'react-router-dom'; //
+
+
+
 import './Navbar.css';
 
 // Importing icons from Heroicons pack
@@ -8,8 +12,12 @@ import { HiSearch, HiPlusCircle, HiCheckCircle, HiHome, HiMenu, HiX } from 'reac
 
 const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   const [searchTerm, setSearchTerm] = useState(''); 
   const navigate = useNavigate(); 
+
+ 
+
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
@@ -38,8 +46,11 @@ const Navbar: React.FC = () => {
             type="text"
             placeholder="Search products by name or brand..."
             className="search-input"
+
             value={searchTerm} 
             onChange={(e) => setSearchTerm(e.target.value)} 
+
+           
           />
         </form>
 
@@ -71,4 +82,7 @@ const Navbar: React.FC = () => {
   );
 };
 
+
 export default Navbar;
+
+
