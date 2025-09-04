@@ -1,31 +1,63 @@
 const postService = require("../services/postService");
 
+exports.createPost = async (req, res) => {
+  try {
+    const { caption, author } = req.body;
+    const imageUrl = req.file ? `/uploads/${req.file.filename}` : undefined;
 
-const getAllPosts = async (req, res) => {
-  const posts = await postService.getAllPosts();
-  return res.json(posts || []);
+    const post = await postService.createPost(caption, author, imageUrl);
+    res.status(201).json({ message: "Post created successfully", post });
+  } catch (error) {
+    console.error("Create Post error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
 
-
-const addPost = async (req, res) => {
-  const savedPost = await postService.addPost(req.body);
-  return res.status(201).json(savedPost || {});
+exports.getAllPosts = async (req, res) => {
+  try {
+    const posts = await postService.getAllPosts();
+    res.status(200).json(posts);
+  } catch (error) {
+    console.error("Get Posts error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
 
-const toggleLike = async (req, res) => {
-  const result = await postService.toggleLike(req.params.postId, req.body.userId);
-  if (!result) return res.status(404).json({ error: "Post not found" });
-  return res.json(result);
+exports.likePost = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const { userId } = req.body;
+
+    const likes = await postService.likePost(postId, userId);
+    res.status(200).json({ message: "Post liked successfully", likes });
+  } catch (error) {
+    console.error("Like Post error:", error);
+    res.status(500).json({ message: error.message });
+  }
 };
 
-const addComment = async (req, res) => {
-  const post = await postService.addComment(
-    req.params.postId,
-    req.body.userId,
-    req.body.text
-  );
-  if (!post) return res.status(404).json({ error: "Post not found" });
-  return res.json(post);
+exports.commentPost = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const { userId, text } = req.body;
+
+    const comment = await postService.commentPost(postId, userId, text);
+    res.status(200).json({ message: "Comment added successfully", comment });
+  } catch (error) {
+    console.error("Comment Post error:", error);
+    res.status(500).json({ message: error.message });
+  }
 };
 
-module.exports = { getAllPosts, addPost, toggleLike, addComment };
+// Get all comments for a post
+exports.getComments = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const comments = await postService.getComments(postId);
+    res.status(200).json({ comments });
+  } catch (error) {
+    console.error("Get Comments error:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
