@@ -17,12 +17,12 @@ const TransactionSchema = new mongoose.Schema({
   },
   categoryId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "CategoryModel",
+    ref: "Category",
     required: true,
   },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "users", // better to keep singular model reference
+    ref: "user",
     required: true,
   },
   date: {
