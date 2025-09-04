@@ -6,6 +6,7 @@ import NotFound from "pages/NotFound";
 import HomeLanding from "./pages/home-landing";
 import AdminDashboard from "./pages/admin-dashboard";
 import Registration from "./pages/registration";
+import RegistrationSuccess from "./pages/registration/components/RegistrationSuccess";
 import LoginPage from "./pages/login";
 import UserDashboard from "./pages/user-dashboard";
 
@@ -27,6 +28,7 @@ const Routes = () => {
 
           {/* Auth */}
           <Route path="/registration" element={<Registration />} />
+          <Route path="/registration/success" element={<RegistrationSuccess />} />
           <Route path="/login" element={<LoginPage />} />
 
           {/* User */}
