@@ -8,6 +8,16 @@ const billReminderRoutes = [
     url: base,
     handler: billReminderController.createBillReminder,
   },
+  {
+    method: "GET",
+    url: base,
+    handler: billReminderController.getBillReminders,
+  },
+  {
+    method: "DELETE",
+    url: `${base}/:id`,
+    handler: billReminderController.deleteBillReminder,
+  },
 ];
 
 module.exports = billReminderRoutes;

@@ -28,3 +28,29 @@ export const createBillReminder = async (reminderData: Omit<BillReminder, '_id'>
     throw error;
   }
 };
+
+export const getBillReminders = async (): Promise<BillReminder[]> => {
+  try {
+    const response = await axios.get<ApiResponse<BillReminder[]>>(API_URL);
+    if (response.data && response.data.success) {
+      return response.data.data;
+    } else {
+      throw new Error(response.data.message || 'Failed to fetch bill reminders');
+    }
+  } catch (error) {
+    console.error('Failed to fetch bill reminders:', error);
+    throw error;
+  }
+};
+
+export const deleteBillReminder = async (id: string): Promise<void> => {
+  try {
+    const response = await axios.delete<ApiResponse<void>>(`${API_URL}/${id}`);
+    if (!response.data || !response.data.success) {
+      throw new Error(response.data.message || 'Failed to delete bill reminder');
+    }
+  } catch (error) {
+    console.error('Failed to delete bill reminder:', error);
+    throw error;
+  }
+};

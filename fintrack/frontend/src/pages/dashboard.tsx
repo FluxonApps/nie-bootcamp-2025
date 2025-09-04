@@ -129,6 +129,7 @@ import { Transaction } from "../types";
 import { useNavigate } from "react-router-dom";
 import { COLORS } from "../theme/colors";
 import ReminderForm from "../components/ReminderForm";
+import RemindersModal from "../components/RemindersModal";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -137,6 +138,7 @@ const Dashboard = () => {
   const [filter, setFilter] = useState({ month: "", year: "" });
   const [progress, setProgress] = useState(60);
   const [showReminderForm, setShowReminderForm] = useState(false);
+  const [showRemindersModal, setShowRemindersModal] = useState(false);
 
   const filteredTransactions = transactions.filter((t) => {
     const [year, month] = t.date.split("-");
@@ -239,6 +241,8 @@ const Dashboard = () => {
 
       {/* Fixed bottom buttons */}
       
+      {showRemindersModal && <RemindersModal onClose={() => setShowRemindersModal(false)} />}
+
       {showReminderForm && (
         <ReminderForm
           onClose={() => setShowReminderForm(false)}
@@ -247,8 +251,8 @@ const Dashboard = () => {
             // Optionally, refresh data or show a success message
           }}
           onShowReminders={() => {
-            console.log("Show reminders clicked");
-            // TODO: Implement show reminders logic
+            setShowReminderForm(false);
+            setShowRemindersModal(true);
           }}
         />
       )}
