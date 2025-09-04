@@ -1,0 +1,123 @@
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { Button } from "../components/ui/Button";
+import ProductHeader from "../components/ProductHeader";
+import ProductFeatures from "../components/ProductFeatures";
+import IngredientList from "../components/IngredientList";
+
+interface Product {
+  _id: string;
+  name: string;
+  aliases?: string[];
+  brand?: string;
+  description?: string;
+  category?: string;
+  ingredients?: any[];
+  useCases?: string[];
+  features?: any;
+  isApproved: boolean;
+  verdict: string;
+}
+
+const ReviewPage: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const [product, setProduct] = useState<Product | null>(null);
+  const [verdict, setVerdict] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  // will replace with actual API call later
+  useEffect(() => {
+    setTimeout(() => {
+      const dummy: Product = {
+        _id: "1",
+        name: "Organic Protein Powder",
+        brand: "FitLife",
+        description: "A plant-based protein powder with essential nutrients.",
+        category: "Supplements",
+        aliases: ["Plant Protein", "Vegan Protein"],
+        features: {
+          Calories: "120",
+          Protein: "25g",
+          Carbs: "5g",
+          Fat: "2g",
+          Vitamins: "B12, D3",
+        },
+        ingredients: [
+          {
+            name: "Brown Rice Protein",
+            details: "Rich in amino acids, easily digestible.",
+            benefits: ["Supports muscle growth", "Easily digestible"],
+          },
+          {
+            name: "Pea Protein",
+            details: "High-quality plant protein source.",
+            benefits: ["Promotes satiety", "Rich in iron"],
+          },
+        ],
+        useCases: ["Post-workout recovery", "Meal replacement"],
+        isApproved: false,
+        verdict: "",
+      };
+      setProduct(dummy);
+      setVerdict(dummy.verdict || "");
+      setLoading(false);
+    }, 800);
+  }, [id]);
+
+  const handleDecision = async (approve: boolean) => {
+    if (!product) return;
+    alert(`Product ${approve ? "Approved" : "Rejected"}!`);
+  };
+
+  if (loading) return <p className="text-center mt-10 text-gray-600">Loading...</p>;
+  if (!product) return <p className="text-center mt-10 text-gray-600">Product not found</p>;
+
+  return (
+    <div className="max-w-4xl mx-auto p-6 space-y-6 bg-gray-50 min-h-screen">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <ProductHeader {...product} />
+      </div>
+
+      <ProductFeatures features={product.features} />
+      <IngredientList ingredients={product.ingredients} />
+
+      {product.useCases && product.useCases.length > 0 && (
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <h2 className="text-xl font-semibold mb-4 text-gray-800">Use Cases</h2>
+          <ul className="list-disc ml-6 text-gray-700 space-y-2">
+            {product.useCases.map((uc, i) => (
+              <li key={i} className="text-gray-600">{uc}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 space-y-4">
+        <h2 className="text-xl font-semibold text-gray-800">Review Decision</h2>
+        <textarea
+          value={verdict}
+          onChange={(e) => setVerdict(e.target.value)}
+          placeholder="Write your verdict..."
+          className="w-full border border-gray-300 rounded-lg p-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+          rows={4}
+        />
+        <div className="flex gap-4 justify-end">
+          <Button 
+            onClick={() => handleDecision(true)}
+            className="bg-green-600 hover:bg-green-700 text-white px-6 py-2.5 rounded-lg font-medium transition-colors duration-200"
+          >
+            Approve
+          </Button>
+          <Button 
+            onClick={() => handleDecision(false)}
+            className="bg-red-600 hover:bg-red-700 text-white px-6 py-2.5 rounded-lg font-medium transition-colors duration-200"
+          >
+            Reject
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ReviewPage;

@@ -4,9 +4,10 @@ import "./App.css";
 
 // 👈 1. Import routing components and your pages
 import { Routes, Route } from "react-router-dom";
-import HomePage from "../pages/HomePage"; 
-import SearchPage from "../pages/SearchPage"; 
-import Navbar from "../components/Navbar";     
+import HomePage from "./pages/homePage";
+import SearchPage from "./pages/SearchPage";
+import Navbar from "./components/Navbar";     
+import ReviewPage from "./pages/ReviewPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/search" element={<SearchPage />} />
+          <Route path="/review" element={<ReviewPage />} />
         </Routes>
       </main>
 
