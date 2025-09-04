@@ -5,9 +5,14 @@ import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 import ConnectPeople from "./pages/ConnectPeople";
 import Profile from "./pages/Profile";
-import Groups from "./pages/Groups"; // 👈 new
+import CreateGroup from "./pages/CreateGroup.tsx";
+import ConnectionsList from "./pages/ConnectionsList";
+import RequestsList from "./pages/RequestsList";
+import Groups from "./pages/Groups";         
+
 
 const App: React.FC = () => {
+  const userId = localStorage.getItem("userId");
   return (
     <Router>
       <Routes>
@@ -16,6 +21,8 @@ const App: React.FC = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/connect" element={<ConnectPeople />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/connections" element={<ConnectionsList userId={userId || ""} />} />
+        <Route path="/requests" element={<RequestsList userId={userId || ""}/>} />
         <Route path="/groups" element={<Groups />} /> {/* 👈 Groups Page */}
       </Routes>
     </Router>
