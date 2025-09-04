@@ -5,7 +5,7 @@ import { Login } from "./pages/login";
 import { Onboarding } from "./pages/onboarding";
 import ReportPage from "./pages/ReportPage";
 import Dashboard from "./pages/Dashboard";  // <-- use their Dashboard
-import FormPage from "./pages/FormPage";
+import FormPage from "./pages/TransactionForm";
 
 
 const App: React.FC = () => {
