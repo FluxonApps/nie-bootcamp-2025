@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import api from "../api/axios";
+import "./CreateGroupForm.css";
 
 interface Props {
   onGroupCreated: () => void;
@@ -15,34 +16,28 @@ const CreateGroupForm: React.FC<Props> = ({ onGroupCreated }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-        console.log("Submitting group:", {
-  name,
-  description,
-  domain,
-  userId: user._id || user.userId,
-});
-
       await api.post("/groups", {
         name,
         description,
         domain,
-        userId: user._id, // pass creator id
+        userId: user._id,
       });
       setName("");
       setDescription("");
       setDomain("");
-      onGroupCreated(); // refresh list
+      onGroupCreated();
     } catch (err: any) {
       alert(err.response?.data?.message || "Error creating group");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ marginBottom: "20px" }}>
-      <h3>Create Group</h3>
+    <form className="create-group-form" onSubmit={handleSubmit}>
+      <h3>✨ Create a New Group</h3>
+
       <input
         type="text"
-        placeholder="Group name"
+        placeholder="Group Name"
         value={name}
         onChange={(e) => setName(e.target.value)}
         required
@@ -58,8 +53,10 @@ const CreateGroupForm: React.FC<Props> = ({ onGroupCreated }) => {
         placeholder="Description"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
+        rows={3}
       />
-      <button type="submit">Create</button>
+
+      <button type="submit">➕ Create Group</button>
     </form>
   );
 };
