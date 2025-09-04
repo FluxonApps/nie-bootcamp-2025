@@ -1,6 +1,6 @@
-var express = require("express");
+const express = require("express");
 const mongoose = require("mongoose");
-
+require("dotenv").config();
 const { APP_PORT, DB_URL } = require("./config/vars");
 const routes = require("./routes/main");
 
@@ -15,7 +15,7 @@ app.get("/", function (req, res, next) {
   res.json({ status: "ok", server: "fintrack server" });
 });
 
-routes.forEach((route) => {
+
   routes.forEach((route) => {
     try {
       app[route.method.toLowerCase()](route.url, route.handler);
@@ -23,7 +23,7 @@ routes.forEach((route) => {
       console.warn(`Error creating route ${route}}`);
     }
   });
-});
+
 
 const start = async () => {
   var server;
@@ -37,6 +37,5 @@ const start = async () => {
     console.log("Error in starting server");
     server.close();
   }
-};
-
+}
 start();
