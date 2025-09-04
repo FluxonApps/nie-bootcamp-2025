@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../api/api';
 import { useAuth } from '../../context/AuthContext';
-import { useAuth } from '../../context/AuthContext';
-
 import DashboardHeader from './components/DashboardHeader.jsx';
 import DashboardNav from './components/DashboardNav.jsx';
 import DonationList from './components/DonationList.jsx';
 import MyRequests from './components/MyRequests.jsx';
 
 const RecipientDashboardPage = () => {
-    const [view, setView] = useState('donations');
-    const [availableDonations, setAvailableDonations] = useState([]);
-    const [userRequests, setUserRequests] = useState([]);
+      const [view, setView] = useState('donations');
+      const [availableDonations, setAvailableDonations] = useState([]);
+      const [userRequests, setUserRequests] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isUserDataoaded, setIsUserDataLoaded] = useState(false);
     const [error, setError] = useState(null);
     const { user } = useAuth(); // The user object now contains { token, role, userId }
-  const { user } = useAuth();
+
 
     useEffect(() => {
         // Run this effect once when the component mounts
@@ -94,6 +92,6 @@ const RecipientDashboardPage = () => {
             </div>
         </div>
     );
-};
 
+}
 export default RecipientDashboardPage;
