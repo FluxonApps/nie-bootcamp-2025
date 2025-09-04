@@ -9,21 +9,17 @@ var app = express();
 app.use(cors());
 app.use(express.json());
 
-
-
 app.get("/", function (req, res, next) {
   res.json({ status: "ok", server: "fintrack server" });
 });
 
-
-  routes.forEach((route) => {
-    try {
-      app[route.method.toLowerCase()](route.url, route.handler);
-    } catch {
-      console.warn(`Error creating route ${route}}`);
-    }
-  });
-
+routes.forEach((route) => {
+  try {
+    app[route.method.toLowerCase()](route.url, route.handler);
+  } catch {
+    console.warn(`Error creating route ${route}}`);
+  }
+});
 
 const start = async () => {
   var server;
@@ -37,5 +33,5 @@ const start = async () => {
     console.log("Error in starting server");
     server.close();
   }
-}
+};
 start();

@@ -38,6 +38,13 @@ const FormPage: React.FC = () => {
     e.preventDefault();
     console.log("Transaction submitted:", formData);
 
+// fetch call
+// fetch(URL/api/transact, {
+//   method
+  
+// })
+
+
     // Reset after submission
     setFormData({
       userId: "",
