@@ -209,7 +209,7 @@ const AddProductPage = () => {
                 {/* Ingredients */}
                 <section className="space-y-6">
                     <h3 className="text-xl font-semibold text-gray-800 border-b pb-2">
-                        🧪 Ingredients
+                        Ingredients
                     </h3>
                     {formData.ingredients.map((ingredient, ingIndex) => (
                         <div
