@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import "./Home.css";
-import welcomeImage from "../assets/welcome.png";
+import { useNavigate } from "react-router-dom";
+import "../pages/Home.css";
 
 interface User {
   name: string;
@@ -18,57 +17,46 @@ const Home: React.FC = () => {
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch (err) {
-        console.error("Error parsing user data:", err);
-      }
+      setUser(JSON.parse(storedUser));
     }
   }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    navigate("/");
-  };
 
   return (
     <>
       <Header />
       <div className="home-container">
-        <div className="welcome-section">
-          <img src={welcomeImage} alt="Welcome" className="welcome-image" />
-          <h1>Welcome to Campus Connect</h1>
-          {user && user.name ? (
-            <h2>Hi, {user.name}! 🎉</h2>
-          ) : (
-            <h2>Hi, User! 🎉</h2>
-          )}
-          <p>Explore and connect with your peers 🚀</p>
+        <div className="banner">
+          <img
+            src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b"
+            alt="Campus"
+            className="banner-image"
+          />
+          <div className="banner-text">
+            {user ? <h1>Hi, {user.name} 👋</h1> : <h1>Welcome to Campus Connect</h1>}
+            <p>Connect, collaborate, and grow together 🚀</p>
+          </div>
         </div>
 
-        <div className="buttons-section">
-          <button
-            className="btn connect-btn"
-            onClick={() => navigate("/connect")}
-          >
-            🤝 Connect with People
-          </button>
-         <button
-            className="btn group-btn"
-            onClick={() => navigate("/groups")}
->
-            👥 Groups
-           </button>
 
-          <button
-            className="btn profile-btn"
-            onClick={() => navigate("/profile")}
-          >
-            👤 Set Your Profile
-          </button>
-          <button className="btn logout-btn" onClick={handleLogout}>
-            🚪 Logout
-          </button>
+        <div className="button-container">
+          <div className="card" onClick={() => navigate("/connect")}>
+            <h2>🤝 Connect with People</h2>
+            <p>Meet new peers and build your network.</p>
+            <button>Explore</button>
+          </div>
+
+          <div className="card" onClick={() => navigate("/create-group")}>
+            <h2>👥 Create a Group</h2>
+            <p>Collaborate and share ideas in groups.</p>
+            <button>Create</button>
+          </div>
+
+          <div className="card" onClick={() => navigate("/profile")}>
+            <h2>👤 Set Your Profile</h2>
+            <p>Personalize your experience and update details.</p>
+            <button>Update</button>
+          </div>
+
         </div>
       </div>
       <Footer />

@@ -17,7 +17,7 @@ const Header: React.FC = () => {
   return (
     <header style={{ padding: "1rem", display: "flex", justifyContent: "space-between", backgroundColor: theme === "light" ? "#f0f0f0" : "#333", color: theme === "light" ? "#000" : "#fff" }}>
       <div><strong>Campus Connect</strong></div>
-      <div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <button onClick={toggleTheme} style={{ marginRight: "10px", cursor: "pointer" }}>
           {theme === "light" ? "Dark Mode" : "Light Mode"}
         </button>
@@ -28,3 +28,4 @@ const Header: React.FC = () => {
 };
 
 export default Header;
+
