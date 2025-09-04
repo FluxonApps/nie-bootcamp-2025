@@ -1,6 +1,11 @@
 const userRoutes = require("./userRoute");
+
 const billReminderRoutes = require("./billReminderRoute");
 
-const allRoutes = [...userRoutes, ...billReminderRoutes];
+
+const onboardingRoutes= require("./onboardingRoute");
+
+const allRoutes = [...userRoutes,...onboardingRoutes,...billReminderRoutes];
+
 
 module.exports = allRoutes;
