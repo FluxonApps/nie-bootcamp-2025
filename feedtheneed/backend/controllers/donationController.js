@@ -1,5 +1,6 @@
-const donationService = require("../services/donationService");
+const donationService = require("../service/donationService");
 
+// Get all donations (latest first)
 const getAllDonations = async (req, res) => {
   try {
     const donations = await donationService.getAllDonations();
@@ -9,22 +10,33 @@ const getAllDonations = async (req, res) => {
   }
 };
 
+// Get only logged-in donor's donations
+const getMyDonations = async (req, res) => {
+  try {
+    const donorId = req.user.id; // from JWT auth middleware
+    const donations = await donationService.getDonationsByDonor(donorId);
+    res.json(donations || []);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Add new donation (donor auto-assigned from token)
 const addDonation = async (req, res) => {
   try {
-    const { donor, category, description, quantity } = req.body;
+    const donorId = req.user.id; // take from token
+    const { category, description, quantity } = req.body;
 
-    if (!donor || !category || !quantity) {
+    if (!category || !quantity) {
       return res
         .status(400)
-        .json({ error: "donor, category, and quantity are required" });
+        .json({ error: "category and quantity are required" });
     }
 
-    const newDonation = await donationService.addDonation({
-      donor,
-      category,
-      description,
-      quantity,
-    });
+    const newDonation = await donationService.addDonation(
+      { category, description, quantity },
+      donorId
+    );
 
     res.status(201).json(newDonation);
   } catch (err) {
@@ -32,6 +44,7 @@ const addDonation = async (req, res) => {
   }
 };
 
+// Update donation status (admin or donor can update their own donation)
 const updateDonationStatus = async (req, res) => {
   try {
     const { id } = req.params;
@@ -49,5 +62,11 @@ const updateDonationStatus = async (req, res) => {
   }
 };
 
-module.exports = { getAllDonations, addDonation, updateDonationStatus };
+module.exports = { 
+  getAllDonations, 
+  getMyDonations, 
+  addDonation, 
+  updateDonationStatus 
+};
+
 
