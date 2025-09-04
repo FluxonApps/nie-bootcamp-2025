@@ -116,7 +116,7 @@ const FormPage: React.FC = () => {
               onChange={handleInputChange}
               className="w-full rounded-lg px-3 py-2"
               style={{
-                backgroundColor: COLORS.inputBackground,
+                backgroundColor: "black",
                 border: `1px solid ${COLORS.border}`,
                 color: COLORS.primaryText,
               }}
@@ -137,7 +137,7 @@ const FormPage: React.FC = () => {
               min="0"
               className="w-full rounded-lg px-3 py-2"
               style={{
-                backgroundColor: COLORS.inputBackground,
+                backgroundColor: "black",
                 border: `1px solid ${COLORS.border}`,
                 color: COLORS.primaryText,
               }}
@@ -153,7 +153,7 @@ const FormPage: React.FC = () => {
               onChange={handleInputChange}
               className="w-full rounded-lg px-3 py-2"
               style={{
-                backgroundColor: COLORS.inputBackground,
+                backgroundColor: "black",
                 border: `1px solid ${COLORS.border}`,
                 color: COLORS.primaryText,
               }}
@@ -176,7 +176,7 @@ const FormPage: React.FC = () => {
               onChange={handleInputChange}
               className="w-full rounded-lg px-3 py-2"
               style={{
-                backgroundColor: COLORS.inputBackground,
+                backgroundColor: "black",
                 border: `1px solid ${COLORS.border}`,
                 color: COLORS.primaryText,
               }}
@@ -192,7 +192,7 @@ const FormPage: React.FC = () => {
               onChange={handleInputChange}
               className="w-full rounded-lg px-3 py-2"
               style={{
-                backgroundColor: COLORS.inputBackground,
+                backgroundColor: "black",
                 border: `1px solid ${COLORS.border}`,
                 color: COLORS.primaryText,
               }}
