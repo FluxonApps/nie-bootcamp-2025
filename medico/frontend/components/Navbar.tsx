@@ -38,8 +38,8 @@ const Navbar: React.FC = () => {
             type="text"
             placeholder="Search products by name or brand..."
             className="search-input"
-            value={searchTerm} // 👈 6. Control the input with state
-            onChange={(e) => setSearchTerm(e.target.value)} // 👈 7. Update state on change
+            value={searchTerm} 
+            onChange={(e) => setSearchTerm(e.target.value)} 
           />
         </form>
 
