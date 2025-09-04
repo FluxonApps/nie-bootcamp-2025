@@ -1,75 +1,99 @@
-// src/pages/recipient-dashboard/index.jsx
-
 import React, { useState, useEffect } from 'react';
+import api from '../../api/api';
+import { useAuth } from '../../context/AuthContext';
 import { useAuth } from '../../context/AuthContext';
 
-// These import paths must match your structure exactly
 import DashboardHeader from './components/DashboardHeader.jsx';
 import DashboardNav from './components/DashboardNav.jsx';
 import DonationList from './components/DonationList.jsx';
 import MyRequests from './components/MyRequests.jsx';
 
 const RecipientDashboardPage = () => {
-  const [view, setView] = useState('donations');
-  const [availableDonations, setAvailableDonations] = useState([]);
-  const [userRequests, setUserRequests] = useState([]);
+    const [view, setView] = useState('donations');
+    const [availableDonations, setAvailableDonations] = useState([]);
+    const [userRequests, setUserRequests] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [isUserDataoaded, setIsUserDataLoaded] = useState(false);
+    const [error, setError] = useState(null);
+    const { user } = useAuth(); // The user object now contains { token, role, userId }
   const { user } = useAuth();
 
-  useEffect(() => {
-    const load = async () => {
-      try {
-        // GET available donations (status active)
-        const res = await fetch('http://localhost:8002/api/donations', {
-          headers: { Authorization: `Bearer ${user?.token || localStorage.getItem('token')}` },
-        });
-        const data = await res.json();
-        const active = Array.isArray(data) ? data.filter(d => (d.status || '').toLowerCase() === 'active') : [];
-        setAvailableDonations(active);
-      } catch (e) {
-        setAvailableDonations([]);
-      }
+    useEffect(() => {
+        // Run this effect once when the component mounts
+        if (user && user.userId) { // Check for userId to ensure context is ready
+            fetchData();
+        } else {
+            setLoading(false);
+        }
+    }, []); // Empty array ensures it runs only once
+
+    const fetchData = async () => {
+        if (isUserDataoaded) return; // Prevent re-fetching if already in a fetch cycle
+        setLoading(true);
+        setError(null);
+        try {
+            // --- ADAPTED API CALLS ---
+            const [allDonationsResponse, requestsResponse] = await Promise.all([
+                // 1. Fetch ALL donations (as per your donationRoute.js)
+                api.get('/donations'),
+                // 2. Fetch requests for the specific logged-in user
+                api.get(`/requests/user/${user.userId}`)
+            ]);
+
+            const allDonationsFromApi = allDonationsResponse;
+
+            // 3. Filter the donations on the frontend
+            const filteredDonations = allDonationsFromApi.filter(donation =>
+                donation.status === 'active' && donation.quantity > 0
+            );
+
+            setAvailableDonations(filteredDonations);
+            setUserRequests(requestsResponse.data);
+
+        } catch (err) {
+            setError(err.message || 'Failed to fetch data.');
+            console.error(err);
+        } finally {
+            setLoading(false);
+            setIsUserDataLoaded(true);
+        }
     };
-    load();
-  }, [user?.token]);
 
-  const handleRequestDonation = async (donationId) => {
-    const donationToRequest = availableDonations.find(d => d._id === donationId);
-    if (!donationToRequest) return;
+    const handleRequestDonation = async (donationId) => {
+        try {
+            // 4. Use the correct POST route for creating a request
+            // Your backend's addRequest service will use the user ID from the auth token
+            await api.post('/requests', { donationId });
+            alert('Your request has been submitted successfully!');
+            // Refresh data to show the new request
+            fetchData();
+        } catch (err) {
+            alert(err.message || 'Failed to submit request.');
+            console.error(err);
+        }
+    };
 
-    try {
-      const res = await fetch('http://localhost:8002/api/requests', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${user?.token || localStorage.getItem('token')}`,
-        },
-        body: JSON.stringify({ donationId }),
-      });
-      if (!res.ok) throw new Error('Failed to request donation');
-      const created = await res.json();
-
-      setUserRequests(prev => [...prev, created]);
-      setAvailableDonations(prev => prev.filter(d => d._id !== donationId));
-      alert('Request submitted. Pending approval.');
-    } catch (e) {
-      alert(e.message || 'Unable to request donation');
+    if (loading) {
+        return <div className="text-center p-12 font-semibold text-gray-500">Loading Dashboard...</div>;
     }
-  };
+    if (error) {
+        return <div className="text-center p-12 font-semibold text-red-600">{error}</div>;
+    }
 
-  return (
-    <div className="bg-gray-50 min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <DashboardHeader />
-        <DashboardNav activeView={view} onViewChange={setView} />
-        <div>
-          {view === 'donations' && (
-            <DonationList donations={availableDonations} onRequest={handleRequestDonation} />
-          )}
-          {view === 'myRequests' && <MyRequests requests={userRequests} />}
+    return (
+        <div className="bg-gray-50 min-h-screen">
+            <div className="max-w-7xl mx-auto px-4 sm-px-6 lg:px-8 py-12">
+                <DashboardHeader />
+                <DashboardNav activeView={view} onViewChange={setView} />
+                <div>
+                    {view === 'donations' && (
+                        <DonationList donations={availableDonations} onRequest={handleRequestDonation} />
+                    )}
+                    {view === 'myRequests' && <MyRequests requests={userRequests} />}
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default RecipientDashboardPage;
