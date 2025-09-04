@@ -37,6 +37,7 @@ const Home: React.FC = () => {
           </div>
         </div>
 
+
         <div className="button-container">
           <div className="card" onClick={() => navigate("/connect")}>
             <h2>🤝 Connect with People</h2>
@@ -55,6 +56,7 @@ const Home: React.FC = () => {
             <p>Personalize your experience and update details.</p>
             <button>Update</button>
           </div>
+
         </div>
       </div>
       <Footer />

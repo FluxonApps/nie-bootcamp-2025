@@ -13,6 +13,16 @@ const postRoutes = [
     url: base,
     handler: postController.addPost,
   },
+  {
+    method: "PUT",
+    url: `${base}/:postId/like`,
+    handler: postController.toggleLike,
+  },
+  {
+    method: "POST",
+    url: `${base}/:postId/comment`,
+    handler: postController.addComment,
+  },
 ];
 
 module.exports = postRoutes;
