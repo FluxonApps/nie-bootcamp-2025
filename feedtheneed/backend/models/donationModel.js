@@ -25,8 +25,8 @@ const donationSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: DONATION_STATUS, // ✅ use constants for status
-      default: DONATION_STATUS[0], // e.g. "available"
+      enum: Object.values(DONATION_STATUS),
+      default: DONATION_STATUS.ACTIVE,
     },
     CreatedAt: {
       type: Date,

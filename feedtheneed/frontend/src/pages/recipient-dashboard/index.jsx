@@ -1,6 +1,7 @@
 // src/pages/recipient-dashboard/index.jsx
 
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../../context/AuthContext';
 
 // These import paths must match your structure exactly
 import DashboardHeader from './components/DashboardHeader.jsx';
@@ -12,37 +13,47 @@ const RecipientDashboardPage = () => {
   const [view, setView] = useState('donations');
   const [availableDonations, setAvailableDonations] = useState([]);
   const [userRequests, setUserRequests] = useState([]);
+  const { user } = useAuth();
 
   useEffect(() => {
-    const dummyDonations = [
-      { _id: 'd1', description: 'A weekly box of assorted fresh vegetables.', category: 'Food', quantity: 5 },
-      { _id: 'd2', description: 'Men\'s size large, gently used winter jacket.', category: 'Clothing', quantity: 1 },
-      { _id: 'd3', description: 'A set of 10 classic storybooks for ages 4-8.', category: 'Education', quantity: 3 },
-    ];
-    
-    const dummyRequests = [
-      { _id: 'r1', donation: dummyDonations[1], status: 'pending', createdAt: new Date() }
-    ];
+    const load = async () => {
+      try {
+        // GET available donations (status active)
+        const res = await fetch('http://localhost:8002/api/donations', {
+          headers: { Authorization: `Bearer ${user?.token || localStorage.getItem('token')}` },
+        });
+        const data = await res.json();
+        const active = Array.isArray(data) ? data.filter(d => (d.status || '').toLowerCase() === 'active') : [];
+        setAvailableDonations(active);
+      } catch (e) {
+        setAvailableDonations([]);
+      }
+    };
+    load();
+  }, [user?.token]);
 
-    setAvailableDonations(dummyDonations);
-    setUserRequests(dummyRequests);
-  }, []);
-
-  const handleRequestDonation = (donationId) => {
+  const handleRequestDonation = async (donationId) => {
     const donationToRequest = availableDonations.find(d => d._id === donationId);
     if (!donationToRequest) return;
-    
-    alert(`You have requested: "${donationToRequest.description}".`);
-    
-    const newRequest = {
-        _id: `r${Math.random()}`,
-        donation: donationToRequest,
-        status: 'pending',
-        createdAt: new Date(),
-    };
 
-    setUserRequests(prev => [...prev, newRequest]);
-    setAvailableDonations(prev => prev.filter(d => d._id !== donationId));
+    try {
+      const res = await fetch('http://localhost:8002/api/requests', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user?.token || localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({ donationId }),
+      });
+      if (!res.ok) throw new Error('Failed to request donation');
+      const created = await res.json();
+
+      setUserRequests(prev => [...prev, created]);
+      setAvailableDonations(prev => prev.filter(d => d._id !== donationId));
+      alert('Request submitted. Pending approval.');
+    } catch (e) {
+      alert(e.message || 'Unable to request donation');
+    }
   };
 
   return (
