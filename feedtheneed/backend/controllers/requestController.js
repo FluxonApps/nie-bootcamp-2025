@@ -1,8 +1,20 @@
 const requestService = require("../services/requestService");
+const { REQUEST_STATUS, ROLES } = require("../constants/constant");
 
 const getAllRequests = async (req, res) => {
   try {
-    const requests = await requestService.getAllRequests();
+    let requests;
+
+    if (req.user.role === "admin") {
+      // Admin can see all requests
+      requests = await requestService.getAllRequests(); // no need to pass req.user
+    } else if (req.user.role === "recipient") {
+      // Recipient can only see their own requests
+      requests = await requestService.getRequestsByUser(req.user.id);
+    } else {
+      return res.status(403).json({ error: "Access denied" });
+    }
+
     return res.json(requests || []);
   } catch (err) {
     return res.status(500).json({ error: err.message });
@@ -11,17 +23,25 @@ const getAllRequests = async (req, res) => {
 
 const addRequest = async (req, res) => {
   try {
-    const { requestedId, status, donationId, UpdatedBy } = req.body;
+    const userRole = req.user?.role;
 
-    if (!requestedId) {
-      return res.status(400).json({ error: "requestedId is required" });
+    // Only recipients can create requests
+    if (userRole !== ROLES[1]) { // ROLES[1] = "recipient"
+      return res.status(403).json({ error: "Only recipients can create requests" });
     }
 
+    const { donationId, UpdatedBy } = req.body;
+
+    if (!donationId) {
+      return res.status(400).json({ error: "donationId is required" });
+    }
+
+    // ✅ Force requestedId to be the logged-in user’s ID
     const savedRequest = await requestService.addRequest({
-      requestedId,
-      status,
+      requestedId: req.user.id,
+      status: "pending", // always pending at start
       donationId,
-      UpdatedBy,
+      UpdatedBy: req.user.id, // mark who created/updated
     });
 
     return res.status(201).json(savedRequest);
@@ -44,6 +64,15 @@ const getRequestById = async (req, res) => {
 
 const updateRequest = async (req, res) => {
   try {
+    const userRole = req.user?.role;
+    const { status } = req.body;
+
+    if ([REQUEST_STATUS[1], REQUEST_STATUS[3]].includes(status)) {
+      if (userRole !== ROLES[2]) { // ROLES[2] = "admin"
+        return res.status(403).json({ error: "Only admins can approve or reject requests" });
+      }
+    }
+
     const updated = await requestService.updateRequest(req.params.id, req.body);
     if (!updated) {
       return res.status(404).json({ error: "Request not found" });

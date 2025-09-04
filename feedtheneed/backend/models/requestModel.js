@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const { REQUEST_STATUS } = require("../constants/constant");
+
 const requestSchema = new mongoose.Schema(
   {
     requestedId: {
@@ -8,8 +10,8 @@ const requestSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["pending", "approved", "fulfilled", "rejected"],
-      default: "pending",
+      enum: REQUEST_STATUS, // ✅ use constant
+      default: REQUEST_STATUS[0], // "pending"
     },
     donationId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -22,7 +24,7 @@ const requestSchema = new mongoose.Schema(
     },
     UpdatedAt: {
       type: Date,
-      default: null,
+      default: Date.now,
     },
     UpdatedBy: {
       type: mongoose.Schema.Types.ObjectId,
