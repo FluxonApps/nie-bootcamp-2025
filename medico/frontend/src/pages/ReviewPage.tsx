@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 import { Button } from "../components/ui/Button";
 import ProductHeader from "../components/ProductHeader";
 import ProductFeatures from "../components/ProductFeatures";
@@ -25,48 +26,44 @@ const ReviewPage: React.FC = () => {
   const [verdict, setVerdict] = useState("");
   const [loading, setLoading] = useState(true);
 
-  // will replace with actual API call later
   useEffect(() => {
-    setTimeout(() => {
-      const dummy: Product = {
-        _id: "1",
-        name: "Organic Protein Powder",
-        brand: "FitLife",
-        description: "A plant-based protein powder with essential nutrients.",
-        category: "Supplements",
-        aliases: ["Plant Protein", "Vegan Protein"],
-        features: {
-          Calories: "120",
-          Protein: "25g",
-          Carbs: "5g",
-          Fat: "2g",
-          Vitamins: "B12, D3",
-        },
-        ingredients: [
-          {
-            name: "Brown Rice Protein",
-            details: "Rich in amino acids, easily digestible.",
-            benefits: ["Supports muscle growth", "Easily digestible"],
-          },
-          {
-            name: "Pea Protein",
-            details: "High-quality plant protein source.",
-            benefits: ["Promotes satiety", "Rich in iron"],
-          },
-        ],
-        useCases: ["Post-workout recovery", "Meal replacement"],
-        isApproved: false,
-        verdict: "",
-      };
-      setProduct(dummy);
-      setVerdict(dummy.verdict || "");
-      setLoading(false);
-    }, 800);
+    const fetchProduct = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(`http://localhost:8004/api/products/${id}`);
+        if (response.data.success) {
+          setProduct(response.data.data);
+          setVerdict(response.data.data.verdict || "");
+        } else {
+          setProduct(null);
+        }
+      } catch (err) {
+        console.error("Error fetching product:", err);
+        setProduct(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProduct();
   }, [id]);
 
   const handleDecision = async (approve: boolean) => {
     if (!product) return;
-    alert(`Product ${approve ? "Approved" : "Rejected"}!`);
+    try {
+      const response = await axios.patch(`http://localhost:8004/api/products/${product._id}/approve`, {
+        verdict,
+        isApproved: approve,
+      });
+      if (response.data.success) {
+        alert(`Product ${approve ? "Approved" : "Rejected"}!`);
+        setProduct(response.data.data);
+      } else {
+        alert("Failed to update product review");
+      }
+    } catch (err) {
+      console.error("Error updating product:", err);
+      alert("Error while reviewing product");
+    }
   };
 
   if (loading) return <p className="text-center mt-10 text-gray-600">Loading...</p>;
@@ -79,6 +76,7 @@ const ReviewPage: React.FC = () => {
       </div>
 
       <ProductFeatures features={product.features} />
+
       <IngredientList ingredients={product.ingredients} />
 
       {product.useCases && product.useCases.length > 0 && (
@@ -102,13 +100,13 @@ const ReviewPage: React.FC = () => {
           rows={4}
         />
         <div className="flex gap-4 justify-end">
-          <Button 
+          <Button
             onClick={() => handleDecision(true)}
             className="bg-green-600 hover:bg-green-700 text-white px-6 py-2.5 rounded-lg font-medium transition-colors duration-200"
           >
             Approve
           </Button>
-          <Button 
+          <Button
             onClick={() => handleDecision(false)}
             className="bg-red-600 hover:bg-red-700 text-white px-6 py-2.5 rounded-lg font-medium transition-colors duration-200"
           >
