@@ -1,18 +1,26 @@
 import { useState, type ChangeEvent, type FormEvent, type JSX } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 
 interface FormState {
   name: string;
   college: string;
   budget: string;
+  email: string;
+  password: string;
 }
 
 function Onboarding(): JSX.Element {
+  const [searchParams] = useSearchParams();
+  const emailFromLogin = searchParams.get("email") || "";
+  const passwordFromLogin = searchParams.get("password") || "";
+
   const [form, setForm] = useState<FormState>({
     name: "",
     college: "",
     budget: "",
+    email: emailFromLogin,
+    password: passwordFromLogin,
   });
 
   const navigate = useNavigate();
@@ -24,12 +32,14 @@ function Onboarding(): JSX.Element {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:8003/api/onboarding", form);
-      if (res.status === 201) {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/onboarding`, form);
+      alert(res.data.message); // ✅ Show backend message
+
+      if (res.data.success) {
         navigate("/dashboard");
       }
     } catch (err: any) {
-      console.error(err.response?.data || err.message);
+      alert(err.response?.data?.message || "Unexpected error occurred");
     }
   };
 
@@ -49,6 +59,28 @@ function Onboarding(): JSX.Element {
           placeholder="Name"
           className="w-full mb-3 p-2 border rounded"
           required
+        />
+
+        <input
+          type="email"
+          name="email"
+          value={form.email}
+          onChange={handleChange}
+          placeholder="Email"
+          className="w-full mb-3 p-2 border rounded"
+          required
+          readOnly={emailFromLogin !== ""} // ✅ clearer than !!
+        />
+
+        <input
+          type="password"
+          name="password"
+          value={form.password}
+          onChange={handleChange}
+          placeholder="Password"
+          className="w-full mb-3 p-2 border rounded"
+          required
+          readOnly={passwordFromLogin !== ""}
         />
 
         <input
