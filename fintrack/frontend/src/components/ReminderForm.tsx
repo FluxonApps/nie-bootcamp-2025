@@ -6,6 +6,11 @@ interface ReminderFormProps {
   onClose: () => void;
   onSave: () => void;
   onShowReminders: () => void;
+  reminderData?: {
+    billName: string;
+    amount: string;
+    date: string;
+  };
 }
 
 const ReminderForm: React.FC<ReminderFormProps> = ({
@@ -39,6 +44,22 @@ const ReminderForm: React.FC<ReminderFormProps> = ({
     }
   };
 
+  const handleSyncToGoogleCalendar = () => {
+    if (!formData.billName.trim() || !formData.amount || !formData.date) {
+      console.error('Please fill in all fields first');
+      return;
+    }
+    
+    const formattedDate = new Date(formData.date).toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+    const endDate = new Date(formData.date);
+    endDate.setHours(endDate.getHours() + 1); 
+    const endDateFormatted = endDate.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+    
+    const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(`Bill Reminder: ${formData.billName}`)}&dates=${formattedDate}/${endDateFormatted}&details=${encodeURIComponent(`Amount: $${formData.amount}`)}&sf=true&output=xml`;
+    
+    window.open(googleCalendarUrl, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="w-full max-w-md p-8 bg-gray-800/90 backdrop-blur-lg rounded-2xl shadow-2xl">
@@ -53,7 +74,6 @@ const ReminderForm: React.FC<ReminderFormProps> = ({
         </div>
 
         <form onSubmit={handleSubmit}>
-          {/* Bill Name */}
           <div className="mb-4">
             <label className="block mb-2 font-medium">Bill Name</label>
             <input
@@ -67,7 +87,6 @@ const ReminderForm: React.FC<ReminderFormProps> = ({
             />
           </div>
 
-          {/* Amount */}
           <div className="mb-4">
             <label className="block mb-2 font-medium">Amount</label>
             <input
@@ -83,7 +102,6 @@ const ReminderForm: React.FC<ReminderFormProps> = ({
             />
           </div>
 
-          {/* Date */}
           <div className="mb-6">
             <label className="block mb-2 font-medium">Due Date</label>
             <div className="relative">
@@ -101,22 +119,35 @@ const ReminderForm: React.FC<ReminderFormProps> = ({
             </div>
           </div>
 
-          {/* Buttons */}
-          <div className="flex flex-col space-y-3">
-            <button
-              type="submit"
-              className="w-full py-3 px-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition"
-              style={{ backgroundColor: COLORS.primary }}
-            >
-              Save Reminder
-            </button>
+          <div className="space-y-4 mt-6">
+            <div className="flex justify-between space-x-4">
+              <button
+                type="button"
+                onClick={onShowReminders}
+                className="py-3 px-6 rounded-lg font-semibold flex-1 text-center transition"
+                style={{ backgroundColor: COLORS.primary, color: COLORS.primaryText }}
+              >
+                Show Reminders
+              </button>
+              <button
+                type="submit"
+                className="py-3 px-6 rounded-lg font-semibold flex-1 text-center transition"
+                style={{ backgroundColor: COLORS.primaryAccent, color: COLORS.primaryText }}
+              >
+                Save Reminder
+              </button>
+            </div>
+            
             <button
               type="button"
-              onClick={onShowReminders}
-              className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition"
-              style={{ backgroundColor: COLORS.secondary }}
+              onClick={handleSyncToGoogleCalendar}
+              className="w-full py-3 px-6 rounded-lg font-semibold text-center transition flex items-center justify-center space-x-2"
+              style={{ backgroundColor: '#f3f4f6', color: '#1f2937' }}
             >
-              Show Reminders
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#DB4437">
+                <path d="M12 12h-6v-9h9v3h-6v6zm0 0h-6v9h9v-3h-6v-6zm12-6h-9v3h6v6h3v-9zm-9-3h9v9h-3v-6h-6v-3z"/>
+              </svg>
+              <span>Sync to Google Calendar</span>
             </button>
           </div>
         </form>
