@@ -36,7 +36,13 @@ const allRoutes = [
         method: "PATCH",
         path: `${base}/products/:id/approve`,
         handler: [productController.updateProductReview],
-  }
+      },
+      {
+        method: "GET",
+        path: `${base}/products/:id`,
+        handler: [productController.getProductById],
+      }
+
 ];
 
 module.exports = allRoutes;
