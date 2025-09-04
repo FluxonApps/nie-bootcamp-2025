@@ -1,21 +1,8 @@
+// src/components/DonationList.jsx
+
 import React from 'react';
 
-// STEP 1: Update the interface to match your Mongoose schema
-export interface Donation {
-  _id: string;
-  category: string;
-  description: string;
-  quantity: number;
-  // We remove 'title' and 'imageUrl' as they are not in the schema
-}
-
-// Define the props for this component
-interface DonationListProps {
-  donations: Donation[];
-  onRequest: (donationId: string) => void;
-}
-
-const DonationList: React.FC<DonationListProps> = ({ donations, onRequest }) => {
+const DonationList = ({ donations, onRequest }) => {
   return (
     <div>
       <h2 className="text-3xl font-bold text-gray-800 mb-6">Available Donations</h2>
@@ -25,18 +12,18 @@ const DonationList: React.FC<DonationListProps> = ({ donations, onRequest }) => 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {donations.map((donation) => (
             <div key={donation._id} className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col">
-              {/* STEP 2: Use a placeholder image since imageUrl is not available */}
+              {/* Placeholder image using category */}
               <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
                 <span className="text-gray-500 text-lg font-semibold">{donation.category}</span>
               </div>
               
               <div className="p-6 flex flex-col flex-grow">
-                {/* Display the Category as a badge */}
+                {/* Category badge */}
                 <span className="text-sm font-semibold text-green-600 bg-green-100 py-1 px-3 rounded-full self-start">
                   {donation.category}
                 </span>
 
-                {/* STEP 3: Display the description and quantity from the schema */}
+                {/* Description and Quantity */}
                 <p className="text-lg font-semibold text-gray-800 mt-4 mb-2 flex-grow">{donation.description}</p>
                 <p className="text-md text-gray-700 font-bold">
                   Quantity Available: <span className="text-green-600">{donation.quantity}</span>

@@ -1,11 +1,7 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import Button from '../../../components/ui/Button';
 import Image from '../../../components/AppImage';
 
 const HeroSection = () => {
-  const navigate = useNavigate();
-
   return (
     <section className="relative bg-gradient-to-br from-primary/5 via-background to-secondary/5 py-20 lg:py-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -19,22 +15,6 @@ const HeroSection = () => {
             <p className="text-lg sm:text-xl text-text-secondary mb-8 max-w-xl mx-auto lg:mx-0">
               Connecting surplus food with those who need it most.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button
-                variant="default"
-                size="lg"
-                onClick={() => navigate('/registration')}
-              >
-                Get Started
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                onClick={() => navigate('/login')}
-              >
-                Login
-              </Button>
-            </div>
           </div>
 
           {/* Hero Image */}
