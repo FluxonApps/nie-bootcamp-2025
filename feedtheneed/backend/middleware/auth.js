@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { ROLES } = require("../constants/constant");
+const { ROLES, JWT_SECRET } = require("../constants/constant");
 
 // Middleware to check authentication
 const authMiddleware = (req, res, next) => {
@@ -11,7 +11,7 @@ const authMiddleware = (req, res, next) => {
 
   try {
     // Verify token using secret key
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, JWT_SECRET);
 
     // Attach user info to request
     req.user = decoded;

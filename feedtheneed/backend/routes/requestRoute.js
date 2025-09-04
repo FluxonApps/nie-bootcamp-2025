@@ -7,6 +7,13 @@ const requestRoutes = [
   // ✅ Any logged-in user can view requests (but what they see depends on role in controller)
   { method: "GET", url: base, handler: [authMiddleware, requestController.getAllRequests] },
 
+  // ✅ Recipient can view all their own requests
+  {
+  method: "GET",
+  url: `${base}/user/:userId`,
+  handler: [authMiddleware, authorizeRoles("recipient"), requestController.getRequestsByUser],
+  },
+
   // ✅ Only recipient can create a request
   { method: "POST", url: base, handler: [authMiddleware, authorizeRoles("recipient"), requestController.addRequest] },
 

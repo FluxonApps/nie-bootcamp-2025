@@ -1,13 +1,15 @@
 module.exports = {
-  ROLES: {
-    DONOR: "donor",
-    RECIPIENT: "recipient",
-    ADMIN: "admin",
+  ROLES: ["donor", "recipient", "admin"],
+  DONATION_STATUS: {
+    ACTIVE: "active",
+    FULFILLED: "fulfilled",
+    CANCELLED: "cancelled",
   },
   REQUEST_STATUS: {
     PENDING: "pending",
     APPROVED: "approved",
-    FULFILLED: "fulfilled",
     REJECTED: "rejected",
+    COMPLETED: "completed",
   },
+  JWT_SECRET : process.env.JWT_SECRET || "supersecretkey"
 };
