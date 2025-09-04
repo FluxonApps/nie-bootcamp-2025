@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
+// import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 
 
@@ -9,10 +9,12 @@ import ConnectPeople from './pages/ConnectPeople.tsx';
 
 import Profile from "./pages/Profile";
 
+import CreateGroup from "./pages/CreateGroup.tsx";
 
 import Groups from "./pages/Groups";         
 import Posts from "./pages/Posts.tsx";
 
+import Profile from "./pages/Profile";
 
 const App: React.FC = () => {
   const userId = localStorage.getItem("userId");
@@ -20,12 +22,14 @@ const App: React.FC = () => {
     <Router>
       <Routes>
         <Route path="/" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
+        {/* <Route path="/signup" element={<SignUp />} /> */}
         <Route path="/home" element={<Home />} />
-        <Route path="/connect" element={<ConnectPeople />} />
-        <Route path="/profile" element={<Profile />} />
         <Route path="/posts" element={<Posts />} />
         <Route path="/groups" element={<Groups />} /> {/* 👈 Groups Page */}
+        {/* <Route path="/connect" element={<ConnectPeople />} /> */}
+        {/* <Route path="/create-group" element={<CreateGroup />} /> */}
+        {/* <Route path="/profile" element={<Profile />} /> */}
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
   );
