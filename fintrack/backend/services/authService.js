@@ -1,28 +1,22 @@
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 
-const SECRET_KEY = "your_secret_key"; // 🔑 Move to .env in production
+const SECRET_KEY = "your_secret_key"; 
 
 exports.loginUser = async (email, password) => {
   try {
-    let user = await User.findOne({ email });
+    const user = await User.findOne({ email });
 
     if (!user) {
-      // ✅ If user does not exist, create a new one
-      user = new User({
-        email,
-        password,
-        onboardingCompleted: false, // start with onboarding incomplete
-      });
-      await user.save();
-    } else {
-      // ✅ If user exists, check password
-      if (user.password !== password) {
-        return { success: false, message: "Invalid credentials" };
-      }
+     
+      return { success: false, message: "User not found" };
     }
 
-    // ✅ Generate JWT token
+    if (user.password !== password) {
+      return { success: false, message: "Invalid credentials" };
+    }
+
+    
     const token = jwt.sign(
       { id: user._id, email: user.email },
       SECRET_KEY,
@@ -36,7 +30,6 @@ exports.loginUser = async (email, password) => {
       user: {
         id: user._id,
         email: user.email,
-        onboardingCompleted: user.onboardingCompleted,
       },
     };
   } catch (err) {
