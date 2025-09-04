@@ -8,7 +8,7 @@ const getAllRequests = async (req, res) => {
 
     if (req.user.role === "admin") {
       // Admin can see all requests
-      requests = await requestService.getAllRequests(); 
+      requests = await requestService.getAllRequests(req.user); 
     } else if (req.user.role === "recipient") {
       // Recipient can only see their own requests
       requests = await requestService.getRequestsByUser(req.user.id);

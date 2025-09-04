@@ -62,7 +62,7 @@ const deleteRequest = async (id) => {
 };
 
 const getRequestsByUser = async (userId) => {
-  return await Request.find({ requestedId: userId }).sort({ CreatedAt: -1 });
+  return await Request.find({ requestedId: userId }).sort({ UpdateddAt: -1 });
 };
 
 module.exports = {
