@@ -9,9 +9,9 @@ import DonationList from './components/DonationList.jsx';
 import MyRequests from './components/MyRequests.jsx';
 
 const RecipientDashboardPage = () => {
-      const [view, setView] = useState('donations');
-      const [availableDonations, setAvailableDonations] = useState([]);
-      const [userRequests, setUserRequests] = useState([]);
+    const [view, setView] = useState('donations');
+    const [availableDonations, setAvailableDonations] = useState([]);
+    const [userRequests, setUserRequests] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isUserDataoaded, setIsUserDataLoaded] = useState(false);
     const [error, setError] = useState(null);
