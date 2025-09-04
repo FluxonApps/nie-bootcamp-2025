@@ -9,56 +9,44 @@ import Button from '../../components/ui/Button';
 
 const AdminDashboard = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [users, setUsers] = useState([]);   // all users
+  const [loading, setLoading] = useState(true);
+
+  const fetchUsers = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch("http://localhost:5000/api/users");
+      const data = await res.json();
+      setUsers(data || []);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 60000); // Update every minute
+    fetchUsers();
+  }, []);
 
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 60000);
     return () => clearInterval(timer);
   }, []);
 
-  // Replace with backend metrics later
+  // split donors & recipients
+  const donors = users.filter(u => u.role === "donor");
+  const recipients = users.filter(u => u.role === "recipient");
+
   const platformMetrics = [
-    {
-      title: "Total Users",
-      value: "2,847",
-      change: "+12%",
-      changeType: "positive",
-      icon: "Users",
-      color: "primary"
-    },
-    {
-      title: "Active Donations",
-      value: "156",
-      change: "+8%",
-      changeType: "positive",
-      icon: "Package",
-      color: "success"
-    },
-    {
-      title: "Successful Matches",
-      value: "1,234",
-      change: "+15%",
-      changeType: "positive",
-      icon: "CheckCircle",
-      color: "secondary"
-    }
+    { title: "Total Users", value: users.length, change: "+12%", changeType: "positive", icon: "Users", color: "primary" },
+    { title: "Donors", value: donors.length, change: "+5%", changeType: "positive", icon: "Package", color: "success" },
+    { title: "Recipients", value: recipients.length, change: "+7%", changeType: "positive", icon: "Gift", color: "secondary" }
   ];
 
   const quickActions = [
-    {
-      title: "User Reports",
-      description: "Generate user activity reports",
-      icon: "FileText",
-      action: () => console.log("Generate reports")
-    },
-    {
-      title: "Send Notifications",
-      description: "Broadcast to all users",
-      icon: "Bell",
-      action: () => console.log("Send notifications")
-    }
+    { title: "User Reports", description: "Generate user activity reports", icon: "FileText", action: () => console.log("Generate reports") },
+    { title: "Send Notifications", description: "Broadcast to all users", icon: "Bell", action: () => console.log("Send notifications") }
   ];
 
   return (
@@ -66,58 +54,59 @@ const AdminDashboard = () => {
       <NavigationHeader />
       <main className="pt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          {/* Header Section */}
-          <div className="mb-8">
-            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-              <div>
-                <h1 className="text-3xl font-bold text-text-primary mb-2">
-                  Admin Dashboard
-                </h1>
-                <p className="text-text-secondary">
-                  Welcome back! Here’s what’s happening on <strong>FeedTheNeed</strong> today.
+          {/* Header */}
+          <div className="mb-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div>
+              <h1 className="text-3xl font-bold text-text-primary mb-2">Admin Dashboard</h1>
+              <p className="text-text-secondary">
+                Welcome back! Manage donors and recipients separately.
+              </p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <div className="text-right">
+                <p className="text-sm text-text-secondary">Current Time</p>
+                <p className="font-semibold text-text-primary">
+                  {currentTime?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
+                </p>
+                <p className="text-xs text-text-secondary">
+                  {currentTime?.toLocaleDateString()}
                 </p>
               </div>
-
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                <div className="text-right">
-                  <p className="text-sm text-text-secondary">Current Time</p>
-                  <p className="font-semibold text-text-primary">
-                    {currentTime?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
-                  </p>
-                  <p className="text-xs text-text-secondary">
-                    {currentTime?.toLocaleDateString()}
-                  </p>
-                </div>
-                <Button variant="default" iconName="Plus">
-                  Quick Action
-                </Button>
-              </div>
+              <Button variant="default" iconName="Plus">Quick Action</Button>
             </div>
           </div>
 
           {/* Metrics Overview */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             {platformMetrics.map((metric, index) => (
-              <MetricsCard
-                key={index}
-                title={metric.title}
-                value={metric.value}
-                change={metric.change}
-                changeType={metric.changeType}
-                icon={metric.icon}
-                color={metric.color}
-              />
+              <MetricsCard key={index} {...metric} />
             ))}
           </div>
 
-          {/* Main Content Grid */}
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 mb-8">
-            {/* User Management */}
-            <div className="xl:col-span-2">
-              <UserManagementTable />
-            </div>
+          {/* Donors Section */}
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold text-text-primary mb-4">Donors</h2>
+            {loading ? (
+              <p className="text-center text-gray-500">Loading donors...</p>
+            ) : (
+              <UserManagementTable users={donors} refreshUsers={fetchUsers} />
+            )}
+          </div>
 
-            {/* Activity + Tasks */}
+          {/* Recipients Section */}
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold text-text-primary mb-4">Recipients</h2>
+            {loading ? (
+              <p className="text-center text-gray-500">Loading recipients...</p>
+            ) : (
+              <UserManagementTable users={recipients} refreshUsers={fetchUsers} />
+            )}
+          </div>
+
+          {/* Side Widgets */}
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 mb-8">
+            <div className="xl:col-span-2"></div>
             <div className="space-y-6">
               <ActivityFeed />
               <PendingTasks />
