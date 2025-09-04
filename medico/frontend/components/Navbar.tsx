@@ -1,6 +1,6 @@
 // src/components/Navbar.tsx
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // 👈 1. Import useNavigate
+import { useNavigate } from 'react-router-dom'; //
 import './Navbar.css';
 
 // Importing icons from Heroicons pack
@@ -8,8 +8,8 @@ import { HiSearch, HiPlusCircle, HiCheckCircle, HiHome, HiMenu, HiX } from 'reac
 
 const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState(''); // 👈 2. Add state for the search input
-  const navigate = useNavigate(); // 👈 3. Initialize the navigate function
+  const [searchTerm, setSearchTerm] = useState(''); 
+  const navigate = useNavigate(); 
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);

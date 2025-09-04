@@ -1,12 +1,12 @@
 import React from "react";
-import React from "react";
 import "./App.css";
 
 // 👈 Import routing components and your pages
 import { Routes, Route } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import SearchPage from "../pages/SearchPage";
-import ReviewPage from "../pages/ReviewPage";   // 👈 added
+import ReviewPage from "../pages/ReviewPage";   // 👈 Review page
+// import AddProductPage from "../pages/AddProductPage"; // 👈 new page
 import Navbar from "../components/Navbar";
 
 function App() {
@@ -18,7 +18,9 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/search" element={<SearchPage />} />
-          <Route path="/review" element={<ReviewPage />} /> {/* 👈 new route */}
+          <Route path="/review" element={<ReviewPage />} />
+          <Route path="/approve-products" element={<ReviewPage />} /> {/* 👈 alias */}
+          {/* <Route path="/add-product" element={<AddProductPage />} /> 👈 add form */}
         </Routes>
       </main>
 
