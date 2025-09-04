@@ -1,18 +1,24 @@
 const User = require("../models/userModel");
 
-exports.getAllUsers = async () => {
-  const users = await User.find();
-  if (!users) {
-    return [];
-  } else return users;
+// Get all users
+const getAllUsers = async () => {
+  return await User.find();
 };
 
-exports.addUser = async (user) => {
-  try {
-    const newUser = new User(user);
-    return await newUser.save();
-  } catch {
-    console.log("Error saving new user");
-    return;
-  }
+// Add new user
+const addUser = async (userData) => {
+  const user = new User(userData);
+  return await user.save();
 };
+
+// Find user by username
+const findByUsername = async (username) => {
+  return await User.findOne({ username });
+};
+
+// Find user by ID (useful for admin checks / JWT decode)
+const findById = async (id) => {
+  return await User.findById(id);
+};
+
+module.exports = { getAllUsers, addUser, findByUsername, findById };
