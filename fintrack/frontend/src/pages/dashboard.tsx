@@ -128,13 +128,15 @@ import Slider from "../components/Slider";
 import { Transaction } from "../types";
 import { useNavigate } from "react-router-dom";
 import { COLORS } from "../theme/colors";
+import ReminderForm from "../components/ReminderForm";
 
-const Dashboard: React.FC = () => {
+const Dashboard = () => {
+  const navigate = useNavigate();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState({ month: "", year: "" });
   const [progress, setProgress] = useState(60);
-  const navigate = useNavigate();
+  const [showReminderForm, setShowReminderForm] = useState(false);
 
   const filteredTransactions = transactions.filter((t) => {
     const [year, month] = t.date.split("-");
@@ -236,9 +238,31 @@ const Dashboard: React.FC = () => {
       </div>
 
       {/* Fixed bottom buttons */}
-      <div className="flex justify-between gap-4 mt-auto">
+      
+      {showReminderForm && (
+        <ReminderForm
+          onClose={() => setShowReminderForm(false)}
+          onSave={(reminder) => {
+            console.log("Saving reminder:", reminder);
+            // TODO: Implement save reminder logic
+          }}
+          onShowReminders={() => {
+            console.log("Show reminders clicked");
+            // TODO: Implement show reminders logic
+          }}
+        />
+      )}
+
+      <div className="fixed bottom-0 left-0 right-0 p-4 flex justify-between space-x-4 bg-gray-900/80 backdrop-blur-sm">
         <button
-          className="h-24 flex items-center justify-center rounded-xl shadow w-1/2 text-lg font-semibold transition"
+          className="h-24 flex items-center justify-center rounded-xl shadow w-1/3 text-lg font-semibold transition"
+          style={{ backgroundColor: COLORS.warning }}
+          onClick={() => setShowReminderForm(true)}
+        >
+          Set Reminder
+        </button>
+        <button
+          className="h-24 flex items-center justify-center rounded-xl shadow w-1/3 text-lg font-semibold transition"
           style={{ backgroundColor: COLORS.secondaryAccent }}
           onClick={() =>
             navigate("/form", {
@@ -258,7 +282,7 @@ const Dashboard: React.FC = () => {
           Add Transaction
         </button>
         <button
-          className="h-24 flex items-center justify-center rounded-xl shadow w-1/2 text-lg font-semibold transition"
+          className="h-24 flex items-center justify-center rounded-xl shadow w-1/3 text-lg font-semibold transition"
           style={{ backgroundColor: COLORS.primaryAccent }}
           onClick={() => navigate("/reports")}
         >
