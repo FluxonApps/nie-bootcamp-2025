@@ -12,7 +12,8 @@ const getAllRequests = async (user) => {
   }
   return [];
 };
-const JWT_SECRET = process.env.JWT_SECRET || "supersecretkey";
+
+
 const addRequest = async (requestData) => {
   // Prevent multiple requests on the same donation
   if (requestData.donationId) {
@@ -61,7 +62,7 @@ const deleteRequest = async (id) => {
 };
 
 const getRequestsByUser = async (userId) => {
-  return await Request.find({ requestedId: userId }).sort({ CreatedAt: -1 });
+  return await Request.find({ requestedId: userId }).sort({ UpdateddAt: -1 });
 };
 
 module.exports = {
