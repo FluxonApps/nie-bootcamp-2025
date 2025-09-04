@@ -1,24 +1,25 @@
 const mongoose = require("mongoose");
 
-const connectionSchema = new mongoose.Schema(
-  {
-    fromUser: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Userdetails", // sender of request
-      required: true,
-    },
-    toUser: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Userdetails", // receiver of request
-      required: true,
-    },
-    status: {
-      type: String,
-      enum: ["pending", "accepted", "rejected"],
-      default: "pending",
-    },
+const connectionModel = new mongoose.Schema({
+  sender: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
+    required: true,
   },
-  { timestamps: true }
-);
+  receiver: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
+    required: true,
+  },
+  status: {
+    type: String,
+    enum: ["pending", "accepted", "rejected"],
+    default: "pending",
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
 
-module.exports = mongoose.model("Connection", connectionSchema);
+module.exports = mongoose.model("connection", connectionModel);
