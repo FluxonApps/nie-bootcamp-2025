@@ -9,9 +9,11 @@ import ConnectPeople from './pages/ConnectPeople.tsx';
 
 import Profile from "./pages/Profile";
 
+import CreateGroup from "./pages/CreateGroup.tsx";
 
 import Groups from "./pages/Groups";         
 import Posts from "./pages/Posts.tsx";
+
 
 
 const App: React.FC = () => {
@@ -22,10 +24,12 @@ const App: React.FC = () => {
         <Route path="/" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/connect" element={<ConnectPeople />} />
-        <Route path="/profile" element={<Profile />} />
         <Route path="/posts" element={<Posts />} />
         <Route path="/groups" element={<Groups />} /> {/* 👈 Groups Page */}
+        <Route path="/connect" element={<ConnectPeople />} />
+        <Route path="/create-group" element={<CreateGroup />} />
+        <Route path="/profile" element={<Profile />} />
+        
       </Routes>
     </Router>
   );
