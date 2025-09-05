@@ -50,6 +50,16 @@ const addDonation = async (req, res) => {
   }
 };
 
+// Get only the authenticated donor's donations
+const getMyDonations = async (req, res) => {
+  try {
+    const donations = await donationService.getDonationsByDonor(req.user.id);
+    return res.json(donations || []);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+};
+
 // Get donation by ID (with donor details)
 const getDonationById = async (req, res) => {
   try {
@@ -119,4 +129,5 @@ module.exports = {
   getDonationById,
   updateDonationStatus,
   deleteDonation,
+  getMyDonations,
 };
