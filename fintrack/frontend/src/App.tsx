@@ -1,23 +1,41 @@
-import React from "react";
+import { type JSX } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Onboarding from "./pages/onboardingView";
 import { Login } from "./pages/login";
-import { Onboarding } from "./pages/onboarding";
-import Dashboard from "./pages/Dashboard";  // <-- use their Dashboard
+import Dashboard from "./pages/dashboard";
 import FormPage from "./pages/FormPage";
+import ProtectedRoute from "./components/ProtectedRoute"; // <-- import this
 
-const App: React.FC = () => {
+function App(): JSX.Element {
   return (
-    <div className="min-h-screen bg-gray-900 text-white"> {/* Dark theme wrapper */}
+    <div className="min-h-screen bg-gray-900 text-white">
       <BrowserRouter>
         <Routes>
+          {/* Public Routes */}
           <Route path="/" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/onboarding" element={<Onboarding />} />
-          <Route path="/form" element={<FormPage />} />
+
+          {/* Protected Routes */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/form"
+            element={
+              <ProtectedRoute>
+                <FormPage />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </div>
   );
-};
+}
 
 export default App;
