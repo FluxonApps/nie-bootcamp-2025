@@ -1,81 +1,229 @@
-/* ---- 1. CSS Variables for Theming ---- */
-/* Define a modern color palette and key layout variables for easy customization. */
-:root {
-  --bg-start: #f8fafc;        /* Lightest shade for background gradient */
-  --bg-end: #eef2f7;          /* Slightly darker shade for gradient */
-  --primary-text: #1f2937;    /* Dark, rich text for high contrast */
-  --secondary-text: #4b5563;  /* Softer gray for paragraphs and secondary info */
-  --accent-primary: #3b82f6;  /* Vibrant blue for links and interactive elements */
-  --accent-hover: #2563eb;    /* Darker blue for hover states */
-  --border-color: #d1d5db;    /* Subtle border color */
-
-  --heading-font: "Inter", system-ui, sans-serif;
-  --body-font: "Inter", system-ui, sans-serif;
-}
-
-
-/* ---- 2. Global & Body Styles ---- */
-/* Apply the theme, improve font rendering, and set up a flexible body layout. */
 body {
-  margin: 0;
-  font-family: var(--body-font);
-  background-image: linear-gradient(170deg, var(--bg-start) 0%, var(--bg-end) 100%);
+margin: 0;
+font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+background-color: #32383f;
+}
+
+/* Color Palette */
+:root {
+--accent-color: #4a90e2;
+--accent-light-bg: #343d46;
+--primary-text: #1a2c5a;
+--secondary-text: #4a658a;
+--light-text: #7f9bbd;
+--border-color: #3e454b;
+--shadow-color: rgba(74, 144, 226, 0.1);
+}
+
+/*
+* --- KEY CHANGE ---
+* Changed position to 'fixed' to make the navbar static relative to the viewport.
+* It will now stay at the top, regardless of scrolling or parent elements.
+*/
+.navbar {
+background-color: #634e4e;
+height: 70px;
+display: flex;
+align-items: center;
+padding: 0 2rem;
+box-shadow: 0 4px 12px var(--shadow-color);
+position: fixed; /* This is the crucial change */
+top: 0;
+left: 0;
+width: 100%;
+z-index: 1000;
+}
+
+.navbar-container {
+max-width: 1400px;
+width: 100%;
+margin: 0 auto;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.navbar-logo {
+display: flex;
+align-items: center;
+gap: 0.5rem;
+font-size: 1.5rem;
+font-weight: 700;
+color: var(--primary-text);
+text-decoration: none;
+}
+
+.navbar-logo svg {
+color: var(--accent-color);
+width: 28px;
+height: 28px;
+}
+
+.search-container {
+position: relative;
+flex-grow: 1;
+max-width: 500px;
+margin: 0 2rem;
+}
+
+.search-input {
+width: 100%;
+height: 40px;
+border-radius: 20px;
+border: 1px solid var(--border-color);
+background-color: var(--accent-light-bg);
+padding: 0 1rem 0 2.5rem; /* Left padding for icon */
+font-size: 0.95rem;
+color: var(--secondary-text);
+transition: all 0.3s ease;
+}
+
+.search-input::placeholder {
+color: var(--light-text);
+}
+
+.search-input:focus {
+outline: none;
+border-color: var(--accent-color);
+background-color: #fff;
+box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+}
+
+.search-icon-wrapper {
+position: absolute;
+left: 1rem;
+top: 50%;
+transform: translateY(-50%);
+color: var(--light-text);
+font-size: 1.2rem;
+display: flex;
+align-items: center;
+}
+
+.search-icon-wrapper svg {
+  width: 20px;
+  height: 20px;
+}
+
+.nav-links {
+display: flex;
+align-items: center;
+gap: 0.5rem;
+}
+
+.nav-link {
+display: flex;
+align-items: center;
+gap: 0.5rem;
+padding: 0.5rem 1rem;
+border-radius: 8px;
+color: var(--secondary-text);
+font-weight: 500;
+text-decoration: none;
+transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-link:hover {
+background-color: var(--accent-light-bg);
+color: var(--accent-color);
+}
+
+.nav-link svg {
+width: 24px;
+height: 24px;
+}
+
+.mobile-menu-toggle {
+display: none; 
+background: none;
+border: none;
+font-size: 1.8rem;
+color: var(--primary-text);
+cursor: pointer;
+}
+
+.mobile-menu-toggle svg {
+  width: 28px;
+  height: 28px;
+}
+
+.mobile-menu {
+display: none; 
+position: absolute;
+top: 70px; 
+left: 0;
+width: 100%;
+background-color: white;
+box-shadow: 0 4px 12px var(--shadow-color);
+flex-direction: column;
+padding: 1rem 0;
+transform: translateY(-10px);
+opacity: 0;
+pointer-events: none;
+transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.mobile-menu.active {
+display: flex;
+transform: translateY(0);
+opacity: 1;
+pointer-events: auto;
+}
+
+.mobile-link {
+padding: 1rem 2rem;
+color: var(--primary-text);
+font-weight: 500;
+text-decoration: none;
+border-bottom: 1px solid var(--border-color);
+}
+
+.mobile-link:last-child {
+border-bottom: none;
+}
+
+.mobile-link:hover {
+background-color: var(--accent-light-bg);
+}
+
+/* --- RESPONSIVE STYLES --- */
+@media (max-width: 992px) {
+.nav-links .nav-link span {
+  display: none; 
+}
+.nav-link {
+  padding: 0.75rem; 
+}
+}
+
+@media (max-width: 768px) {
+.search-container, .nav-links {
+  display: none; 
+}
+.mobile-menu-toggle {
+  display: block;
+}
+.navbar-container {
+  justify-content: space-between;
+}
+.navbar-logo {
+  flex-grow: 1;
+}
+}
+
+/* --- Page Content Placeholder --- */
+/* IMPORTANT: Add padding to the top of your main content container 
+  to prevent it from being hidden behind the fixed navbar. 
+  The padding should be equal to the navbar's height. */
+.page-content {
+  padding-top: 70px; 
+  padding: 85px 2rem 2rem 2rem;
+  height: 200vh; /* Just to make the page scrollable for demonstration */
+}
+.page-content h1 {
   color: var(--primary-text);
-  line-height: 1.6;
-  min-height: 100vh; /* Ensure body takes full screen height */
-  
-  /* Improves font rendering for a smoother look */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
-
-* {
-  box-sizing: border-box;
-}
-
-
-/* ---- 3. Typography ---- */
-/* Create a clear visual hierarchy with distinct styles for headings, paragraphs, and links. */
-h1, h2, h3, h4, h5, h6 {
-  margin: 0;
-  font-family: var(--heading-font);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.5px; /* Tighten spacing for a modern feel */
-}
-
-/* Hero title style */
-h1 {
-  font-size: 3rem;
-  background: linear-gradient(45deg, var(--accent-primary), #1d4ed8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
-}
-
-h2 {
-  font-size: 2.25rem;
-  margin-bottom: 1.5rem;
-  border-bottom: 2px solid var(--border-color);
-  padding-bottom: 0.75rem;
-}
-
-p {
-  margin: 0 0 1rem 0; /* Only add margin to the bottom */
+.page-content p {
   color: var(--secondary-text);
-  max-width: 75ch; /* Limit line width for better readability */
-}
-
-a {
-  text-decoration: none;
-  color: var(--accent-primary);
-  font-weight: 500;
-  transition: all 0.2s ease-in-out;
-}
-
-a:hover {
-  color: var(--accent-hover);
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
+  line-height: 1.6;
 }

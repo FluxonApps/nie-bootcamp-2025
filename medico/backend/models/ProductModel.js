@@ -29,6 +29,7 @@ const concernSchema = new mongoose.Schema({
   },
 });
 
+
 const productSchema = new mongoose.Schema({
   name: { type: String, required: true, trim: true },
 
@@ -38,8 +39,9 @@ const productSchema = new mongoose.Schema({
   category: String,
 
   ingredients: [ingredientSchema],
-
+  concernSchemas: [concernSchema],
   useCases: [String],
+
 
   features: {
     calories: String,
@@ -50,9 +52,18 @@ const productSchema = new mongoose.Schema({
     minerals: [String],
     otherBenefits: [String],
   },
-
+  aiSuggestion: {
+      reviewer: {
+        type: String,
+      riskScore: {
+        type: Number,
+        min: 0,
+        max: 100,
+      }
+    }
+  },
+  aiDescription: String,
   isApproved: { type: Boolean, default: false },
-
   verdict: { type: String, default: "Unknown" },
 });
 

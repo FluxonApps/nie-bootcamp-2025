@@ -1,6 +1,6 @@
 var express = require("express");
 const mongoose = require("mongoose");
-
+require("dotenv").config();
 const { APP_PORT, DB_URL } = require("./config/vars");
 const routes = require("./routes/main");
 
@@ -15,7 +15,6 @@ app.get("/", function (req, res, next) {
 
 routes.forEach((route) => {
   try {
-    console.log(`Creating route ${route.path}`);
     app[route.method.toLowerCase()](route.path, route.handler);
   } catch {
     console.warn(`Error creating route ${route}}`);
