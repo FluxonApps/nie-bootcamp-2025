@@ -1,8 +1,18 @@
+// src/types.ts
+
 export interface Transaction {
+  _id: string;
   userId: string;
   type: "Income" | "Expense";
-  amount: number; // strictly number
+  amount: number;
   categoryName: string;
   description: string;
-  date: string; // ISO string
+  date: string;
+}
+
+export interface User {
+  _id: string;
+  name: string;
+  email: string;
+  budget: number;
 }

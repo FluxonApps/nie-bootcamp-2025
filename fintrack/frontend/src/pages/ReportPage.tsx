@@ -196,13 +196,13 @@ const ReportPage: React.FC = () => {
             <div>
               <p className="text-base sm:text-lg">Total Income:</p>
               <p className="text-xl sm:text-2xl font-bold text-green-500">
-                ${totalIncome.toFixed(2)}
+                ₹{totalIncome.toFixed(2)}
               </p>
             </div>
             <div>
               <p className="text-base sm:text-lg">Total Expense:</p>
               <p className="text-xl sm:text-2xl font-bold text-red-500">
-                ${totalExpense.toFixed(2)}
+                ₹{totalExpense.toFixed(2)}
               </p>
             </div>
           </div>

@@ -16,30 +16,26 @@ const RemindersModal: React.FC<RemindersModalProps> = ({ onClose }) => {
       try {
         const data = await getBillReminders();
         setReminders(data);
-      } catch (err) {
+      } catch {
         setError('Failed to fetch reminders.');
       }
       setLoading(false);
     };
-
     fetchReminders();
   }, []);
 
   const handleDelete = async (id: string) => {
     try {
       await deleteBillReminder(id);
-      setReminders(reminders.filter((r) => r._id !== id));
-    } catch (err) {
+      setReminders(reminders.filter(r => r._id !== id));
+    } catch {
       setError('Failed to delete reminder.');
     }
   };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
-      <div 
-        className="w-full max-w-2xl p-6 rounded-2xl shadow-2xl text-white relative border"
-        style={{ backgroundColor: COLORS.card, borderColor: COLORS.border }}
-      >
+      <div className="w-full max-w-2xl p-6 rounded-2xl shadow-2xl text-white relative border" style={{ backgroundColor: COLORS.card, borderColor: COLORS.border }}>
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-3xl font-bold" style={{ color: COLORS.primaryAccent }}>Bill Reminders</h2>
           <button onClick={onClose} className="text-gray-400 hover:text-white text-2xl">&times;</button>
@@ -53,26 +49,16 @@ const RemindersModal: React.FC<RemindersModalProps> = ({ onClose }) => {
             {reminders.length === 0 ? (
               <p className="text-center text-gray-400 py-8">No reminders found.</p>
             ) : (
-              reminders.map((reminder) => (
-                <div 
-                  key={reminder._id}
-                  className="flex items-center justify-between p-4 rounded-lg border"
-                  style={{ backgroundColor: COLORS.background, borderColor: COLORS.border }}
-                >
+              reminders.map(r => (
+                <div key={r._id} className="flex items-center justify-between p-4 rounded-lg border" style={{ backgroundColor: COLORS.background, borderColor: COLORS.border }}>
                   <div>
-                    <p className="font-semibold text-lg" style={{ color: COLORS.primaryText }}>{reminder.billName}</p>
+                    <p className="font-semibold text-lg" style={{ color: COLORS.primaryText }}>{r.billName}</p>
                     <p style={{ color: COLORS.secondaryText }}>
-                      Amount: <span className="font-medium" style={{ color: COLORS.primaryAccent }}>${reminder.amount.toFixed(2)}</span>
+                      Amount: <span className="font-medium" style={{ color: COLORS.primaryAccent }}>${r.amount.toFixed(2)}</span>
                     </p>
-                    <p style={{ color: COLORS.secondaryText }}>
-                      Due: {new Date(reminder.date).toLocaleDateString()}
-                    </p>
+                    <p style={{ color: COLORS.secondaryText }}>Due: {new Date(r.date).toLocaleDateString()}</p>
                   </div>
-                  <button 
-                    onClick={() => handleDelete(reminder._id!)}
-                    className="py-2 px-4 rounded-lg font-semibold transition"
-                    style={{ backgroundColor: COLORS.danger, color: COLORS.primaryText }}
-                  >
+                  <button onClick={() => handleDelete(r._id!)} className="py-2 px-4 rounded-lg font-semibold transition" style={{ backgroundColor: COLORS.danger, color: COLORS.primaryText }}>
                     Delete
                   </button>
                 </div>

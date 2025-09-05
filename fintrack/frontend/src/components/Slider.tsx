@@ -21,15 +21,12 @@ const Slider: React.FC<SliderProps> = ({ value, onChange }) => {
           outline: "none",
         }}
       />
-
-      {/* Show numeric value below slider */}
       <span style={{ color: COLORS.secondaryText, fontSize: "0.9rem" }}>
         {value}%
       </span>
 
       <style>
         {`
-          /* Custom thumb styling */
           input[type="range"]::-webkit-slider-thumb {
             appearance: none;
             width: 18px;
@@ -41,11 +38,9 @@ const Slider: React.FC<SliderProps> = ({ value, onChange }) => {
             cursor: pointer;
             transition: transform 0.2s ease;
           }
-
           input[type="range"]::-webkit-slider-thumb:hover {
             transform: scale(1.2);
           }
-
           input[type="range"]::-moz-range-thumb {
             width: 18px;
             height: 18px;
@@ -56,7 +51,6 @@ const Slider: React.FC<SliderProps> = ({ value, onChange }) => {
             cursor: pointer;
             transition: transform 0.2s ease;
           }
-
           input[type="range"]::-moz-range-thumb:hover {
             transform: scale(1.2);
           }

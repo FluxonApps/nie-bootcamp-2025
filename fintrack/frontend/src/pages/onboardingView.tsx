@@ -1,8 +1,8 @@
-import { useState, type ChangeEvent, type FormEvent, type JSX } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { COLORS } from "../theme/colors";
-import Logo from "../assets/logo.png"; 
+import Logo from "../assets/logo.png";
 
 interface FormState {
   name: string;
@@ -12,12 +12,12 @@ interface FormState {
   password: string;
 }
 
-function Onboarding(): JSX.Element {
+function Onboarding() {
   const location = useLocation();
   const navigate = useNavigate();
 
   const { email: emailFromLogin = "", password: passwordFromLogin = "" } =
-    location.state || {};
+    (location.state as { email?: string; password?: string }) || {};
 
   const [form, setForm] = useState<FormState>({
     name: "",
@@ -37,12 +37,32 @@ function Onboarding(): JSX.Element {
     e.preventDefault();
 
     try {
-      const res = await axios.post(`http://localhost:8003/api/onboarding`, form);
-      setMessage(res.data.message);
+      const res = await axios.post("http://localhost:8003/api/onboarding", form);
 
+      // Save userId and token to localStorage before navigating
+      const { userId, token, message } = res.data;
+
+      if (!userId || !token) {
+        setMessage("⚠️ Onboarding failed: Missing userId or token");
+        return;
+      }
+
+      localStorage.setItem("userId", userId);
+      localStorage.setItem("token", token);
+
+      setMessage(message || "✅ Onboarding successful");
+
+      // Navigate to dashboard AFTER saving localStorage
       navigate("/dashboard");
-    } catch (err: any) {
-      setMessage(err.response?.data?.message || "⚠️ Unexpected error occurred");
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError<{ message: string }>;
+        setMessage(
+          axiosError.response?.data?.message || "⚠️ Unexpected error occurred"
+        );
+      } else {
+        setMessage("⚠️ An unknown error occurred");
+      }
     }
   };
 
@@ -61,7 +81,6 @@ function Onboarding(): JSX.Element {
         className="w-full max-w-md p-8 rounded-2xl shadow-2xl text-center"
         style={{ backgroundColor: COLORS.card, border: `1px solid ${COLORS.border}` }}
       >
-
         <div className="flex flex-col items-center gap-2 mb-6">
           <img src={Logo} alt="FinTrack Logo" className="w-40 h-40 object-contain" />
           <h2 className="text-3xl font-bold" style={{ color: COLORS.primaryAccent }}>

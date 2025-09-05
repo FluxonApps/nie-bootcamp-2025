@@ -9,11 +9,7 @@ interface Props {
   handleSubmit: (e: FormEvent) => void;
 }
 
-const TransactionForm: React.FC<Props> = ({
-  formData,
-  handleInputChange,
-  handleSubmit,
-}) => (
+const TransactionForm: React.FC<Props> = ({ formData, handleInputChange, handleSubmit }) => (
   <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
     <form
       onSubmit={handleSubmit}
@@ -23,7 +19,6 @@ const TransactionForm: React.FC<Props> = ({
         Add Transaction
       </h2>
 
-      {/* Type */}
       <div className="mb-4">
         <label className="block mb-2 font-medium">Type</label>
         <select
@@ -37,7 +32,6 @@ const TransactionForm: React.FC<Props> = ({
         </select>
       </div>
 
-      {/* Amount */}
       <div className="mb-4">
         <label className="block mb-2 font-medium">Amount</label>
         <input
@@ -47,10 +41,11 @@ const TransactionForm: React.FC<Props> = ({
           onChange={handleInputChange}
           className="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-green-400 outline-none"
           placeholder="Enter amount"
+          min="0"
+          step="0.01"
         />
       </div>
 
-      {/* Category */}
       <div className="mb-4">
         <label className="block mb-2 font-medium">Category</label>
         <input
@@ -63,7 +58,6 @@ const TransactionForm: React.FC<Props> = ({
         />
       </div>
 
-      {/* Description */}
       <div className="mb-4">
         <label className="block mb-2 font-medium">Description</label>
         <textarea
@@ -75,7 +69,6 @@ const TransactionForm: React.FC<Props> = ({
         />
       </div>
 
-      {/* Date */}
       <div className="mb-6">
         <label className="block mb-2 font-medium">Date</label>
         <input
@@ -87,7 +80,6 @@ const TransactionForm: React.FC<Props> = ({
         />
       </div>
 
-      {/* Submit */}
       <button
         type="submit"
         className="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white py-3 px-4 rounded-lg font-semibold transition duration-300 shadow-lg"

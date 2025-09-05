@@ -13,6 +13,12 @@ const userRoutes = [
     url: base,
     handler: userController.addUser,
   },
+  // New route for getting user budget
+  {
+    method: "GET",
+    url: `${base}/:userId/budget`,
+    handler: userController.getUserBudget,
+  },
 ];
 
 module.exports = userRoutes;

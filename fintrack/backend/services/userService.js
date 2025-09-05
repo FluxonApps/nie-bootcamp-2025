@@ -16,3 +16,10 @@ exports.addUser = async (user) => {
     return;
   }
 };
+
+// New: Get budget by userId
+exports.getBudgetByUserId = async (userId) => {
+  const user = await User.findById(userId);
+  if (!user) return null;
+  return user.budget; // make sure 'budget' exists in your User schema
+};

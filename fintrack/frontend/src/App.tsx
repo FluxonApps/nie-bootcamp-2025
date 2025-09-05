@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { Login } from "./pages/login";
-import Onboarding  from "./pages/onboarding";
+import Onboarding  from "./pages/onboardingView";
 import ReportPage from "./pages/ReportPage";
 import Dashboard from "./pages/Dashboard";  // <-- use their Dashboard
 import FormPage from "./pages/TransactionForm";

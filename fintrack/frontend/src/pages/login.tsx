@@ -94,7 +94,7 @@ export const Login = () => {
               required
               className="w-full rounded-lg px-3 sm:px-4 py-2 text-sm sm:text-base outline-none focus:ring-2 focus:ring-blue-500 transition-all"
               style={{
-                backgroundColor: COLORS.inputBackground,
+                backgroundColor: COLORS.background,
                 border: `1px solid ${COLORS.border}`,
                 color: COLORS.primaryText,
               }}
@@ -118,7 +118,7 @@ export const Login = () => {
               required
               className="w-full rounded-lg px-3 sm:px-4 py-2 text-sm sm:text-base outline-none focus:ring-2 focus:ring-blue-500 transition-all"
               style={{
-                backgroundColor: COLORS.inputBackground,
+                backgroundColor: COLORS.background,
                 border: `1px solid ${COLORS.border}`,
                 color: COLORS.primaryText,
               }}
