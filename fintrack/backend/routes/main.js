@@ -1,10 +1,9 @@
 const userRoutes = require("./userRoute");
-
 const onboardingRoutes = require("./onboardingRoute");
 const transactionRoutes = require("./transactionRoute");
 const categoryRoutes = require("./categoryRoutes");
 const authRoutes = require("./authRoutes");
-
+const billRemainderRoutes = require("./billReminderRoutes");
 
 const allRoutes = [
   ...userRoutes,
@@ -12,6 +11,7 @@ const allRoutes = [
   ...transactionRoutes,
   ...categoryRoutes,
   ...authRoutes,
+  ...billRemainderRoutes,
 ];
 
 

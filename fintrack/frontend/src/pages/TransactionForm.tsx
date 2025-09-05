@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Transaction } from "../types";
 import { COLORS } from "../theme/colors";
 
-const API_BASE_URL = "http://localhost:5000"; // Matches backend port
+const API_BASE_URL = "http://localhost:8003"; // Matches backend port
 
 const FormPage: React.FC = () => {
   const location = useLocation();
@@ -11,7 +11,7 @@ const FormPage: React.FC = () => {
   const state = location.state as { transaction?: Transaction };
 
   const [formData, setFormData] = useState<Transaction>({
-    userId: "507f1f77bcf86cd799439100", // Replace with actual user ID from auth context
+    userId:localStorage.getItem("userId"), // Replace with actual user ID from auth context
     type: "Income",
     amount: 200,
     categoryId: "",
@@ -84,7 +84,7 @@ const FormPage: React.FC = () => {
         throw new Error(errorData.error || "Failed to save transaction");
       }
 
-      navigate("/"); // Redirect to dashboard
+      navigate("/dashboard"); // Redirect to dashboard
     } catch (err) {
       setError(err.message || "An error occurred");
     }
