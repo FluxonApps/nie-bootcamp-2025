@@ -13,7 +13,7 @@ const generateToken = (userId) => {
 // Signup
 exports.signup = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, username } = req.body;
 
     let user = await User.findOne({ email });
     if (user) {
@@ -22,7 +22,7 @@ exports.signup = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    user = new User({ email, password: hashedPassword });
+    user = new User({ email, password: hashedPassword , username });
     await user.save();
 
     const token = generateToken(user._id);
