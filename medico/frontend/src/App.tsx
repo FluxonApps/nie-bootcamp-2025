@@ -5,9 +5,14 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import SearchPage from "../pages/SearchPage";
-import ReviewPage from "../pages/ReviewPage";   // 👈 Review page
-// import AddProductPage from "../pages/AddProductPage"; // 👈 new page
+import ReviewPage from "../pages/ReviewPage";
+import Signuppage from "../pages/SignupPage";
+import LoginPage from "../pages/LoginPage";
+import FavoritesPage from "../pages/FavoritesPage";
 import Navbar from "../components/Navbar";
+
+// 👈 Import your ProductList component
+import ProductList from "../Pages/ProductList";
 
 function App() {
   return (
@@ -19,8 +24,13 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/review" element={<ReviewPage />} />
-          <Route path="/approve-products" element={<ReviewPage />} /> {/* 👈 alias */}
-          {/* <Route path="/add-product" element={<AddProductPage />} /> 👈 add form */}
+          <Route path="/approve-products" element={<ReviewPage />} /> {/* alias */}
+          <Route path="/signup" element={<Signuppage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/favorites" element={<FavoritesPage />} />
+          
+          {/* 👇 New route for product list */}
+          <Route path="/products" element={<ProductList />} />
         </Routes>
       </main>
 
