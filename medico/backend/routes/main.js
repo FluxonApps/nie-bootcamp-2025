@@ -1,5 +1,7 @@
 const userRoutes = require("./userRoute");
 const productController = require("../controllers/productController");
+const authController = require("../controllers/authController");
+const authMiddleware = require("../middleware/auth");
 const base = "/api";
 const allRoutes = [
     {
@@ -33,5 +35,14 @@ const allRoutes = [
         handler: [productController.approveProduct],
       }
 ];
+
+const authRoutes = require("./authRoutes");
+allRoutes.push(
+  { method: "POST", path: "/api/auth/signup", handler: authController.signup },
+  { method: "POST", path: "/api/auth/login", handler: authController.login },
+  { method: "POST", path: "/api/auth/favorites", handler: [authMiddleware, authController.addFavorite] },
+  { method: "GET", path: "/api/auth/favorites", handler: [authMiddleware, authController.getFavorites] }
+);
+
 
 module.exports = allRoutes;
