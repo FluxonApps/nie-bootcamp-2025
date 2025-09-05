@@ -42,6 +42,7 @@ const allRoutes = [
         path: `${base}/products/similar/:id`,
         handler: [productController.getSimilarProducts],
       },
+
 ];
 
 module.exports = allRoutes;
