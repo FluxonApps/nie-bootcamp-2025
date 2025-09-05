@@ -62,8 +62,15 @@ const deleteRequest = async (id) => {
 };
 
 const getRequestsByUser = async (userId) => {
-  return await Request.find({ requestedId: userId }).sort({ UpdateddAt: -1 });
+  return await Request.find({ requestedId: userId })
+    .sort({ UpdatedAt: -1 })
+    .populate({
+      path: "donationId",
+      select: "category description quantity donor status createdAt",
+      populate: { path: "donor", select: "name username" }
+    });
 };
+
 
 module.exports = {
   getAllRequests,

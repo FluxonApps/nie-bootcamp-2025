@@ -59,6 +59,10 @@ const getRequestsByUser = async (req, res) => {
       populate: { path: "donor", select: "name username" }
     });
 
+    if (!requests || requests.length === 0) {
+      return res.status(404).json({ message: "No requests found for this user" });
+    }
+
     return res.json(requests);
   } catch (err) {
     return res.status(500).json({ error: err.message });
