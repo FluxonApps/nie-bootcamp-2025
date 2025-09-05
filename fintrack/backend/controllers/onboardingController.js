@@ -1,15 +1,16 @@
 const User=require("../models/userModel");
 const saveDetails=async(req,res)=>{
   try{
-    const{name,college,budget}=req.body;
+    const{name,email,password,college,budget}=req.body;
     if(!name || !college || !budget){
       return res.status(400).json({message:"Some Fields are missing"})
     }
     
-    const user=await User.create({name,college,budget});
+    const user=await User.create({name,email,password,college,budget});
 
+    console.log(user);
     res.status(201).json({
-      message:"onboarding completed successfully",user,
+      message:"onboarding completed successfully",user
     })
   }
   catch (error){

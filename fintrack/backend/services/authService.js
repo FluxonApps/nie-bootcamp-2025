@@ -6,9 +6,12 @@ exports.loginUser = async (email, password) => {
   try {
     const user = await User.findOne({ email });
 
-    if (!user) {
-      return { success: false, message: "User not found" };
-    }
+    if (!user) return ({
+    success: false,
+    message: "User not found",
+    email,
+    password,
+  });
 
     if (user.password !== password) {
       return { success: false, message: "Invalid credentials" };
