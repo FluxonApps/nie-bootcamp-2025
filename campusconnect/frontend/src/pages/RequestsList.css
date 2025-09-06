@@ -1,0 +1,106 @@
+.requests-container {
+  padding: 2rem;
+  min-height: 70vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.requests-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Request Card */
+.request-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--card-bg);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.request-user {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.request-actions {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.request-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Light Theme */
+body.light .requests-title {
+  color: #222;
+}
+
+body.light .request-card {
+  background: #fff;
+  color: #222;
+}
+
+body.light .request-btn {
+  background: #0077ff;
+  color: #fff;
+}
+
+body.light .request-btn:hover {
+  background: #005fcc;
+}
+
+body.light .request-btn.reject {
+  background: #e74c3c;
+}
+
+body.light .request-btn.reject:hover {
+  background: #c0392b;
+}
+
+/* Dark Theme */
+body.dark .requests-title {
+  color: #f5f5f5;
+}
+
+body.dark .request-card {
+  background: #222;
+  color: #f5f5f5;
+}
+
+body.dark .request-btn {
+  background: #444;
+  color: #fff;
+}
+
+body.dark .request-btn:hover {
+  background: #666;
+}
+
+body.dark .request-btn.reject {
+  background: #c0392b;
+}
+
+body.dark .request-btn.reject:hover {
+  background: #e74c3c;
+}
+
+/* Empty state */
+.no-requests {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 1.1rem;
+  opacity: 0.8;
+}
