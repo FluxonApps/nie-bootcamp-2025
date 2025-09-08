@@ -46,14 +46,16 @@ export default function Groups() {
         {/* Front side */}
         <div className="card-front">
           <h3>{g.name}</h3>
+          <p>{g.domain}</p>
         </div>
+
         {/* Back side */}
         <div className="card-back">
           <p><strong>Description:</strong> {g.description || "No description"}</p>
-          <p><strong>Domain:</strong> {g.domain}</p>
           <p><strong>Members:</strong> {g.members.length}</p>
           {showJoin && (
-            <button onClick={() => handleJoin(g._id)}>➕ Join</button>
+            <button className="join-btn" onClick={() => handleJoin(g._id)}>➕ Join</button>
+
           )}
         </div>
       </div>
@@ -91,14 +93,20 @@ export default function Groups() {
       <div className="group-grid">
         {tab === "my" &&
           (myGroups.length === 0 ? (
-            <p>You haven’t joined any groups yet 🚀</p>
+
+            <p className="empty-msg">You haven’t joined any groups yet 🚀</p>
+
+            
           ) : (
             myGroups.map((g) => renderGroupCard(g))
           ))}
 
         {tab === "all" &&
           (allGroups.length === 0 ? (
-            <p>No groups available 😢</p>
+
+            <p className="empty-msg">No groups available 😢</p>
+
+
           ) : (
             allGroups.map((g) => renderGroupCard(g, true))
           ))}
