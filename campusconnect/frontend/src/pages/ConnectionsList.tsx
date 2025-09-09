@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getConnections } from "../api/connections";
+import "./ConnectionsList.css";
+import { MessageCircle } from "lucide-react";
 
 interface User {
   _id: string;
@@ -31,21 +33,45 @@ const ConnectionsList: React.FC<{ userId: string }> = ({ userId }) => {
     fetchConnections();
   }, [userId]);
 
+  const handleMessage = (userId: string) => {
+    alert(`Opening chat with user ID: ${userId}`);
+    // Future enhancement: navigate(`/chat/${userId}`);
+  };
+
   return (
-    <div>
-      <h2>My Connections</h2>
+    <div className="connections-container">
+      <h2 className="connections-title">My Connections</h2>
+
       {connections.length === 0 ? (
-        <p>No connections yet.</p>
+        <p className="no-connections">No connections yet.</p>
       ) : (
-        <ul>
+        <ul className="connections-list">
           {connections.map((conn) => {
-            // Determine the connected user (not the current user)
             const connectedUser =
               conn.fromUser._id === userId ? conn.toUser : conn.fromUser;
 
             return (
-              <li key={conn._id}>
-                <strong>{connectedUser.name}</strong> ({connectedUser.username}) - {connectedUser.email}
+              <li key={conn._id} className="connection-card">
+                {/* Avatar */}
+                <div className="avatar">
+                  {connectedUser.name.charAt(0).toUpperCase()}
+                </div>
+
+                {/* User Details */}
+                <div className="user-info">
+                  <span className="user-name">{connectedUser.name}</span>
+                  <span className="user-username">@{connectedUser.username}</span>
+                  <span className="user-email">{connectedUser.email}</span>
+                </div>
+
+                {/* Small Message Button */}
+                <button
+                  className="message-btn"
+                  onClick={() => handleMessage(connectedUser._id)}
+                >
+                  <MessageCircle size={14} />
+                  Message
+                </button>
               </li>
             );
           })}
@@ -56,77 +82,3 @@ const ConnectionsList: React.FC<{ userId: string }> = ({ userId }) => {
 };
 
 export default ConnectionsList;
-
-// import React, { useEffect, useState } from "react";
-// import { getConnections } from "../api/connections";
-// import "./ConnectionsList.css";
-// import Header from "../components/Header";
-// import Footer from "../components/Footer";
-
-// interface User {
-//   _id: string;
-//   name: string;
-//   username: string;
-//   email: string;
-//   avatar?: string; // optional avatar URL
-// }
-
-// const ConnectionsList: React.FC<{ userId: string }> = ({ userId }) => {
-//   const [connections, setConnections] = useState<User[]>([]);
-//   const [heading, setHeading] = useState("My Connections");
-
-//   useEffect(() => {
-//     // Dynamic heading based on time of day
-//     const hours = new Date().getHours();
-//     if (hours < 12) setHeading("☀️ Morning Connections");
-//     else if (hours < 18) setHeading("🌞 Afternoon Connections");
-//     else setHeading("🌙 Evening Connections");
-//   }, []);
-
-//   useEffect(() => {
-//     const fetchConnections = async () => {
-//       try {
-//         const data = await getConnections(userId);
-//         setConnections(data);
-//       } catch (err) {
-//         console.error("Error fetching connections:", err);
-//       }
-//     };
-
-//     fetchConnections();
-//   }, [userId]);
-
-//   return (
-//     <>
-//       <Header />
-//       <div className="connections-container">
-//         <h2>{heading}</h2>
-//         {connections.length === 0 ? (
-//           <p className="no-connections">No connections yet.</p>
-//         ) : (
-//           <ul className="connections-list">
-//             {connections.map((user) => (
-//               <li key={user._id} className="connection-item theme-card">
-//                 <div className="connection-avatar">
-//                   {user.avatar ? (
-//                     <img src={user.avatar} alt={user.name} />
-//                   ) : (
-//                     <span>{user.name.charAt(0).toUpperCase()}</span>
-//                   )}
-//                 </div>
-//                 <div className="connection-details">
-//                   <strong>{user.name}</strong>{" "}
-//                   <span className="username">({user.username})</span>
-//                   <div className="connection-email">{user.email}</div>
-//                 </div>
-//               </li>
-//             ))}
-//           </ul>
-//         )}
-//       </div>
-//       <Footer />
-//     </>
-//   );
-// };
-
-// export default ConnectionsList;
