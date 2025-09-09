@@ -1,0 +1,119 @@
+/* === Main Container === */
+.connections-container {
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* === Title === */
+.connections-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #111827;
+  text-align: center;
+}
+
+/* === No Connections === */
+.no-connections {
+  text-align: center;
+  color: #6b7280;
+  font-size: 15px;
+}
+
+/* === List === */
+.connections-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* === Connection Card === */
+.connection-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f9fafb;
+  padding: 14px 18px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.connection-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.1);
+}
+
+/* === Avatar === */
+.avatar {
+  width: 45px;
+  height: 45px;
+  background-color: #3b82f6;
+  color: #fff;
+  font-weight: 600;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3);
+}
+
+/* === User Info === */
+.user-info {
+  flex: 1;
+  margin-left: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.user-username {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.user-email {
+  font-size: 13px;
+  color: #374151;
+}
+
+/* === Small Message Button === */
+.message-btn {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 4px 10px;    /* Smaller padding */
+  border-radius: 6px;
+  font-size: 12px;      /* Smaller text */
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 2px 5px rgba(37, 99, 235, 0.25);
+  height: 28px;         /* Fixed small height */
+  min-width: 85px;      /* Ensures symmetry */
+}
+
+.message-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.message-btn:hover {
+  background-color: #1e40af;
+  transform: scale(1.05);
+}

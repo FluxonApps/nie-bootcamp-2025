@@ -1,0 +1,11 @@
+APIs for MVP features
+1. Sign in 
+   - get api
+   - post
+2. Signup
+   - post api 
+3. Add connection 
+   - send request - post
+   - accept request - post
+4. Show all connection
+    - get 

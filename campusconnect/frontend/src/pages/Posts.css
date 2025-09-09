@@ -1,0 +1,249 @@
+/* Page Container */
+.posts-page {
+  background-color: #f5f6f8;
+  min-height: 100vh;
+}
+
+/* Wrapper */
+.posts-wrapper {
+  max-width: 650px;
+  margin: 90px auto 30px;
+  padding: 10px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Posts List */
+.posts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Post Card */
+.post-card {
+  background: white;
+  padding: 15px;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+/* Post Header */
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.profile-circle {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: #e8f0fe;
+  color: #1877f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.author-name {
+  font-weight: bold;
+  color: #222;
+}
+
+.post-date {
+  font-size: 12px;
+  color: #777;
+}
+
+/* Caption */
+.caption {
+  margin: 8px 0;
+  color: #333;
+  font-size: 15px;
+}
+
+/* Post Image */
+.post-image {
+  width: 100%;
+  border-radius: 12px;
+  margin: 10px 0;
+  object-fit: cover;
+  max-height: 400px;
+}
+
+/* Actions */
+.post-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 10px 0;
+}
+
+.like-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  color: #555;
+  background: none;
+  border: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.like-btn:hover {
+  color: #e03131;
+}
+
+.like-btn.liked {
+  color: red;
+}
+
+.comments-count {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #555;
+}
+
+/* Comments */
+.comments-section p {
+  font-size: 14px;
+  margin: 4px 0;
+  color: #333;
+}
+
+.comment-user {
+  font-weight: bold;
+  color: #222;
+}
+
+/* Add Comment */
+.add-comment {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.add-comment input {
+  flex: 1;
+  padding: 6px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.add-comment button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  background: #e4e6eb;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.add-comment button:hover {
+  background: #d0d3d8;
+}
+
+/* Floating Plus Button */
+.floating-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 25px;
+  background: #1877f2;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: background 0.2s ease-in-out;
+}
+
+.floating-btn:hover {
+  background: #145dbf;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Modal Content */
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content h2 {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.modal-content textarea {
+  width: 100%;
+  height: 70px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  resize: none;
+}
+
+.modal-content input[type="file"] {
+  margin-bottom: 10px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.modal-actions button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.modal-actions button:first-child {
+  background: #e4e6eb;
+}
+
+.modal-actions button:first-child:hover {
+  background: #d0d3d8;
+}
+
+.modal-actions button:last-child {
+  background: #1877f2;
+  color: white;
+}
+
+.modal-actions button:last-child:hover {
+  background: #145dbf;
+}
