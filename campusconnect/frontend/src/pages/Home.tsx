@@ -32,7 +32,8 @@ const Home: React.FC = () => {
           <div className="welcome-banner">
             <img src={welcomeImage} alt="Welcome" className="welcome-image" />
             <div className="overlay">
-              <h1>Hi, {user.username}! 👋</h1>
+              <h1 style={{ color: "white" }}
+              >Hi, {user.username}! 👋</h1>
               <p>Welcome back to Campus Connect 🚀</p>
             </div>
           </div>
