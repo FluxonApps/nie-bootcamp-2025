@@ -5,32 +5,43 @@ const postController = require("../controllers/postController");
 const postRoutes = [
   {
     method: "post",
+
     url: "/api/posts",
-    handler: upload.single("image") // middleware for image upload
+
   },
   {
     method: "post",
+
     url: "/api/posts",
+
     handler: postController.createPost // actual handler
   },
   {
     method: "get",
+
     url: "/api/get/posts",
+
     handler: postController.getAllPosts
   },
   {
     method: "post",
+
     url: "/api/posts/:postId/like",
+
     handler: postController.likePost
   },
   {
     method: "post",
+
     url: "/api/posts/:postId/comment",
+
     handler: postController.commentPost
   },
   {
     method: "get",
+
     url: "/api/posts/:postId/comments",
+
     handler: postController.getComments // new route to fetch all comments
   }
 ];

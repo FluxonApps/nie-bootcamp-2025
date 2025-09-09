@@ -2,10 +2,12 @@ const postService = require("../services/postService");
 
 exports.createPost = async (req, res) => {
   try {
+
     const { caption} = req.body;
     const imageUrl = req.file ? `/uploads/${req.file.filename}` : undefined;
 
     const post = await postService.createPost(caption, imageUrl);
+
     res.status(201).json({ message: "Post created successfully", post });
   } catch (error) {
     console.error("Create Post error:", error);

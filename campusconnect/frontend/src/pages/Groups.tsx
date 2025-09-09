@@ -246,6 +246,8 @@ export default function Groups() {
           <p><strong>Members:</strong> {g.members.length}</p>
           {showJoin && (
             <button className="join-btn" onClick={() => handleJoin(g._id)}>➕ Join</button>
+
+
           )}
         </div>
       </div>
@@ -283,14 +285,18 @@ export default function Groups() {
       <div className="group-grid">
         {tab === "my" &&
           (myGroups.length === 0 ? (
+
             <p className="empty-msg">You haven’t joined any groups yet 🚀</p>
+
           ) : (
             myGroups.map((g) => renderGroupCard(g))
           ))}
 
         {tab === "all" &&
           (allGroups.length === 0 ? (
+
             <p className="empty-msg">No groups available 😢</p>
+
           ) : (
             allGroups.map((g) => renderGroupCard(g, true))
           ))}

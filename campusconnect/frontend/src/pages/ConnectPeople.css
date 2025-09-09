@@ -1,3 +1,4 @@
+
 /* Container */
 .connect-container {
   max-width: 750px;
@@ -19,10 +20,12 @@
   color: #555;
   margin-bottom: 20px;
   font-style: italic;
+
 }
 
 /* Navigation Buttons */
 .connect-nav {
+
   display: flex;
   justify-content: center;
   gap: 15px;
@@ -44,17 +47,21 @@
 .connect-nav button:hover {
   background: #2563eb;
   transform: scale(1.05);
+
 }
 
 /* User List */
 .user-list {
   list-style: none;
   padding: 0;
+
   margin-top: 20px;
+
 }
 
 .user-item {
   display: flex;
+
   align-items: center;
   justify-content: space-between;
   background: #fff;
@@ -63,10 +70,12 @@
   border-radius: 12px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
+
 }
 
 .user-item:hover {
   transform: translateY(-3px);
+
   box-shadow: 0 5px 14px rgba(0, 0, 0, 0.15);
 }
 
@@ -133,4 +142,5 @@
   background: #15803d;
   transform: scale(1.05);
   box-shadow: 0 5px 10px rgba(22, 163, 74, 0.35);
+
 }

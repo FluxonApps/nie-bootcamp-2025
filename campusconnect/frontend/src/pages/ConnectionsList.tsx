@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getConnections } from "../api/connections";
+
 import "./ConnectionsList.css";
 import { MessageCircle } from "lucide-react";
 
@@ -33,6 +34,7 @@ const ConnectionsList: React.FC<{ userId: string }> = ({ userId }) => {
     fetchConnections();
   }, [userId]);
 
+
   const handleMessage = (userId: string) => {
     alert(`Opening chat with user ID: ${userId}`);
     // Future enhancement: navigate(`/chat/${userId}`);
@@ -47,10 +49,12 @@ const ConnectionsList: React.FC<{ userId: string }> = ({ userId }) => {
       ) : (
         <ul className="connections-list">
           {connections.map((conn) => {
+
             const connectedUser =
               conn.fromUser._id === userId ? conn.toUser : conn.fromUser;
 
             return (
+
               <li key={conn._id} className="connection-card">
                 {/* Avatar */}
                 <div className="avatar">
@@ -72,6 +76,7 @@ const ConnectionsList: React.FC<{ userId: string }> = ({ userId }) => {
                   <MessageCircle size={14} />
                   Message
                 </button>
+
               </li>
             );
           })}
@@ -82,3 +87,5 @@ const ConnectionsList: React.FC<{ userId: string }> = ({ userId }) => {
 };
 
 export default ConnectionsList;
+
+

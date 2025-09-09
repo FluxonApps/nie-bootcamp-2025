@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllUsers, sendConnectionRequest } from "../api/connections";
@@ -74,6 +75,7 @@ const ConnectPeople: React.FC = () => {
           <ul className="user-list">
             {users.map((user) => (
               <li key={user._id} className="user-item">
+
                 <div className="user-left">
                   <div className="user-avatar">
                     {user.name.charAt(0).toUpperCase()}
@@ -83,6 +85,7 @@ const ConnectPeople: React.FC = () => {
                     <span>@{user.username || "unknown"}</span>
                     <div className="user-email">{user.email}</div>
                   </div>
+
                 </div>
                 <button
                   className="connect-btn"
