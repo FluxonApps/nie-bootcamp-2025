@@ -17,6 +17,8 @@ const LoginPage = () => {
         navigate('/admin-dashboard');
       } else if (user.role === 'recipient') {
         navigate('/recipient-dashboard');
+      } else if (user.role === 'donor') {
+        navigate('/donor-dashboard');
       } else {
         // For roles not implemented yet (e.g., donor), send to home for now
         navigate('/');

@@ -1,16 +1,11 @@
 const Donation = require("../models/donationModel");
 
-// Get all donations (admin sees all, donor sees only theirs)
-const getAllDonations = async (user) => {
-  if (user.role === "donor") {
-    // donor → only their own donations
-    return await Donation.find({ donor: user.id }).sort({ CreatedAt: -1 });
-  } else if (user.role === "admin") {
-    // admin → all donations
-    return await Donation.find().sort({ CreatedAt: -1 });
-  }
-  return [];
+// Admin: get all donations
+const getAllDonations = async () => {
+  return await Donation.find().sort({ CreatedAt: -1 });
 };
+
+// Donor: get donations by donor handled by dedicated method
 
 // Add donation (donorId comes from auth)
 const addDonation = async (donationData, donorId) => {
@@ -49,6 +44,11 @@ const getDonationsByDonor = async (donorId) => {
   return await Donation.find({ donor: donorId }).sort({ CreatedAt: -1 });
 };
 
+// Recipient: get only available donations (status: active)
+const getAvailableDonations = async () => {
+  return await Donation.find({ status: 'active' }).sort({ CreatedAt: -1 });
+};
+
 module.exports = {
   getAllDonations,
   addDonation,
@@ -56,4 +56,5 @@ module.exports = {
   updateDonation,
   deleteDonation,
   getDonationsByDonor,
+  getAvailableDonations,
 };
