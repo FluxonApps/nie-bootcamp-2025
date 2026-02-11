@@ -1,0 +1,146 @@
+
+/* Container */
+.connect-container {
+  max-width: 750px;
+  margin: 20px auto;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Title & Tagline */
+.connect-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #222;
+}
+
+.connect-tagline {
+  font-size: 15px;
+  color: #555;
+  margin-bottom: 20px;
+  font-style: italic;
+
+}
+
+/* Navigation Buttons */
+.connect-nav {
+
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.connect-nav button {
+  background: #3b82f6;
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 180px;
+}
+
+.connect-nav button:hover {
+  background: #2563eb;
+  transform: scale(1.05);
+
+}
+
+/* User List */
+.user-list {
+  list-style: none;
+  padding: 0;
+
+  margin-top: 20px;
+
+}
+
+.user-item {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  margin-bottom: 15px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+
+}
+
+.user-item:hover {
+  transform: translateY(-3px);
+
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.15);
+}
+
+/* Left Side: Avatar + Details */
+.user-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Avatar */
+.user-avatar {
+  background: #3b82f6;
+  color: white;
+  font-weight: bold;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+}
+
+/* User Details */
+.user-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.user-details strong {
+  font-size: 15px;
+  color: #222;
+}
+
+.user-details span {
+  font-size: 13px;
+  color: #666;
+}
+
+.user-email {
+  font-size: 13px;
+  color: #777;
+}
+
+/* Connect Button - Smaller + Right Aligned */
+.connect-btn {
+  background: #16a34a;
+  color: white;
+  border: none;
+  padding: 6px 16px;  /* smaller padding */
+  border-radius: 18px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 6px rgba(22, 163, 74, 0.25);
+  min-width: 95px;   /* smaller width */
+  text-align: center;
+}
+
+.connect-btn:hover {
+  background: #15803d;
+  transform: scale(1.05);
+  box-shadow: 0 5px 10px rgba(22, 163, 74, 0.35);
+
+}

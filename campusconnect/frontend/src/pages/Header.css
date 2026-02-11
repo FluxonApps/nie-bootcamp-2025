@@ -1,0 +1,75 @@
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 2rem;
+  background-color: #f8f9fa;
+  color: #333;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Dark Theme */
+.main-header.dark {
+  background-color: #222;
+  color: #fff;
+}
+
+/* Logo */
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.logo span {
+  color: #007bff;
+}
+
+/* Welcome Text */
+.welcome-text {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-left: auto;
+  margin-right: 2rem;
+  color: inherit;
+}
+
+/* Buttons */
+.header-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.theme-toggle,
+.logout-btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease-in-out;
+}
+
+.theme-toggle {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.theme-toggle:hover {
+  background-color: #0056b3;
+}
+
+.logout-btn {
+  background-color: #e63946;
+  color: #fff;
+}
+
+.logout-btn:hover {
+  background-color: #c71f2d;
+}
