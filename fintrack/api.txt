@@ -1,0 +1,37 @@
+Auth
+
+POST /auth/register – Register
+
+POST /auth/login – Login (JWT)
+
+GET /auth/profile – User profile
+
+Expenses
+
+POST /expenses – Add expense
+
+GET /expenses – All expenses
+
+GET /expenses/:id – Single expense
+
+PUT /expenses/:id – Update expense
+
+DELETE /expenses/:id – Delete expense
+
+Budgets
+
+POST /budgets – Set budget
+
+GET /budgets – Get budgets
+
+PUT /budgets/:id – Update budget
+
+DELETE /budgets/:id – Delete budget
+
+Analytics
+
+GET /analytics/summary – Monthly summary
+
+GET /analytics/trends – Expense trends
+
+GET /analytics/category – Category breakdown
